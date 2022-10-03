@@ -1,4 +1,4 @@
-villarre rob-villarre <- adding this because git did not add me as a contributor
+villarre rob-villarre
 shariatz NimaShariatz
 yliu30 Michaelshark
 prabhnoo kooner27
