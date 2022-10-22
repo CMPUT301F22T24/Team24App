@@ -20,7 +20,7 @@ public class IngredientsActivity extends AppCompatActivity {
     int position = -1; // for item selection and deletion
     ListView ingredientListView;
     ArrayList<Ingredient> ingredientList;
-    ArrayAdapter<Ingredient> ingredientAdapter;
+    IngredientAdapter ingredientAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,7 +28,7 @@ public class IngredientsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ingredient_list);
         ingredientListView = findViewById(R.id.ingredient_list);
         ingredientList = new ArrayList<>();
-        ingredientAdapter = new ArrayAdapter<>(this, R.layout.content, R.id.textView, ingredientList);
+        ingredientAdapter = new IngredientAdapter(this, ingredientList);
         ingredientListView.setAdapter(ingredientAdapter);
 
         // adding an egg ingredient to make sure everything works

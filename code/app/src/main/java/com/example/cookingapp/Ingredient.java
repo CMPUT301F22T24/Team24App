@@ -9,11 +9,11 @@ public class Ingredient {
     private String description;
     private Date bestBeforeDate;
     private String location;
-    private int amount;
+    private Integer amount;
     private String unit;
     private String category;
 
-    public Ingredient(String description, Date bestBeforeDate, String location, int amount, String unit, String category) {
+    public Ingredient(String description, Date bestBeforeDate, String location, Integer amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
         this.location = location;
@@ -22,7 +22,7 @@ public class Ingredient {
         this.category = category;
     }
 
-    public Ingredient(String description, String location, int amount, String unit, String category) {
+    public Ingredient(String description, String location, Integer amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = null;
         this.location = location;
@@ -71,11 +71,11 @@ public class Ingredient {
         this.location = location;
     }
 
-    public int getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
