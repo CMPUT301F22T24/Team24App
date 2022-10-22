@@ -13,8 +13,6 @@ public class Ingredient {
     private String unit;
     private String category;
 
-
-
     public Ingredient(String description, Date bestBeforeDate, String location, int amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
@@ -24,7 +22,14 @@ public class Ingredient {
         this.category = category;
     }
 
-
+    public Ingredient(String description, String location, int amount, String unit, String category) {
+        this.description = description;
+        this.bestBeforeDate = null;
+        this.location = location;
+        this.amount = amount;
+        this.unit = unit;
+        this.category = category;
+    }
 
     // ArrayAdapter uses toString to display stuff to the list View
     // so we can override the toString to tell Arrayadapter how to display and ingredient object
@@ -40,7 +45,6 @@ public class Ingredient {
         String date = simpleDateFormat.format(this.bestBeforeDate);
         return date;
     }
-
 
     // Getters and Setters
     public String getDescription() {

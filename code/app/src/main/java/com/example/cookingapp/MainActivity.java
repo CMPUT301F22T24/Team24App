@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startIngredientList(View view) {
-        startActivity(new Intent(MainActivity.this, IngredientList.class));
+        startActivity(new Intent(MainActivity.this, IngredientsActivity.class));
 
     }
 }

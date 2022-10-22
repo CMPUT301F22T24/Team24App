@@ -14,11 +14,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class IngredientList extends AppCompatActivity {
+public class IngredientsActivity extends AppCompatActivity {
     private final int ADD_REQUEST_CODE = 1;
-
-
-
 
     int position = -1; // for item selection and deletion
     ListView ingredientListView;
@@ -27,15 +24,12 @@ public class IngredientList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredient_list);
         ingredientListView = findViewById(R.id.ingredient_list);
         ingredientList = new ArrayList<>();
         ingredientAdapter = new ArrayAdapter<>(this, R.layout.content, R.id.textView, ingredientList);
         ingredientListView.setAdapter(ingredientAdapter);
-
 
         // adding an egg ingredient to make sure everything works
         Date date = new Date(); // current date is default
@@ -49,7 +43,7 @@ public class IngredientList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 position = i;
                 String selected = ingredientList.get(position).getDescription() + " selected";
-                Toast.makeText(IngredientList.this, selected, Toast.LENGTH_SHORT).show();
+                Toast.makeText(IngredientsActivity.this, selected, Toast.LENGTH_SHORT).show();
             }
         });
     }
