@@ -1,7 +1,9 @@
 package com.example.cookingapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +15,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class IngredientList extends AppCompatActivity {
+    private final int ADD_REQUEST_CODE = 1;
+
+
+
+
     int position = -1; // for item selection and deletion
     ListView ingredientListView;
     ArrayList<Ingredient> ingredientList;
@@ -48,8 +55,25 @@ public class IngredientList extends AppCompatActivity {
     }
 
     public void onAddClick(View view) {
+        Intent intent = new Intent(this, AddIngredientActivity.class);
+        intent.putExtra("requestCode", ADD_REQUEST_CODE);
+        startActivityForResult(intent, ADD_REQUEST_CODE);
     }
 
     public void onDeleteClick(View view) {
+        // if position is not -1 that means something was selected
+        if (position != -1) {
+            ingredientList.remove(position);
+            ingredientAdapter.notifyDataSetChanged();
+            position = -1;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == ADD_REQUEST_CODE) {
+
+        }
     }
 }
