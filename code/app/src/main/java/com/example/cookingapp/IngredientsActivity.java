@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class IngredientsActivity extends AppCompatActivity {
     private final int ADD_REQUEST_CODE = 1;
@@ -42,9 +48,10 @@ public class IngredientsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 position = i;
+
                 String selected = ingredientList.get(position).getDescription() + " selected";
                 Toast.makeText(IngredientsActivity.this, selected, Toast.LENGTH_SHORT).show();
-            }
+            }//onItemClick
         });
     }
 
@@ -52,7 +59,7 @@ public class IngredientsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddIngredientActivity.class);
         intent.putExtra("requestCode", ADD_REQUEST_CODE);
         startActivityForResult(intent, ADD_REQUEST_CODE);
-    }
+    }//onAddClick
 
     public void onDeleteClick(View view) {
         // if position is not -1 that means something was selected
@@ -61,13 +68,36 @@ public class IngredientsActivity extends AppCompatActivity {
             ingredientAdapter.notifyDataSetChanged();
             position = -1;
         }
-    }
+    }//onDeleteClick
+
+    public void onReturnClick(View view){
+        finish();
+
+    }//onReturnClick
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ADD_REQUEST_CODE) {
+            if(data!=null) {
+                String returnDescription = data.getStringExtra("Description");
+                String returnLocation = data.getStringExtra("Location");
+                String returnCategory = data.getStringExtra("Category");
+                String returnDate = data.getStringExtra("Date");
+                String returnUnit = data.getStringExtra("Unit");
+                String returnCount = data.getStringExtra("Count");
 
-        }
-    }
+                Date date = new Date();
+
+                ingredientList.add(new Ingredient(returnDescription, date, returnLocation, Integer.parseInt(returnCount), returnUnit, returnCategory));
+                ingredientAdapter.notifyDataSetChanged();
+
+
+            }//if
+        }//if
+    }//onActivityResult
+
+
+
+
 }

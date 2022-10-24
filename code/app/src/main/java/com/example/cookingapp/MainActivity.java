@@ -18,8 +18,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param view
+     * commences the activity_ingredient_list.xml
+     */
     public void startIngredientList(View view) {
         startActivity(new Intent(MainActivity.this, IngredientsActivity.class));
 
-    }
+    }//startIngredientList
 }

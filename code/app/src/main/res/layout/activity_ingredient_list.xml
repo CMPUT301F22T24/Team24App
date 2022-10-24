@@ -3,41 +3,102 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#343231"
     tools:context=".IngredientsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/ingredient_add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
+            android:textAllCaps="false"
+            android:backgroundTint="#ED524E"
+            android:fontFamily="@font/karma_medium"
             android:onClick="onAddClick"
-            android:text="Add" />
+            android:text="Add"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/ingredient_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textAllCaps="false"
             android:layout_weight="1"
+            android:backgroundTint="#ED524E"
+            android:fontFamily="@font/karma_medium"
             android:onClick="onDeleteClick"
-            android:text="Delete" />
+            android:text="Delete"
+            android:textSize="20sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/ingredient_sort_button"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="Sort By" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ingredient_sort"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Sort By:"
+            android:textColor="#ED524E"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/Sort_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#EC524E" />
+    </LinearLayout>
+
+
+
+
 
     <ListView
         android:id="@+id/ingredient_list"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+
+        android:layout_weight="1"
+        />
+
+  <!--  android:layout_margin="5dp"
+-->
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/return_button"
+            android:layout_width="175dp"
+            android:layout_height="55dp"
+            android:layout_margin="5dp"
+            android:backgroundTint="#ED524E"
+            android:fontFamily="@font/karma_medium"
+            android:onClick="onReturnClick"
+            android:text="Return"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
 </LinearLayout>

@@ -1,16 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#343231"
     tools:context=".AddIngredientActivity">
 
-    <TextView
-        android:id="@+id/add_ingredient_text_view"
-        android:layout_width="133dp"
-        android:layout_height="52dp"
-        android:text="Add Ingredient"
-        tools:layout_editor_absoluteX="48dp"
-        tools:layout_editor_absoluteY="29dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!-- https://www.youtube.com/watch?v=xZ9vURZ0RHY Link on how to implement scroll view. To scroll down the app-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/Add_Ingredient_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Add Ingredient"
+            android:textColor="#E9E5E5"
+            android:textSize="32sp">
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/Description_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Description"
+            android:textColor="#E9E5E5"
+            android:textSize="24sp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/Description_EditText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:backgroundTint="#ED524E"
+            android:fontFamily="@font/karma_medium"
+            android:layout_weight="1"
+            android:hint="Write a description..."
+            android:minHeight="48dp"
+            android:padding="5dp"
+            android:textColor="#E9E5E5"
+            android:textColorHint="#99E9E5E5"
+            android:textSize="14sp">
+        </EditText>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/Location_title"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Location"
+            android:textColor="#E9E5E5"
+            android:textSize="24sp">
+        </TextView>
+
+        <Spinner
+            android:id="@+id/Location_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:backgroundTint="#EC524E" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <EditText
+            android:id="@+id/Location_EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ED524E"
+            android:fontFamily="@font/karma_medium"
+            android:layout_weight="1"
+            android:hint="Write a location or select from previously created..."
+            android:minHeight="48dp"
+            android:padding="5dp"
+            android:textColor="#E9E5E5"
+            android:textColorHint="#99E9E5E5"
+            android:textSize="14sp">
+        </EditText>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <TextView
+            android:id="@+id/Category_title"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Category"
+            android:textColor="#E9E5E5"
+            android:textSize="24sp">
+        </TextView>
+
+        <Spinner
+            android:id="@+id/Category_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:backgroundTint="#EC524E" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <EditText
+            android:id="@+id/Category_EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ED524E"
+            android:fontFamily="@font/karma_medium"
+            android:layout_weight="1"
+            android:hint="Write a category or select from previously created..."
+            android:minHeight="48dp"
+            android:padding="5dp"
+            android:textColor="#E9E5E5"
+            android:textColorHint="#99E9E5E5"
+            android:textSize="14sp">
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <TextView
+            android:id="@+id/Unit_title"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Unit"
+            android:textColor="#E9E5E5"
+            android:textSize="24sp">
+        </TextView>
+
+        <Spinner
+            android:id="@+id/Unit_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:backgroundTint="#EC524E" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/Expiry_date_title"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Expiry Date"
+            android:textColor="#E9E5E5"
+            android:textSize="24sp"/>
+
+        <Button
+            android:id="@+id/Select_date_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="#EC524E"
+            android:fontFamily="@font/karma_medium"
+            android:onClick="setDate"
+            android:text="Select Date"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/Amount_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:fontFamily="@font/karma_medium"
+                    android:text="Amount"
+                    android:textColor="#E9E5E5"
+                    android:textSize="24sp"/>
+                <EditText
+                    android:id="@+id/Amount_EditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#ED524E"
+                    android:fontFamily="@font/karma_medium"
+                    android:layout_weight="1"
+                    android:hint="Amount of Ingredient..."
+                    android:minHeight="48dp"
+                    android:padding="5dp"
+                    android:textColor="#E9E5E5"
+                    android:textColorHint="#99E9E5E5"
+                    android:inputType="number"
+                    android:textSize="14sp"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/Confirm_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="#EC524E"
+            android:fontFamily="@font/karma_medium"
+            android:onClick="ConfirmAdd"
+            android:text="Confirm"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <Button
+            android:id="@+id/Cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="#EC524E"
+            android:fontFamily="@font/karma_medium"
+            android:onClick="CancelAdd"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
