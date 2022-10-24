@@ -29,9 +29,6 @@ public class AddIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ingredient);
 
-
-
-
     }//onCreate
 
 
@@ -61,22 +58,14 @@ public class AddIngredientActivity extends AppCompatActivity {
             return;
         }//if
 
-
-        Intent intent = new Intent();//Sends user input back to MainActivity.java
-        intent.putExtra("Description", description);
-        intent.putExtra("Count", amount);
-        intent.putExtra("Location", location);
-        intent.putExtra("Category", category);
-        intent.putExtra("Unit", "kg");
-        Date tempdate = new Date();
-        intent.putExtra("Date", tempdate);
-
-
+        // return ingredient to IngredientsActivity
+        Ingredient ingredient = new Ingredient(description, LocalDate.now(), location, Integer.parseInt(amount), "kg", category);
+        Intent intent = new Intent(this, IngredientsActivity.class);
+        intent.putExtra("ingredient", ingredient);
         setResult(RESULT_OK, intent);
-        finish();//End it
+        finish();
 
     }//ConfirmAdd
-
 
     public void setDate(View view){
         currentDate = LocalDate.now();

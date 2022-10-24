@@ -64,10 +64,6 @@
             android:backgroundTint="#EC524E" />
     </LinearLayout>
 
-
-
-
-
     <ListView
         android:id="@+id/ingredient_list"
         android:layout_width="match_parent"
@@ -77,28 +73,5 @@
 
         android:layout_weight="1"
         />
-
-  <!--  android:layout_margin="5dp"
--->
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/return_button"
-            android:layout_width="175dp"
-            android:layout_height="55dp"
-            android:layout_margin="5dp"
-            android:backgroundTint="#ED524E"
-            android:fontFamily="@font/karma_medium"
-            android:onClick="onReturnClick"
-            android:text="Return"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
-    </LinearLayout>
-
 
 </LinearLayout>

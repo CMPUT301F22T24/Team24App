@@ -1,19 +1,20 @@
 package com.example.cookingapp;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
 
-public class Ingredient {
+public class Ingredient implements Serializable {
     private String description;
-    private Date bestBeforeDate;
+    private LocalDate bestBeforeDate;
     private String location;
     private Integer amount;
     private String unit;
     private String category;
 
-    public Ingredient(String description, Date bestBeforeDate, String location, Integer amount, String unit, String category) {
+    public Ingredient(String description, LocalDate bestBeforeDate, String location, Integer amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
         this.location = location;
@@ -55,11 +56,11 @@ public class Ingredient {
         this.description = description;
     }
 
-    public Date getBestBeforeDate() {
+    public LocalDate getBestBeforeDate() {
         return bestBeforeDate;
     }
 
-    public void setBestBeforeDate(Date bestBeforeDate) {
+    public void setBestBeforeDate(LocalDate bestBeforeDate) {
         this.bestBeforeDate = bestBeforeDate;
     }
 
