@@ -19,7 +19,6 @@
 
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -248,13 +247,12 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#ED524E"
                     android:fontFamily="@font/karma_medium"
-                    android:layout_weight="1"
                     android:hint="Amount of Ingredient..."
                     android:minHeight="48dp"
                     android:padding="5dp"
                     android:textColor="#E9E5E5"
                     android:textColorHint="#99E9E5E5"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:textSize="14sp"/>
 
 
