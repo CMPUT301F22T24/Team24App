@@ -3,6 +3,7 @@ package com.example.cookingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -61,19 +62,34 @@ public class AddIngredientActivity extends AppCompatActivity {
         String category = categorySpinner.getSelectedItem().toString();
         String amount = amountEditText.getText().toString();
 
-        if(description.isEmpty() || location.isEmpty() || category.isEmpty()  || amount.isEmpty()) {//if user input is empty..
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_LONG).show();
+        if((description.replace(" ", "")).isEmpty() || (location.replace(" ", "")).isEmpty() || (category.replace(" ", "")).isEmpty()  || (amount.replace(" ", "")).isEmpty()) {//if user input is empty..
+            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
             return;
 
 
-        }else if( Double.parseDouble(amount) <=0 ){//checks if user input count is zero
-            Toast.makeText(this, "Inputs cannot be less than zero", Toast.LENGTH_LONG).show();
+        }else if( Double.parseDouble(amount) < 0 ){//checks if user input count is zero
+            Toast.makeText(this, "Amount cannot be less than zero", Toast.LENGTH_SHORT).show();
             //Log.d("Checking","2");
             return;
-        }//if
+        }else if(description.length() > 30){
+            Toast.makeText(this, "Number of characters in description should not exceed 30", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(category.length() > 30){
+            Toast.makeText(this, "Number of characters in category should not exceed 30", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(location.length() > 30){
+            Toast.makeText(this, "Number of characters in location should not exceed 30", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        double roundToHundredth  = Math.round(Double.parseDouble(amount) * 100.0) / 100.0;//Converts an input of say "12.1234" to 12.12. Rounds up.
+        amount = String.valueOf(roundToHundredth);//turn amount back into string
+
+
 
         // return ingredient to IngredientsActivity
-        Ingredient ingredient = new Ingredient(description, LocalDate.now(), location, Integer.parseInt(amount), "kg", category);
+        Ingredient ingredient = new Ingredient(description, LocalDate.now(), location, Double.parseDouble(amount), "kg", category);
         Intent intent = new Intent(this, IngredientsActivity.class);
         intent.putExtra("ingredient", ingredient);
         setResult(RESULT_OK, intent);

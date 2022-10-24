@@ -10,11 +10,11 @@ public class Ingredient implements Serializable {
     private String description;
     private LocalDate bestBeforeDate;
     private String location;
-    private Integer amount;
+    private Double amount;
     private String unit;
     private String category;
 
-    public Ingredient(String description, LocalDate bestBeforeDate, String location, Integer amount, String unit, String category) {
+    public Ingredient(String description, LocalDate bestBeforeDate, String location, Double amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
         this.location = location;
@@ -23,7 +23,7 @@ public class Ingredient implements Serializable {
         this.category = category;
     }
 
-    public Ingredient(String description, String location, Integer amount, String unit, String category) {
+    public Ingredient(String description, String location, Double amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = null;
         this.location = location;
@@ -72,11 +72,11 @@ public class Ingredient implements Serializable {
         this.location = location;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

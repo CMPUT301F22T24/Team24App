@@ -55,7 +55,7 @@ public class IngredientsActivity extends AppCompatActivity {
 
         // adding an egg ingredient to make sure everything works
         LocalDate date = LocalDate.now(); // current date is default
-        Ingredient ingredient = new Ingredient("egg", date, "fridge", 1, "dozen", "idk");
+        Ingredient ingredient = new Ingredient("egg", date, "fridge", 1.0, "dozen", "idk");
         ingredientList.add(ingredient);
         ingredientAdapter.notifyDataSetChanged();
 
@@ -67,6 +67,10 @@ public class IngredientsActivity extends AppCompatActivity {
 
                 String selected = ingredientList.get(position).getDescription() + " selected";
                 Toast.makeText(IngredientsActivity.this, selected, Toast.LENGTH_SHORT).show();
+
+
+
+
             }//onItemClick
         });
     }
@@ -84,4 +88,11 @@ public class IngredientsActivity extends AppCompatActivity {
             position = -1;
         }
     }//onDeleteClick
+
+
+    public void onReturnClick(View view){
+        finish();
+
+    }//onReturnClick
+
 }
