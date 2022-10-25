@@ -153,7 +153,7 @@
             android:padding="5dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="2">
@@ -163,12 +163,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:padding="5dp"
                     android:fontFamily="@font/karma_medium"
+                    android:padding="5dp"
                     android:text="Expiry Date"
                     android:textColor="#E9E5E5"
                     android:textSize="20dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/add_ingredient_expiryDate_textView"
@@ -184,7 +184,7 @@
 
             <Button
                 android:id="@+id/add_ingredient_select_expiryDate_button"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1.5"
