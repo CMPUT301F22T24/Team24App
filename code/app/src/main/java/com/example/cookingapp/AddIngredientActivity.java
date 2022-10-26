@@ -2,12 +2,14 @@ package com.example.cookingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,9 +17,10 @@ import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class AddIngredientActivity extends AppCompatActivity {
-    LocalDate currentDate;
+    LocalDate expiryDate;
 
     // description
     EditText descriptionEditText;
@@ -89,7 +92,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
 
         // return ingredient to IngredientsActivity
-        Ingredient ingredient = new Ingredient(description, LocalDate.now(), location, Double.parseDouble(amount), "kg", category);
+        Ingredient ingredient = new Ingredient(description, expiryDate, location, Double.parseDouble(amount), "kg", category);
         Intent intent = new Intent(this, IngredientsActivity.class);
         intent.putExtra("ingredient", ingredient);
         setResult(RESULT_OK, intent);
@@ -98,11 +101,20 @@ public class AddIngredientActivity extends AppCompatActivity {
     }//ConfirmAdd
 
     public void setDate(View view){
-        currentDate = LocalDate.now();
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        Button SelectDateButton;
-        SelectDateButton = findViewById(R.id.add_ingredient_select_expiryDate_button);
-        SelectDateButton.setText(currentDate.toString());
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddIngredientActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1; // account for android's indexing
+                expiryDate = LocalDate.of(year, month, dayOfMonth);
+                expiryDateTextView.setText(expiryDate.toString());
+            }
+        }, year, month, day);
+        datePickerDialog.show();
 
     }//setDate
 
