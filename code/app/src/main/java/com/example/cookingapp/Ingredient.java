@@ -1,9 +1,15 @@
 package com.example.cookingapp;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentId;
+import com.google.firebase.firestore.Exclude;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 
 public class Ingredient implements Serializable {
@@ -13,6 +19,17 @@ public class Ingredient implements Serializable {
     private Double amount;
     private String unit;
     private String category;
+    @DocumentId
+    private String documentId;
+
+    public Ingredient() {
+        this.description = null;
+        this.bestBeforeDate = LocalDate.now();
+        this.location = null;
+        this.amount = null;
+        this.unit = null;
+        this.category = null;
+    }
 
     public Ingredient(String description, LocalDate bestBeforeDate, String location, Double amount, String unit, String category) {
         this.description = description;
@@ -42,9 +59,10 @@ public class Ingredient implements Serializable {
     // converts bestBeforeDate to clean formatted string
     public String getStringDate() {
         String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String date = simpleDateFormat.format(this.bestBeforeDate);
-        return date;
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        //String date = simpleDateFormat.format(this.bestBeforeDate);
+        //return date;
+        return pattern;
     }
 
     // Getters and Setters
@@ -60,8 +78,13 @@ public class Ingredient implements Serializable {
         return bestBeforeDate;
     }
 
+    @Exclude
     public void setBestBeforeDate(LocalDate bestBeforeDate) {
         this.bestBeforeDate = bestBeforeDate;
+    }
+
+    public void setBestBeforeDate(Timestamp bestBeforeDate) {
+        this.bestBeforeDate = bestBeforeDate.toDate().toInstant().atZone(ZoneOffset.UTC).toLocalDate();
     }
 
     public String getLocation() {
@@ -83,6 +106,10 @@ public class Ingredient implements Serializable {
     public String getUnit() {
         return unit;
     }
+
+    public String getDocumentId() { return documentId; }
+
+    public void setDocumentId(String documentId) { this.documentId = documentId; }
 
     public void setUnit(String unit) {
         this.unit = unit;

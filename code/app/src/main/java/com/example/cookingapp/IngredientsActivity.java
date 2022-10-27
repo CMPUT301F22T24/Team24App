@@ -4,8 +4,9 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class IngredientsActivity extends AppCompatActivity {
     private final int ADD_REQUEST_CODE = 1;
@@ -25,6 +24,7 @@ public class IngredientsActivity extends AppCompatActivity {
     ListView ingredientListView;
     ArrayList<Ingredient> ingredientList;
     IngredientAdapter ingredientAdapter;
+    IngredientsActivityViewModel viewModel;
 
     ActivityResultLauncher<Intent> activityResultLauncher;
 
@@ -34,31 +34,36 @@ public class IngredientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingredients);
 
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK) {
-                    Intent intent = result.getData();
-                    Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
-                    if (ingredient != null) {
-                        ingredientList.add(ingredient);
-                        ingredientAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        });
-
         ingredientListView = findViewById(R.id.ingredient_list);
         ingredientList = new ArrayList<>();
         ingredientAdapter = new IngredientAdapter(this, ingredientList);
         ingredientListView.setAdapter(ingredientAdapter);
 
-        // adding an egg ingredient to make sure everything works
-        LocalDate date = LocalDate.now(); // current date is default
-        Ingredient ingredient = new Ingredient("egg", date, "fridge", 1.0, "dozen", "idk");
-        ingredientList.add(ingredient);
-        ingredientAdapter.notifyDataSetChanged();
+        viewModel = new ViewModelProvider(this).get(IngredientsActivityViewModel.class);
+        viewModel.getIngredients().observe(this, new Observer<ArrayList<Ingredient>>() {
+                    @Override
+                    public void onChanged(ArrayList<Ingredient> ingredients) {
+                        if (ingredients != null) {
+                            ingredientList = ingredients;
+                            ingredientAdapter = new IngredientAdapter(getApplicationContext(), ingredients);
+                            ingredientListView.setAdapter(ingredientAdapter);
+                        }
+                        ingredientAdapter.notifyDataSetChanged();
+                    }
+                });
 
+                activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            Intent intent = result.getData();
+                            Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
+                            if (ingredient != null) {
+                               viewModel.addIngredient(ingredient);
+                            }
+                        }
+                    }
+                });
 
         ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,9 +72,6 @@ public class IngredientsActivity extends AppCompatActivity {
 
                 String selected = ingredientList.get(position).getDescription() + " selected";
                 Toast.makeText(IngredientsActivity.this, selected, Toast.LENGTH_SHORT).show();
-
-
-
 
             }//onItemClick
         });
@@ -83,8 +85,7 @@ public class IngredientsActivity extends AppCompatActivity {
     public void onDeleteClick(View view) {
         // if position is not -1 that means something was selected
         if (position != -1) {
-            ingredientList.remove(position);
-            ingredientAdapter.notifyDataSetChanged();
+            viewModel.deleteIngredient(ingredientList.get(position));
             position = -1;
         }
     }//onDeleteClick
