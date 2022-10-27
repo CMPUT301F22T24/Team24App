@@ -17,7 +17,6 @@
         android:layout_margin="5dp">
 
         <TextView
-            android:id="@+id/ingredient_sort"
             android:layout_width="100dp"
             android:layout_height="35dp"
             android:layout_marginStart="5dp"
@@ -27,11 +26,12 @@
             android:textSize="20sp" />
 
         <Spinner
-            android:id="@+id/Sort_spinner"
+            android:id="@+id/ingredients_sortBy_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#EC524E" />
+            android:backgroundTint="#EC524E"
+            android:popupBackground="#343231"/>
     </LinearLayout>
 
     <ListView

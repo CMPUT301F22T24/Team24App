@@ -15,19 +15,24 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class IngredientsActivity extends AppCompatActivity implements ViewIngredientDialogFragment.OnFragmentInteractionListener{
-    private final int ADD_REQUEST_CODE = 1;
 
     ListView ingredientListView;
     ArrayList<Ingredient> ingredientList;
     IngredientAdapter ingredientAdapter;
     IngredientsActivityViewModel viewModel;
     ActivityResultLauncher<Intent> activityResultLauncher;
+
+    Spinner sortBySpinner;
+    CustomSpinnerAdapter sortBySpinnerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,7 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
         ingredientList = new ArrayList<>();
         ingredientAdapter = new IngredientAdapter(this, ingredientList);
         ingredientListView.setAdapter(ingredientAdapter);
+        initSortBySpinner();
 
         // TODO: handle case when no connection to db (loading state / display error)
         viewModel = new ViewModelProvider(this).get(IngredientsActivityViewModel.class);
@@ -73,6 +79,7 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
                 ViewIngredientDialogFragment.newInstance(ingredientList.get(i)).show(getSupportFragmentManager(), "VIEW_INGREDIENT");
             }//onItemClick
         });
+
     }
 
     // TODO: change add button color
@@ -107,5 +114,47 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
 
         // to change color
         // dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED);
+    }
+
+    private void initSortBySpinner() {
+        sortBySpinner = findViewById(R.id.ingredients_sortBy_spinner);
+        ArrayList<String> sortBy = new ArrayList<String>() {{
+            add("Description");
+            add("Best Before Date");
+            add("Location");
+            add("Category");
+            add("");
+        }};
+        sortBySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, sortBy);
+        sortBySpinner.setAdapter(sortBySpinnerAdapter);
+        sortBySpinner.setSelection(sortBySpinnerAdapter.getCount());
+        // TODO: figure out way to call when list is retrieved/updateda from db
+        // TODO: give option to sort desc and asc (currently only desc)
+        sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = parent.getItemAtPosition(position).toString();
+                switch (selection) {
+                    case "Best Before Date":
+                        Collections.sort(ingredientList, Ingredient.IngredientBestBeforeDateComparator);
+                        break;
+                    case "Location":
+                        Collections.sort(ingredientList, Ingredient.IngredientLocationComparator);
+                        break;
+                    case "Category":
+                        Collections.sort(ingredientList, Ingredient.IngredientCategoryComparator);
+                        break;
+                    default:
+                        Collections.sort(ingredientList, Ingredient.IngredientDescriptionComparator);
+                        break;
+                }
+                ingredientAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

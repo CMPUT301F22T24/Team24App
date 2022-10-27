@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-
+import java.util.Comparator;
 
 public class Ingredient implements Serializable {
     private String description;
@@ -126,4 +126,45 @@ public class Ingredient implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public static Comparator<Ingredient> IngredientDescriptionComparator = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient i1, Ingredient i2) {
+            String d1 = i1.getDescription();
+            String d2 = i2.getDescription();
+            // desc order
+            return d1.compareTo(d2);
+        }
+    };
+
+    public static Comparator<Ingredient> IngredientBestBeforeDateComparator = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient i1, Ingredient i2) {
+            LocalDate d1 = i1.getBestBeforeDate();
+            LocalDate d2 = i2.getBestBeforeDate();
+            // desc order
+            return d1.compareTo(d2);
+        }
+    };
+
+    public static Comparator<Ingredient> IngredientLocationComparator = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient i1, Ingredient i2) {
+            String d1 = i1.getLocation();
+            String d2 = i2.getLocation();
+            // desc order
+            return d1.compareTo(d2);
+        }
+    };
+
+    public static Comparator<Ingredient> IngredientCategoryComparator = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient i1, Ingredient i2) {
+            String d1 = i1.getCategory();
+            String d2 = i2.getCategory();
+            // desc order
+            return d1.compareTo(d2);
+        }
+    };
 }
+
