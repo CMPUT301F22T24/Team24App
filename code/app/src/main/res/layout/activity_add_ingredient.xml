@@ -52,6 +52,7 @@
                 android:fontFamily="@font/karma_medium"
                 android:layout_weight="1"
                 android:hint="Write a description..."
+                android:maxLength="30"
                 android:minHeight="48dp"
                 android:padding="5dp"
                 android:textColor="#E9E5E5"
@@ -171,7 +172,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/add_ingredient_expiryDate_textView"
+                    android:id="@+id/add_ingredient_bestBeforeDate_textView"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -183,7 +184,7 @@
 
 
             <Button
-                android:id="@+id/add_ingredient_select_expiryDate_button"
+                android:id="@+id/add_ingredient_select_bestBeforeDate_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -231,7 +232,7 @@
                         android:padding="5dp"
                         android:textColor="#E9E5E5"
                         android:textColorHint="#99E9E5E5"
-                        android:inputType="number" />
+                        android:inputType="numberDecimal" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -253,7 +254,7 @@
                 android:layout_margin="5dp"
                 android:background = "@drawable/custom_button"
                 android:fontFamily="@font/karma_medium"
-                android:onClick="ConfirmAdd"
+                android:onClick="onConfirm"
                 android:text="Confirm"
                 android:textAllCaps="false"
                 android:textSize="20dp" />

@@ -59,6 +59,7 @@ public class IngredientsActivityViewModel extends ViewModel {
         data.put("bestBeforeDate", new Timestamp(Date.from(ingredient.getBestBeforeDate().atStartOfDay(ZoneOffset.UTC).toInstant())));
         data.put("location", ingredient.getLocation());
         data.put("amount", ingredient.getAmount());
+        data.put("unit", ingredient.getUnit());
         data.put("category", ingredient.getCategory());
         db = FirebaseFirestore.getInstance();
         db.collection("Ingredients").add(data)

@@ -19,12 +19,13 @@ public class Ingredient implements Serializable {
     private Double amount;
     private String unit;
     private String category;
+
     @DocumentId
     private String documentId;
 
     public Ingredient() {
         this.description = null;
-        this.bestBeforeDate = LocalDate.now();
+        this.bestBeforeDate = null;
         this.location = null;
         this.amount = null;
         this.unit = null;
@@ -50,7 +51,7 @@ public class Ingredient implements Serializable {
     }
 
     // ArrayAdapter uses toString to display stuff to the list View
-    // so we can override the toString to tell Arrayadapter how to display and ingredient object
+    // so we can override the toString to tell ArrayAdapter how to display and ingredient object
     public String toString() {
         String date = getStringDate();
         return String.format("%s | %s | %s | %s", description, date, location, category);
@@ -58,10 +59,13 @@ public class Ingredient implements Serializable {
 
     // converts bestBeforeDate to clean formatted string
     public String getStringDate() {
+        // TODO: handle better when date is null
         String pattern = "yyyy-MM-dd";
-        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        //String date = simpleDateFormat.format(this.bestBeforeDate);
-        //return date;
+        if (this.bestBeforeDate != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(this.bestBeforeDate);
+            return date;
+        }
         return pattern;
     }
 
@@ -103,13 +107,13 @@ public class Ingredient implements Serializable {
         this.amount = amount;
     }
 
-    public String getUnit() {
-        return unit;
-    }
-
     public String getDocumentId() { return documentId; }
 
     public void setDocumentId(String documentId) { this.documentId = documentId; }
+
+    public String getUnit() {
+        return this.unit;
+    }
 
     public void setUnit(String unit) {
         this.unit = unit;
