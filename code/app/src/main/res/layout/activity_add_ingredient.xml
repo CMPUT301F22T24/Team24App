@@ -176,7 +176,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:padding="5dp"
-                    android:text="2022-10-24"
+                    android:text="yyyy-mm-dd"
                     android:textColor="#E9E5E5"
                     android:textSize="15dp" />
             </LinearLayout>

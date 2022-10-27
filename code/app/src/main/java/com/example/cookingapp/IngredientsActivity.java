@@ -90,10 +90,4 @@ public class IngredientsActivity extends AppCompatActivity {
         }
     }//onDeleteClick
 
-
-    public void onReturnClick(View view){
-        finish();
-
-    }//onReturnClick
-
 }
