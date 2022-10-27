@@ -13,17 +13,24 @@
         android:theme="@style/Theme.CookingApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddIngredientActivity"
-            android:parentActivityName=".IngredientsActivity"
+            android:name=".RecipesActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
+            android:name=".AddIngredientActivity"
+            android:exported="false"
+            android:parentActivityName=".IngredientsActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".IngredientsActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
