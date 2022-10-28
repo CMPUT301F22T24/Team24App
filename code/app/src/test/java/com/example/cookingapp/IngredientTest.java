@@ -1,5 +1,5 @@
 package com.example.cookingapp;
 
-public class ingredientTest {
+public class IngredientTest {
 
 }
