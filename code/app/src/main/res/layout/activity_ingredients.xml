@@ -50,9 +50,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
+        app:backgroundTint="#EC524E"
         android:clickable="true"
         android:focusable="true"
+        android:tint="@color/black"
         android:contentDescription="add ingredient"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/ic_baseline_playlist_add_24" />
 
 </LinearLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#343231"
     android:orientation="vertical"
     tools:context=".RecipesActivity">
 
@@ -50,8 +51,10 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:clickable="true"
+        app:backgroundTint="#EC524E"
+        app:srcCompat="@drawable/ic_baseline_playlist_add_24"
         android:focusable="true"
         android:contentDescription="add recipe"
-        app:srcCompat="@android:drawable/ic_input_add" />
+         />
 
 </LinearLayout>
