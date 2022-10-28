@@ -31,6 +31,7 @@ public class RecipesActivity extends AppCompatActivity {
     }
 
     public void onAddRecipeClick(View view){
+        // when the add button is clicked the user is redirected to the add recipe screen
         //Intent intent = new Intent(this, AddRecipeActivity.class);
         //activityResultLauncher.launch(intent);
         startActivity(new Intent(RecipesActivity.this, AddRecipeActivity.class));
