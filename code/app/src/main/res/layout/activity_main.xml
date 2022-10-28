@@ -1,18 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#343231"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+    <Button
+        android:id="@+id/main_ingredient_button"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="32dp"
+        android:background = "@drawable/custom_button"
+        android:fontFamily="@font/karma_medium"
+        android:onClick="startIngredientList"
+        android:text="Ingredients"
+        android:textSize="30sp"
+
+        />
+
+    <Button
+        android:id="@+id/main_recipe_button"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="32dp"
+        android:background = "@drawable/custom_button"
+        android:fontFamily="@font/karma_medium"
+        android:text="Recipes"
+        android:textSize="30sp"
+
+        />
+
+
+    <Button
+        android:id="@+id/main_meal_plan_button"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="32dp"
+        android:background = "@drawable/custom_button"
+        android:fontFamily="@font/karma_medium"
+        android:text="Meal Plan"
+        android:textSize="30sp"
+
+        />
+
+
+    <Button
+        android:id="@+id/main_shopping_list_button"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="32dp"
+        android:background = "@drawable/custom_button"
+        android:fontFamily="@font/karma_medium"
+        android:text="Shopping List"
+        android:textSize="30sp"
+
+        />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <!-- set purple 200 to ED524E so that when it is in DARK MODE, the colors will remain ED524E-->
+    <color name="purple_200">#ED524E</color>
+    <color name="purple_500">#EC524E</color>
+    <color name="purple_700">#830805</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
 </resources>
+
+<!-- Original Stock colors:
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+
+    Potential option #2:
+    <color name="purple_500">#C30601</color>
+    <color name="purple_700">#830805</color>
+
+
+-->
+
