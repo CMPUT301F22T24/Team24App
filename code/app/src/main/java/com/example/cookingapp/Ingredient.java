@@ -69,7 +69,6 @@ public class Ingredient implements Serializable {
         return pattern;
     }
 
-    // Getters and Setters
     public String getDescription() {
         return description;
     }
