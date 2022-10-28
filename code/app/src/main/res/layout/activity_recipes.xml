@@ -44,7 +44,7 @@
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/ingredient_add_button"
+        android:id="@+id/recipe_add_button"
         android:onClick="onAddRecipeClick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
