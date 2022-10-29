@@ -1,5 +1,6 @@
 package com.example.cookingapp;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.io.Serializable;
@@ -7,12 +8,12 @@ import java.util.ArrayList;
 
 public class Recipe implements Serializable {
     private String title;
-    private Double servings;
+    private String servings;
     private String category;
     private String comments;
     private String prepTime;
     private ArrayList<Ingredient> ingredients;
-    private Uri image;
+    private String image;
 
     public Recipe() {
         this.title = null;
@@ -24,7 +25,7 @@ public class Recipe implements Serializable {
         this.image = null;
     }
 
-    public Recipe(String title, Double servings, String category, String comments, String prepTime, ArrayList<Ingredient> ingredients, Uri image) {
+    public Recipe(String title, String servings, String category, String comments, String prepTime, ArrayList<Ingredient> ingredients, String image) {
         this.title = title;
         this.servings = servings;
         this.category = category;
@@ -42,11 +43,11 @@ public class Recipe implements Serializable {
         this.title = title;
     }
 
-    public Double getServings() {
+    public String getServings() {
         return servings;
     }
 
-    public void setServings(Double servings) {
+    public void setServings(String servings) {
         this.servings = servings;
     }
 
@@ -76,7 +77,7 @@ public class Recipe implements Serializable {
         this.ingredients = ingredients;
     }
 
-    public Uri getImage() { return image; }
+    public String getImage() { return image; }
 
-    public void setImage(Uri image) { this.image = image; }
+    public void setImage(String image) { this.image = image; }
 }

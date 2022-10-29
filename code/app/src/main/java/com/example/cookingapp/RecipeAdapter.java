@@ -1,7 +1,10 @@
 package com.example.cookingapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,8 +48,24 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         recipeDescription.setText(recipe.getTitle());
         recipeCategory.setText(recipe.getCategory());
         recipePrepTime.setText(recipe.getPrepTime());
-        recipeImage.setImageURI(recipe.getImage());
+        //recipeImage.setImageBitmap(StringToBitMap(recipe.getImage()));
 
         return view;
     }
+
+    /**
+     * @param encodedString
+     * @return bitmap (from given string)
+     */
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
 }

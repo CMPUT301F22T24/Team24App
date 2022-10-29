@@ -88,6 +88,7 @@
                 android:padding="5dp">
 
                 <NumberPicker
+                    android:id="@+id/hour_numberPicker"
                     android:layout_width="wrap_content"
                     android:layout_height="90dp"
                     android:layout_weight="2"
@@ -105,6 +106,7 @@
                 </TextView>
 
                 <NumberPicker
+                    android:id="@+id/min_numberPicker"
                     android:layout_width="wrap_content"
                     android:layout_height="90dp"
                     android:layout_weight="2"
@@ -150,6 +152,7 @@
                 android:layout_weight="1"
                 android:hint="Enter the number of servings"
                 android:maxLength="30"
+                android:inputType="number"
                 android:minHeight="48dp"
                 android:padding="5dp"
                 android:textColor="#E9E5E5"
@@ -186,7 +189,8 @@
                 android:textColor="#E9E5E5"
                 android:popupBackground="#343231"/>
         </LinearLayout>
-        <!--Recipe Title-->
+
+        <!--Recipe Comments-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -221,7 +225,7 @@
 
         </LinearLayout>
 
-        <!--Recipe Title-->
+        <!--Recipe Image-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -240,7 +244,7 @@
             </TextView>
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/add_recipe_imageView"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 app:srcCompat="@android:drawable/ic_menu_camera" />
@@ -307,13 +311,13 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <Button
-                android:id="@+id/add_ingredient_confirm_button"
+                android:id="@+id/add_recipe_confirm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background = "@drawable/custom_button"
                 android:fontFamily="@font/karma_medium"
-                android:onClick="onConfirm"
+                android:onClick="onAddRecipeConfirm"
                 android:text="Confirm"
                 android:textAllCaps="false"
                 android:textSize="20dp" />
