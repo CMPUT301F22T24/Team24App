@@ -3,6 +3,8 @@ package com.example.cookingapp;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
+import com.google.firebase.firestore.DocumentId;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,6 +16,9 @@ public class Recipe implements Serializable {
     private String prepTime;
     private ArrayList<Ingredient> ingredients;
     private String image;
+
+    @DocumentId
+    private String documentId;
 
     public Recipe() {
         this.title = null;
@@ -80,4 +85,9 @@ public class Recipe implements Serializable {
     public String getImage() { return image; }
 
     public void setImage(String image) { this.image = image; }
+
+    public String getDocumentId() { return documentId; }
+
+    public void setDocumentId(String documentId) { this.documentId = documentId; }
+
 }

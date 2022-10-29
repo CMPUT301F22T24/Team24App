@@ -1,7 +1,12 @@
 package com.example.cookingapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +18,10 @@ import java.util.ArrayList;
 
 public class RecipesActivity extends AppCompatActivity {
     ListView recipeListView;
-    private static final ArrayList<Recipe> recipeList = new ArrayList<>();;
+    ArrayList<Recipe> recipeList;
     RecipeAdapter recipeAdapter;
     ActivityResultLauncher<Intent> activityResultLauncher;
+    RecipeActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +30,37 @@ public class RecipesActivity extends AppCompatActivity {
 
         // initialize the array adapter for the list of recipes
         recipeListView = findViewById(R.id.recipe_list);
-        recipeList.add(new Recipe());
+        recipeList = new ArrayList<>();;
         recipeAdapter = new RecipeAdapter(this, recipeList);
         recipeListView.setAdapter(recipeAdapter);
-        getNewRecipe();
 
-    }
+        // TODO: handle case when no connection to db (loading state / display error)
+        viewModel = new ViewModelProvider(this).get(RecipeActivityViewModel.class);
+        viewModel.getRecipe().observe(this, new Observer<ArrayList<Recipe>>() {
+            @Override
+            public void onChanged(ArrayList<Recipe> recipes) {
+                if (recipes != null) {
+                    recipeList = recipes;
+                    recipeAdapter = new RecipeAdapter(getApplicationContext(),recipes);
+                    recipeListView.setAdapter(recipeAdapter);
+                }
+                recipeAdapter.notifyDataSetChanged();
+            }
+        });
 
-    public void getNewRecipe() {
-        // TODO: update the list this is  not working
-        // add the newly submitted food to the array
-        Intent intent = getIntent();
-        Recipe recipe = (Recipe) intent.getSerializableExtra("recipe");
-        if (recipe != null) {
-            recipeList.add(recipe);
-        }
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent intent = result.getData();
+                    Recipe recipe = (Recipe) intent.getSerializableExtra("recipe");
+                    if (recipe != null) {
+                        viewModel.addRecipe(recipe);
+                    }
+                }
+            }
+        });
+
     }
 
     public void onAddRecipeClick(View view){

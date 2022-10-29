@@ -48,7 +48,8 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         recipeDescription.setText(recipe.getTitle());
         recipeCategory.setText(recipe.getCategory());
         recipePrepTime.setText(recipe.getPrepTime());
-        //recipeImage.setImageBitmap(StringToBitMap(recipe.getImage()));
+        recipeImage.setImageURI(null);
+        //recipeImage.setImageBitmap(StringToBitMap(recipe.getImage())); //TOD0: set image
 
         return view;
     }
