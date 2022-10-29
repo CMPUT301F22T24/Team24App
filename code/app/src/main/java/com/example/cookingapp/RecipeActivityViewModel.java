@@ -31,7 +31,7 @@ public class RecipeActivityViewModel extends ViewModel {
     private void loadRecipies() {
         // fetch from db
         db = FirebaseFirestore.getInstance();
-        db.collection("Recipes").get()
+        db.collection("Recipe").get()
                 .addOnSuccessListener(new OnSuccessListener<>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
