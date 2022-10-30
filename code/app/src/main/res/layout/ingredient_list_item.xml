@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:orientation="vertical"
-    android:background="#7C7272"
+    android:background="@drawable/custom_listview"
+    android:paddingStart="5dp"
+
 
     >
 
