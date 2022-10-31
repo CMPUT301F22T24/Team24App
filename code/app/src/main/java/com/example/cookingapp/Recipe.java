@@ -6,7 +6,9 @@ import android.net.Uri;
 import com.google.firebase.firestore.DocumentId;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Recipe implements Serializable {
     private String title;
@@ -89,5 +91,50 @@ public class Recipe implements Serializable {
     public String getDocumentId() { return documentId; }
 
     public void setDocumentId(String documentId) { this.documentId = documentId; }
+
+    public static Comparator<Recipe> RecipeTitleComparator = new Comparator<Recipe>() {
+        @Override
+        public int compare(Recipe i1, Recipe i2) {
+            String d1 = i1.getTitle();
+            String d2 = i2.getTitle();
+            // desc order
+            return d1.compareTo(d2);
+        }
+    };
+
+    public static Comparator<Recipe> RecipePreparationTimeComparator = new Comparator<Recipe>() {
+        @Override
+        public int compare(Recipe i1, Recipe i2) {
+            String d1 = i1.getPrepTime();
+            String d2 = i2.getPrepTime();
+            // desc order
+            return d1.compareTo(d2);
+        }
+    };
+
+
+    public static Comparator<Recipe> RecipeServingsComparator = new Comparator<Recipe>() {
+        @Override
+        public int compare(Recipe i1, Recipe i2) {
+            String d1 = i1.getServings();
+            String d2 = i2.getServings();
+            // desc order
+            return d1.compareTo(d2);
+        }
+    };
+
+    public static Comparator<Recipe> RecipeCategoryComparator = new Comparator<Recipe>() {
+        @Override
+        public int compare(Recipe i1, Recipe i2) {
+            String d1 = i1.getCategory();
+            String d2 = i2.getCategory();
+            // desc order
+            return d1.compareTo(d2);
+        }
+    };
+
+
+
+
 
 }

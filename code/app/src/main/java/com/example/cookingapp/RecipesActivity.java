@@ -11,17 +11,23 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class RecipesActivity extends AppCompatActivity {
     ListView recipeListView;
     ArrayList<Recipe> recipeList;
+    Spinner sortBySpinner;
+    CustomSpinnerAdapter sortBySpinnerAdapter;
     RecipeAdapter recipeAdapter;
     ActivityResultLauncher<Intent> activityResultLauncher;
     RecipeActivityViewModel viewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,8 @@ public class RecipesActivity extends AppCompatActivity {
         recipeList = new ArrayList<>();;
         recipeAdapter = new RecipeAdapter(this, recipeList);
         recipeListView.setAdapter(recipeAdapter);
+        initSortBySpinner();
+
 
         // TODO: handle case when no connection to db (loading state / display error)
         viewModel = new ViewModelProvider(this).get(RecipeActivityViewModel.class);
@@ -67,4 +75,52 @@ public class RecipesActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddRecipeActivity.class);
         activityResultLauncher.launch(intent);
     }
+
+
+
+    private void initSortBySpinner() {
+        sortBySpinner = findViewById(R.id.recipes_sortBy_spinner);
+        ArrayList<String> sortBy = new ArrayList<String>() {{
+            add("Title");
+            add("Preparation Time");
+            add("Servings");
+            add("Category");
+            add("");
+        }};
+
+
+        sortBySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, sortBy);
+        sortBySpinner.setAdapter(sortBySpinnerAdapter);
+        sortBySpinner.setSelection(sortBySpinnerAdapter.getCount());
+
+        sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = parent.getItemAtPosition(position).toString();
+                switch (selection) {
+                    case "Preparation Time":
+                        Collections.sort(recipeList, Recipe.RecipePreparationTimeComparator);
+                        break;
+                    case "Servings":
+                        Collections.sort(recipeList, Recipe.RecipeServingsComparator);
+                        break;
+                    case "Category":
+                        Collections.sort(recipeList, Recipe.RecipeCategoryComparator);
+                        break;
+                    default:
+                        Collections.sort(recipeList, Recipe.RecipeTitleComparator);
+                        break;
+                }
+                recipeAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }//onNothingSelected
+        });
+
+
+    }//initSortBySpinner
+
 }
