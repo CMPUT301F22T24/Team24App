@@ -15,7 +15,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * <p>
+ * This is the class for the recipe view model for the data base
+ * </p>
+ */
 public class RecipeActivityViewModel extends ViewModel {
     final String TAG = "RecipesActivity";
     private FirebaseFirestore db;
@@ -28,6 +32,12 @@ public class RecipeActivityViewModel extends ViewModel {
         return recipes;
     }
 
+    /**
+     * <p>
+     * This method loads in everything from the data base, maps each document into a recipe class
+     * and stores them in an array list
+     * </p>
+     */
     private void loadRecipies() {
         // fetch from db
         db = FirebaseFirestore.getInstance();
@@ -47,6 +57,12 @@ public class RecipeActivityViewModel extends ViewModel {
                 });
     }
 
+    /**
+     * <p>
+     * This method adds a recipe to the data base
+     * @param recipe: recipe to added
+     * </p>
+     */
     public void addRecipe(@NonNull Recipe recipe) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("title", recipe.getTitle());
@@ -75,7 +91,13 @@ public class RecipeActivityViewModel extends ViewModel {
                 });
     }
 
-    public void deleteIngredient(@NonNull Recipe recipe) {
+    /**
+     * <p>
+     * This method deletes a recipe from the data base
+     * @param recipe: recipe to be deleted
+     * </p>
+     */
+    public void deleteRecipe(@NonNull Recipe recipe) {
         db = FirebaseFirestore.getInstance();
         db.collection("Ingredients").document(recipe.getDocumentId()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

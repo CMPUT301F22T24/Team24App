@@ -16,7 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-
+/**
+ * <p>
+ * This is the class for the recipe adapter. It connects the recipe array list to the array list item.
+ * </p>
+ */
 public class RecipeAdapter extends ArrayAdapter<Recipe> {
     private final ArrayList<Recipe> recipeList;
     private final Context context;

@@ -1,15 +1,16 @@
 package com.example.cookingapp;
 
-import android.graphics.Bitmap;
-import android.net.Uri;
-
 import com.google.firebase.firestore.DocumentId;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * <p>
+ * This is the Recipe class. This is the object that defines a recipe.
+ * </p>
+ */
 public class Recipe implements Serializable {
     private String title;
     private String servings;

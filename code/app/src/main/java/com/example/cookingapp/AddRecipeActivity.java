@@ -24,7 +24,11 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-
+/**
+ * <p>
+ * This is the add recipe activity class. It is the activity responsible for adding new recipes :)
+ * </p>
+ */
 public class AddRecipeActivity extends AppCompatActivity {
     ImageView image;
     EditText title, servings, comments;
@@ -58,6 +62,13 @@ public class AddRecipeActivity extends AppCompatActivity {
         onImageClick();
     }
 
+    /**
+     * <p>
+     * Once the user is done filling out the form and hits confirm the information is used
+     * to create a new Recipe and sends the info back to the recipe activity
+     * </p>
+     * @param view
+     */
     public void onAddRecipeConfirm(View view){
         // This method is called when the confirm button has been clicked
         String recipeTitle = title.getText().toString();
@@ -82,7 +93,14 @@ public class AddRecipeActivity extends AppCompatActivity {
         finish();
     }
 
-    //https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+    /**
+     * <p>
+     * Turns a bitmap into a string
+     * </p>
+     * @author https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+     * @param bitmap: the bit map of the chosen image
+     * @return string
+     */
     public String BitMapToString(Bitmap bitmap){
         ByteArrayOutputStream baos = new  ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
@@ -91,6 +109,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         return temp;
     }
 
+    /**
+     * <p>
+     * This method initializes the category spinner
+     * </p>
+     */
     private void initCategorySpinner() {
         // TODO: add ability for user to add categories to list/adapter
         ArrayList<String> locations = new ArrayList<String>() {{
@@ -104,6 +127,12 @@ public class AddRecipeActivity extends AppCompatActivity {
         categorySpinner.setSelection(categorySpinnerAdapter.getCount());
     }
 
+    /**
+     * <p>
+     * This method sets the number pickers for the preparation time. One for hours and another
+     * for minutes.
+     * </p>
+     */
     private void initNumberPickers() {
         minPicker.setMaxValue(59);
         minPicker.setMinValue(0);
@@ -112,7 +141,12 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is called when the user clicks to choose an image
+     * <p>
+     * This method is called when the user clicks to choose an image. It redirects them to the
+     * images on their phone where they can then choose an Image. Once the Image is chosen the
+     * user is redirected to the add recipe form and the image will be shown.
+     * shown on the addRecipe form.
+     * </p>
      */
     private void onImageClick() {
 

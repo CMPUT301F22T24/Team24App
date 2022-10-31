@@ -18,7 +18,12 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+/**
+ * <p>
+ * This is the recipe activity class. Where the user can view all their recipes, choose to delete
+ * add or edit a recipe.
+ * </p>
+ */
 public class RecipesActivity extends AppCompatActivity {
     ListView recipeListView;
     ArrayList<Recipe> recipeList;
@@ -70,6 +75,13 @@ public class RecipesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * <p>
+     * When the 'add recipe' button is clicked this method will redirect the customer to the
+     * add recipe activity
+     * </p>
+     * @param view
+     */
     public void onAddRecipeClick(View view){
         // when the add button is clicked the user is redirected to the add recipe screen
         Intent intent = new Intent(this, AddRecipeActivity.class);
@@ -77,7 +89,11 @@ public class RecipesActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * <p>
+     * Initializes the sort spinner
+     * </p>
+     */
     private void initSortBySpinner() {
         sortBySpinner = findViewById(R.id.recipes_sortBy_spinner);
         ArrayList<String> sortBy = new ArrayList<String>() {{
