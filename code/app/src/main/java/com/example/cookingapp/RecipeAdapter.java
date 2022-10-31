@@ -52,7 +52,11 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         recipeDescription.setText(recipe.getTitle());
         recipeCategory.setText(recipe.getCategory());
         recipePrepTime.setText(recipe.getPrepTime());
-        recipeImage.setImageBitmap(StringToBitMap(recipe.getImage()));
+        if (recipe.getImage() == null){
+            recipeImage.setImageResource(R.mipmap.camera);
+        } else {
+            recipeImage.setImageBitmap(StringToBitMap(recipe.getImage()));
+        }
 
         return view;
     }
