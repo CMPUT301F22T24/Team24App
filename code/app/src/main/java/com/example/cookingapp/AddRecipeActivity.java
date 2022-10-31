@@ -77,16 +77,18 @@ public class AddRecipeActivity extends AppCompatActivity {
         String recipeCategory = categorySpinner.getSelectedItem().toString();
         int prepTimeHours = hourPicker.getValue();
         int prepTimeMinutes = minPicker.getValue();
-        String recipePrepTime = String.valueOf(prepTimeHours) + " hrs " + String.valueOf(prepTimeMinutes) + " min";// "hours minutes"
+        String recipePrepTime = String.valueOf(prepTimeHours) + " hrs " + String.valueOf(prepTimeMinutes) + " min";
         String recipeImageBitMap = null;
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            recipeImageBitMap = BitMapToString(bitmap);
+            int nh = (int) ( bitmap.getHeight() * (512.0 / bitmap.getWidth()) );
+            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
+            recipeImageBitMap = BitMapToString(scaled);
         } catch (Exception e) {
             System.out.println("something went wrong"); // TODO: change this into an error log
         }
 
-        Recipe recipe = new Recipe(recipeTitle,recipeServings,recipeCategory,recipeComments,recipePrepTime,ingredients,recipeImageBitMap);//recipeImage);
+        Recipe recipe = new Recipe(recipeTitle,recipeServings,recipeCategory,recipeComments,recipePrepTime,ingredients,recipeImageBitMap);
         Intent intent = new Intent(this, RecipesActivity.class);
         intent.putExtra("recipe", recipe);
         setResult(RESULT_OK, intent);
