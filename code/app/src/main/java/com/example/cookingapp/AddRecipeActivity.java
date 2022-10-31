@@ -10,9 +10,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -38,6 +41,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     Spinner categorySpinner;
     ArrayAdapter categorySpinnerAdapter;
     ActivityResultLauncher<String> getImage;
+    Button confirm;
     Uri imageUri = null;
 
     @Override
@@ -55,7 +59,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         minPicker = findViewById(R.id.min_numberPicker);
         hourPicker = findViewById(R.id.hour_numberPicker);
         categorySpinner = findViewById(R.id.add_recipe_category_spinner);
+        confirm = findViewById(R.id.add_recipe_confirm_button);
         image.setClickable(true);
+
+        title.addTextChangedListener(addRecipeTextWatcher);
+        servings.addTextChangedListener(addRecipeTextWatcher);
 
         initCategorySpinner();
         initNumberPickers();
@@ -167,5 +175,30 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * <p>
+     * This method is used to ensure certain fields get filled before the user can click confirm
+     * </p>
+     */
+    private TextWatcher addRecipeTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String usernameInput = title.getText().toString().trim();
+            String passwordInput = servings.getText().toString().trim();
+
+            confirm.setEnabled(!usernameInput.isEmpty() && !passwordInput.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 }
