@@ -12,6 +12,9 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Comparator;
 
+/**
+ * The Ingredient object class
+ */
 public class Ingredient implements Serializable {
     private String description;
     private LocalDate bestBeforeDate;

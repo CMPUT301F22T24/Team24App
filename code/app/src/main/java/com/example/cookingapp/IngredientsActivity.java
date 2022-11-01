@@ -23,6 +23,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * The Ingredients activity class, allowing users to add, edit and delete and sort ingredient entries
+ */
 public class IngredientsActivity extends AppCompatActivity implements ViewIngredientDialogFragment.OnFragmentInteractionListener{
 
     ListView ingredientListView;
