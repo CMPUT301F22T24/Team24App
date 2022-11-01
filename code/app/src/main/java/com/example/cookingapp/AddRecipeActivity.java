@@ -179,6 +179,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     /**
      * <p>
      * This method is used to ensure certain fields get filled before the user can click confirm
+     * https://gist.github.com/codinginflow/52db7d909c179e9e175dd8da322cb79e
      * </p>
      */
     private TextWatcher addRecipeTextWatcher = new TextWatcher() {
