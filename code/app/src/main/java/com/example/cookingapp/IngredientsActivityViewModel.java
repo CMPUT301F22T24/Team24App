@@ -102,6 +102,7 @@ public class IngredientsActivityViewModel extends ViewModel {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
+                        ingredient.setDocumentId(id);
                         ArrayList<Ingredient> updated = ingredients.getValue();
                         updated.set(position, ingredient);
                         ingredients.setValue(updated);
