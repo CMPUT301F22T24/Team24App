@@ -80,6 +80,42 @@ public class IngredientsActivityViewModel extends ViewModel {
         });
     }
 
+    public void editIngredient(@NonNull Ingredient ingredient, int position) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("description", ingredient.getDescription());
+        data.put("bestBeforeDate", new Timestamp(Date.from(ingredient.getBestBeforeDate().atStartOfDay(ZoneOffset.UTC).toInstant())));
+        data.put("location", ingredient.getLocation());
+        data.put("amount", ingredient.getAmount());
+        data.put("unit", ingredient.getUnit());
+        data.put("category", ingredient.getCategory());
+
+        ArrayList<Ingredient> updated = ingredients.getValue();
+        Ingredient oldIngredient = updated.get(position);
+        String id = oldIngredient.getDocumentId();
+        // can only get id the first time
+        // next time it is null
+        // not updating properly or something idk??
+        Log.e("test", "test: " + id); //
+
+        db = FirebaseFirestore.getInstance();
+        db.collection("Ingredients").document(id).set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        ArrayList<Ingredient> updated = ingredients.getValue();
+                        updated.set(position, ingredient);
+                        ingredients.setValue(updated);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+    }
+
+
     public void deleteIngredient(@NonNull Ingredient ingredient) {
         db = FirebaseFirestore.getInstance();
         db.collection("Ingredients").document(ingredient.getDocumentId()).delete()

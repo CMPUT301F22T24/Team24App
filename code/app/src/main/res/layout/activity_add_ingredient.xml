@@ -17,14 +17,14 @@
 
         <!--Title-->
         <TextView
+            android:id="@+id/add_ingredient_title_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/karma_medium"
             android:text="Add Ingredient"
             android:textColor="#E9E5E5"
-            android:fontFamily="@font/karma_medium"
             android:textSize="30dp"
-            android:textStyle="bold">
-        </TextView>
+            android:textStyle="bold"></TextView>
 
         <!--Ingredient Description-->
         <LinearLayout
