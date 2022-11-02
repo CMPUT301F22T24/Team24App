@@ -92,17 +92,15 @@ public class IngredientsActivityViewModel extends ViewModel {
         ArrayList<Ingredient> updated = ingredients.getValue();
         Ingredient oldIngredient = updated.get(position);
         String id = oldIngredient.getDocumentId();
-        // can only get id the first time
-        // next time it is null
-        // not updating properly or something idk??
-        Log.e("test", "test: " + id); //
 
         db = FirebaseFirestore.getInstance();
         db.collection("Ingredients").document(id).set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        ingredient.setDocumentId(id);
+                        // Remember to setup the document id for the new ingredient
+                        // or you will get a null document id the next time
+                        ingredient.setDocumentId(id); //
                         ArrayList<Ingredient> updated = ingredients.getValue();
                         updated.set(position, ingredient);
                         ingredients.setValue(updated);
