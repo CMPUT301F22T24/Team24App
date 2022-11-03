@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,8 +32,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AddIngredientActivity extends AppCompatActivity {
-    LocalDate expiryDate;
+    int receivedCode; // code this activity receives
+    private final int EDIT_OK = 1;
+    int resultCode = RESULT_OK; // default is add
+    // receive 1 -> do edit instead -> set resultCode = 1 so onResult knows to do edit
+    // receive nothing -> do add -> set resultCode as RESULT_OK
 
+    LocalDate expiryDate;
+    TextView titleTextView;
     // description
     EditText descriptionEditText;
     // location
@@ -57,6 +64,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_ingredient);
 
+        titleTextView = findViewById(R.id.add_ingredient_title_textView);
         descriptionEditText = findViewById(R.id.add_ingredient_description_editText);
         descriptionEditText.addTextChangedListener(new EditTextWatcher());
         locationSpinner = findViewById(R.id.add_ingredient_location_spinner);
@@ -72,6 +80,22 @@ public class AddIngredientActivity extends AppCompatActivity {
         initLocationSpinner();
         initCategorySpinner();
         initUnitSpinner();
+
+        Bundle info = getIntent().getExtras();
+        receivedCode = info.getInt("EDIT_CODE"); // try to look for an edit request
+        if (receivedCode == EDIT_OK) {
+            // edit request received so change descriptors
+            resultCode = EDIT_OK; // tell onResult that it came from edit
+            Ingredient ingredient = (Ingredient) info.getSerializable("ingredient");
+            titleTextView.setText("Edit Ingredient");
+            descriptionEditText.setText(ingredient.getDescription());
+            bestBeforeDateTextView.setText(ingredient.getBestBeforeDate().toString());
+            amountEditText.setText(ingredient.getAmount().toString());
+
+            locationSpinner.setSelection(locationSpinnerAdapter.getPosition(ingredient.getLocation()));
+            categorySpinner.setSelection(categorySpinnerAdapter.getPosition(ingredient.getCategory()));
+            unitSpinner.setSelection(unitSpinnerAdapter.getPosition(ingredient.getUnit()));
+        }
 
     }//onCreate
 
@@ -114,7 +138,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         Ingredient ingredient = new Ingredient(description, bestBeforeDate, location, Double.parseDouble(amount), unit, category);
         Intent intent = new Intent(this, IngredientsActivity.class);
         intent.putExtra("ingredient", ingredient);
-        setResult(RESULT_OK, intent);
+        setResult(resultCode, intent);
         finish();
 
     }//ConfirmAdd
