@@ -8,12 +8,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -35,6 +38,11 @@ import java.util.ArrayList;
  * </p>
  */
 public class AddRecipeActivity extends AppCompatActivity {
+    int receivedCode; // code this activity receives
+    private final int EDIT_OK = 1;
+    int resultCode = RESULT_OK; // default is add
+
+    TextView titleTextView;
     ImageView image;
     EditText title, servings, comments;
     NumberPicker hourPicker, minPicker;
@@ -59,6 +67,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         // initialize variables
         // TODO: make it so that they cannot click submit without all values being filled
+        titleTextView = findViewById(R.id.recipe_title_textView);
         title = findViewById(R.id.add_recipe_title_editText);
         servings = findViewById(R.id.add_recipe_servings_editText);
         comments = findViewById(R.id.add_recipe_comments_editText);
@@ -77,25 +86,77 @@ public class AddRecipeActivity extends AppCompatActivity {
         initCategorySpinner();
         initNumberPickers();
         onImageClick();
+        Bundle info = getIntent().getExtras();
+        receivedCode = info.getInt("EDIT_CODE"); // try to look for an edit request
+        if (receivedCode == EDIT_OK) {
+            // edit request received so change descriptors
+            resultCode = EDIT_OK; // tell onResult that it came from edit
+            Recipe recipe = (Recipe) info.getSerializable("recipe");
+            titleTextView.setText("Edit Recipe");
+            title.setText(recipe.getTitle());
+            servings.setText(recipe.getServings());
 
-        ingredientListView = findViewById(R.id.recipe_ingredient_list);
+            minPicker.setValue(Integer.parseInt(recipe.getPrepTime().split("hrs")[0].strip()));
+            hourPicker.setValue(Integer.parseInt(recipe.getPrepTime().split("hrs")[1].split("min")[0].strip()));
+            try {
+                categorySpinner.setSelection(categorySpinnerAdapter.getPosition(recipe.getCategory()));
+            } catch (Error e) {
+
+                Log.d("Add Recipe Activity", "Logging in case snack not being shown causes problems");
+                Log.d("Error", String.valueOf(e));
+            }
+            servings.setText(recipe.getServings());
+            comments.setText(recipe.getServings());
+
+            Log.d("REACHED", "102");
+            if (recipe.getImage() == null) {
+                image.setImageResource(R.mipmap.camera);
+            } else {
+                image.setImageBitmap(StringToBitMap(recipe.getImage()));
+            }
+
+        }
+
+        ingredientListView =
+
+                findViewById(R.id.recipe_ingredient_list);
+
         ingredientList = new ArrayList<Ingredient>();
-        ingredientAdapter = new IngredientAdapter(this, ingredientList);
+        ingredientAdapter = new
+
+                IngredientAdapter(this, ingredientList);
         ingredientListView.setAdapter(ingredientAdapter);
 
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK) {
-                    Intent intent = result.getData();
-                    Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
-                    if (ingredient != null) {
-                        ingredientList.add(ingredient);
-                        ingredientAdapter.notifyDataSetChanged();
+        activityResultLauncher =
+
+                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            Intent intent = result.getData();
+                            Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
+                            if (ingredient != null) {
+                                ingredientList.add(ingredient);
+                                ingredientAdapter.notifyDataSetChanged();
+                            }
+                        }
                     }
-                }
-            }
-        });
+                });
+    }
+
+    /**
+     * @param encodedString
+     * @return bitmap (from given string)
+     */
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
     /**
@@ -103,9 +164,10 @@ public class AddRecipeActivity extends AppCompatActivity {
      * Once the user is done filling out the form and hits confirm the information is used
      * to create a new Recipe and sends the info back to the recipe activity
      * </p>
+     *
      * @param view
      */
-    public void onAddRecipeConfirm(View view){
+    public void onAddRecipeConfirm(View view) {
         // This method is called when the confirm button has been clicked
         String recipeTitle = title.getText().toString();
         String recipeServings = servings.getText().toString();
@@ -117,15 +179,15 @@ public class AddRecipeActivity extends AppCompatActivity {
         String recipeImageBitMap = null;
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            int nh = (int) ( bitmap.getHeight() * (512.0 / bitmap.getWidth()) );
+            int nh = (int) (bitmap.getHeight() * (512.0 / bitmap.getWidth()));
             Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
             recipeImageBitMap = BitMapToString(scaled);
         } catch (Exception e) {
             System.out.println("something went wrong"); // TODO: change this into an error log
         }
 
-        ArrayList<Ingredient> test = (ArrayList<Ingredient>)ingredientList.clone();
-        Recipe recipe = new Recipe(recipeTitle,recipeServings,recipeCategory,recipeComments,recipePrepTime,test,recipeImageBitMap);
+        ArrayList<Ingredient> test = (ArrayList<Ingredient>) ingredientList.clone();
+        Recipe recipe = new Recipe(recipeTitle, recipeServings, recipeCategory, recipeComments, recipePrepTime, test, recipeImageBitMap);
         Intent intent = new Intent(this, RecipesActivity.class);
         intent.putExtra("recipe", recipe);
         setResult(RESULT_OK, intent);
@@ -136,15 +198,16 @@ public class AddRecipeActivity extends AppCompatActivity {
      * <p>
      * Turns a bitmap into a string
      * </p>
-     * @author https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+     *
      * @param bitmap: the bit map of the chosen image
      * @return string
+     * @author https://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
      */
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos = new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
 
@@ -192,8 +255,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         getImage = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
             @Override
             public void onActivityResult(Uri result) {
-                    image.setImageURI(result);
-                    imageUri = result;
+                image.setImageURI(result);
+                imageUri = result;
             }
         });
 

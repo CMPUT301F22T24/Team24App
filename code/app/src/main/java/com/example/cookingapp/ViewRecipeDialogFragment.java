@@ -38,10 +38,10 @@ public class ViewRecipeDialogFragment extends DialogFragment {
     ImageView recipePictureImageView;
 
     // TODO: ADD Ingredients
-    private ViewIngredientDialogFragment.OnFragmentInteractionListener listener;
+    private OnFragmentInteractionListener listener;
 
-    public interface OnRecipeFragmentInteractionListener {
-        // void onEdit(Ingredient ingredient);
+    public interface OnFragmentInteractionListener {
+        void onEdit(Recipe recipe);
         //void onDelete(Ingredient ingredient);
     }
 
@@ -57,11 +57,11 @@ public class ViewRecipeDialogFragment extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-//        if (context instanceof OnRecipeFragmentInteractionListener) {
-//            listener = (OnRecipeFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context + "must implement OnFragmentInteractionListener");
-//        }
+        if (context instanceof OnFragmentInteractionListener) {
+            listener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context + "must implement OnFragmentInteractionListener");
+        }
     }
 
     @NonNull
@@ -104,12 +104,12 @@ public class ViewRecipeDialogFragment extends DialogFragment {
 //                        listener.onDelete(recipe);
 //                    }
 //                })
-//                .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        listener.onEdit(recipe);
-//                    }
-//                })
+                .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        listener.onEdit(recipe);
+                    }
+                })
                 .create();
 
     }

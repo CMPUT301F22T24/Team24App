@@ -24,7 +24,10 @@ import java.util.Collections;
  * add or edit a recipe.
  * </p>
  */
-public class RecipesActivity extends AppCompatActivity {
+public class RecipesActivity extends AppCompatActivity implements ViewRecipeDialogFragment.OnFragmentInteractionListener {
+
+    private final int EDIT_OK = 1;
+
     ListView recipeListView;
     ArrayList<Recipe> recipeList;
     Spinner sortBySpinner;
@@ -33,7 +36,7 @@ public class RecipesActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     RecipeActivityViewModel viewModel;
 
-
+    int position = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,13 @@ public class RecipesActivity extends AppCompatActivity {
                         viewModel.addRecipe(recipe);
                     }
                 }
+                if (result.getResultCode() == EDIT_OK) {
+                    Intent intent = result.getData();
+                    Recipe recipe = (Recipe) intent.getSerializableExtra("recipe");
+                    if (recipe != null) {
+                        viewModel.editRecipe(recipe, position);
+                    }
+                }
 
             }
         });
@@ -90,12 +100,20 @@ public class RecipesActivity extends AppCompatActivity {
      * </p>
      * @param view
      */
-    public void onAddRecipeClick(View view){
+    public void onAddRecipeClick(View view) {
         // when the add button is clicked the user is redirected to the add recipe screen
         Intent intent = new Intent(this, AddRecipeActivity.class);
+        intent.putExtra("ADD_CODE", 0);
         activityResultLauncher.launch(intent);
     }
 
+    public void onEdit(Recipe recipe) {
+        // TODO: edit activity
+        Intent intent = new Intent(this, AddRecipeActivity.class);
+        intent.putExtra("EDIT_CODE", 1);
+        intent.putExtra("recipe", recipe);
+        activityResultLauncher.launch(intent);
+    }
 
     /**
      * <p>
