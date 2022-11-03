@@ -71,7 +71,15 @@ public class RecipesActivity extends AppCompatActivity {
                         viewModel.addRecipe(recipe);
                     }
                 }
+
             }
+        });
+        recipeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int position = i; // for use in editing
+                ViewRecipeDialogFragment.newInstance(recipeList.get(i)).show(getSupportFragmentManager(), "VIEW_RECIPE");
+            }//onItemClick
         });
     }
 
