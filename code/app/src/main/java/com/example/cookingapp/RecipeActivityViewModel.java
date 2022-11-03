@@ -67,15 +67,6 @@ public class RecipeActivityViewModel extends ViewModel {
      * </p>
      */
     public void addRecipe(@NonNull Recipe recipe) {
-//        String s = recipe.getIngredients().get(0).getDescription();
-//        Log.e("test", s);
-
-//        ArrayList<Ingredient> ingredients = new ArrayList<>();
-//        Ingredient ingredient;
-//        ingredient = recipe.getIngredients().get(0);
-//        Log.e("test", ingredient.getDescription());
-//        ingredients.add(ingredient);
-
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("title", recipe.getTitle());
@@ -83,6 +74,7 @@ public class RecipeActivityViewModel extends ViewModel {
         data.put("category", recipe.getCategory());
         data.put("comments", recipe.getComments());
         data.put("prepTime",recipe.getPrepTime());
+        data.put("ingredients", recipe.getIngredients());
         ;
 
         data.put("image", recipe.getImage());

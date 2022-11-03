@@ -7,6 +7,7 @@ import com.google.firebase.firestore.DocumentId;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * <p>
@@ -19,7 +20,7 @@ public class Recipe implements Serializable {
     private String category;
     private String comments;
     private String prepTime;
-    private ArrayList<Ingredient> ingredients;
+    private List<RecipeIngredient> ingredients = new ArrayList<>();
     private String image;
 
     @DocumentId
@@ -35,7 +36,7 @@ public class Recipe implements Serializable {
         this.image = null;
     }
 
-    public Recipe(String title, String servings, String category, String comments, String prepTime, ArrayList<Ingredient> ingredients, String image) {
+    public Recipe(String title, String servings, String category, String comments, String prepTime, ArrayList<RecipeIngredient> ingredients, String image) {
         this.title = title;
         this.servings = servings;
         this.category = category;
@@ -81,9 +82,9 @@ public class Recipe implements Serializable {
 
     public void setPrepTime(String prepTime) { this.prepTime = prepTime; }
 
-    public ArrayList<Ingredient> getIngredients() { return ingredients; }
+    public List<RecipeIngredient> getIngredients() { return ingredients; }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredients(ArrayList<RecipeIngredient> ingredients) {
         this.ingredients = ingredients;
     }
 

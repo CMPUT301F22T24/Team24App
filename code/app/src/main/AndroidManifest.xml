@@ -16,10 +16,16 @@
         android:theme="@style/Theme.CookingApp"
         tools:targetApi="31">
         <activity
+            android:name=".AddRecipeIngredient"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AddRecipeActivity"
             android:exported="false"
-            android:parentActivityName=".RecipesActivity"
-            >
+            android:parentActivityName=".RecipesActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -27,8 +33,7 @@
         <activity
             android:name=".RecipesActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
-            >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

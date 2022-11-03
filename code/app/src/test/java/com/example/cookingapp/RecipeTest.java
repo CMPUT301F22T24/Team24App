@@ -57,14 +57,14 @@ public class RecipeTest {
         assertEquals("image", recipe.getImage());
     }
 
-    @Test
-    public void ingredientTest(){
-        Recipe recipe = mockRecipe();
-        Ingredient ingredient = mockIngredient();
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        ingredients.add(ingredient);
-        recipe.setIngredients(ingredients);
-        assertEquals(ingredients, recipe.getIngredients());
-    }
+//    @Test
+//    public void ingredientTest(){
+//        Recipe recipe = mockRecipe();
+//        Ingredient ingredient = mockIngredient();
+//        ArrayList<Ingredient> ingredients = new ArrayList<>();
+//        ingredients.add(ingredient);
+//        recipe.setIngredients(ingredients);
+//        assertEquals(ingredients, recipe.getIngredients());
+//    }
 
 }

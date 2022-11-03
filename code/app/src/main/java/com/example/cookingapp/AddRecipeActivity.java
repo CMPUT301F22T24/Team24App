@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -31,6 +33,7 @@ import com.google.gson.Gson;
 import java.io.ByteArrayOutputStream;
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -54,11 +57,11 @@ public class AddRecipeActivity extends AppCompatActivity {
     Button confirm;
     Uri imageUri = null;
 
-
     ListView ingredientListView;
-    ArrayList<Ingredient> ingredientList;
-    IngredientAdapter ingredientAdapter;
-    ArrayList<Ingredient> emptyList = new ArrayList<>();
+    ArrayList<RecipeIngredient> ingredientList;
+    RecipeIngredientAdapter recipeIngredientAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         title = findViewById(R.id.add_recipe_title_editText);
         servings = findViewById(R.id.add_recipe_servings_editText);
         comments = findViewById(R.id.add_recipe_comments_editText);
-        ingredientListView = findViewById(R.id.recipe_ingredient_list);
         image = findViewById(R.id.add_recipe_imageView);
         minPicker = findViewById(R.id.min_numberPicker);
         hourPicker = findViewById(R.id.hour_numberPicker);
@@ -82,6 +84,31 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         title.addTextChangedListener(addRecipeTextWatcher);
         servings.addTextChangedListener(addRecipeTextWatcher);
+
+        // initialize add ingredient to recipe list items
+        ingredientListView = findViewById(R.id.recipe_ingredient_list);
+        ingredientList = new ArrayList<>();
+        recipeIngredientAdapter = new RecipeIngredientAdapter(this, ingredientList);
+        ingredientListView.setAdapter(recipeIngredientAdapter);
+
+        // The listView is inside a ScrollView. This causes errors such as only 1 item to show
+        // NestedScrollView did not work so we'll use this fix instead
+        //https://stackoverflow.com/questions/18367522/android-list-view-inside-a-scroll-view
+        ScrollView mScrollView = findViewById(R.id.recipe_scroll_view);
+        ingredientListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mScrollView.requestDisallowInterceptTouchEvent(true);
+                int action = event.getActionMasked();
+                switch (action) {
+                    case MotionEvent.ACTION_UP:
+                        mScrollView.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
+
 
         initCategorySpinner();
         initNumberPickers();
@@ -117,27 +144,16 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         }
 
-        ingredientListView =
-
-                findViewById(R.id.recipe_ingredient_list);
-
-        ingredientList = new ArrayList<Ingredient>();
-        ingredientAdapter = new
-
-                IngredientAdapter(this, ingredientList);
-        ingredientListView.setAdapter(ingredientAdapter);
-
-        activityResultLauncher =
-
-                registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == RESULT_OK) {
                             Intent intent = result.getData();
-                            Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
-                            if (ingredient != null) {
-                                ingredientList.add(ingredient);
-                                ingredientAdapter.notifyDataSetChanged();
+                            RecipeIngredient recipeIngredient = (RecipeIngredient) intent.getSerializableExtra("recipeIngredient");
+                            if (recipeIngredient != null) {
+                                // retrieved recipeIngredient successfully from addRecipeIngredient activity
+                                ingredientList.add(recipeIngredient);
+                                recipeIngredientAdapter.notifyDataSetChanged();
                             }
                         }
                     }
@@ -186,8 +202,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             System.out.println("something went wrong"); // TODO: change this into an error log
         }
 
-        ArrayList<Ingredient> test = (ArrayList<Ingredient>) ingredientList.clone();
-        Recipe recipe = new Recipe(recipeTitle, recipeServings, recipeCategory, recipeComments, recipePrepTime, test, recipeImageBitMap);
+        Recipe recipe = new Recipe(recipeTitle, recipeServings, recipeCategory, recipeComments, recipePrepTime, ingredientList, recipeImageBitMap);
         Intent intent = new Intent(this, RecipesActivity.class);
         intent.putExtra("recipe", recipe);
         setResult(RESULT_OK, intent);
@@ -295,8 +310,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     };
 
     public void addIngredientToRecipe(View view) {
-        Intent intent = new Intent(this, AddIngredientActivity.class);
-        intent.putExtra("default", -1);
+        Intent intent = new Intent(this, AddRecipeIngredient.class);
+
         activityResultLauncher.launch(intent);
     }
 }

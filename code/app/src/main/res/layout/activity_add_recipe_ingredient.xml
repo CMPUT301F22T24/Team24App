@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- https://www.youtube.com/watch?v=xZ9vURZ0RHY Link on how to implement scroll view. To scroll down the app-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#343231"
+    tools:context=".AddIngredientActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!--Title-->
+        <TextView
+            android:id="@+id/add_ingredient_title_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/karma_medium"
+            android:text="Add Ingredient"
+            android:textColor="#E9E5E5"
+            android:textSize="30dp"
+            android:textStyle="bold"></TextView>
+
+        <!--Ingredient Description-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karma_medium"
+                android:padding="5dp"
+                android:text="Description"
+                android:textColor="#E9E5E5"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/add_recipeIngredient_description_editText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:backgroundTint="#ED524E"
+                android:fontFamily="@font/karma_medium"
+                android:hint="Write a description..."
+                android:maxLength="30"
+                android:minHeight="48dp"
+                android:padding="5dp"
+                android:textColor="#E9E5E5"
+                android:textColorHint="#99E9E5E5"></EditText>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karma_medium"
+                android:padding="5dp"
+                android:text="Category"
+                android:textColor="#E9E5E5"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/add_recipeIngredient_category_editText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:backgroundTint="#ED524E"
+                android:fontFamily="@font/karma_medium"
+                android:hint="Enter a category..."
+                android:maxLength="30"
+                android:minHeight="48dp"
+                android:padding="5dp"
+                android:textColor="#E9E5E5"
+                android:textColorHint="#99E9E5E5"></EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karma_medium"
+                android:padding="5dp"
+                android:text="Unit"
+                android:textColor="#E9E5E5"
+                android:textSize="20dp"
+                android:textStyle="bold"></TextView>
+
+            <EditText
+                android:id="@+id/add_recipeIngredient_unit_editText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:backgroundTint="#ED524E"
+                android:fontFamily="@font/karma_medium"
+                android:hint="Enter a unit..."
+                android:maxLength="30"
+                android:minHeight="48dp"
+                android:padding="5dp"
+                android:textColor="#E9E5E5"
+                android:textColorHint="#99E9E5E5"></EditText>
+
+        </LinearLayout>
+
+        <!--Ingredient Location-->
+
+        <!--Ingredient Category-->
+
+        <!--Ingredient Unit-->
+
+        <!--Ingredient Expiry Date-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <!--Ingredient Amount-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/Amount_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:fontFamily="@font/karma_medium"
+                    android:text="Amount"
+                    android:textColor="#E9E5E5"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/add_recipeIngredient_amount_editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#ED524E"
+                    android:fontFamily="@font/karma_medium"
+                    android:layout_weight="1"
+                    android:hint="Enter amount..."
+                    android:minHeight="48dp"
+                    android:padding="5dp"
+                    android:textColor="#E9E5E5"
+                    android:textColorHint="#99E9E5E5"
+                    android:inputType="numberDecimal" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/add_recipeIngredient_confirm_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background = "@drawable/custom_button"
+                android:fontFamily="@font/karma_medium"
+                android:onClick="onConfirm"
+                android:text="Confirm"
+                android:textAllCaps="false"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
