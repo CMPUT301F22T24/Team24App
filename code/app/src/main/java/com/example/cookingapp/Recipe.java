@@ -1,5 +1,7 @@
 package com.example.cookingapp;
 
+import android.util.Log;
+
 import com.google.firebase.firestore.DocumentId;
 
 import java.io.Serializable;
@@ -98,6 +100,7 @@ public class Recipe implements Serializable {
         public int compare(Recipe i1, Recipe i2) {
             String d1 = i1.getTitle();
             String d2 = i2.getTitle();
+
             // desc order
             return d1.compareTo(d2);
         }
@@ -108,8 +111,24 @@ public class Recipe implements Serializable {
         public int compare(Recipe i1, Recipe i2) {
             String d1 = i1.getPrepTime();
             String d2 = i2.getPrepTime();
+            d1 = d1.replace("hrs","");
+            d1 = d1.replace("min","");
+            d1 = d1.replace(" ","");
+            d2 = d2.replace("hrs","");
+            d2 = d2.replace("min","");
+            d2 = d2.replace(" ","");
+
+            if(Integer.parseInt(d1)<Integer.parseInt(d2)){
+                return -1;
+
+            }else if(Integer.parseInt(d1)>Integer.parseInt(d2)){
+                return 1;
+            }else{//if equal
+                return 0;
+            }
+
+
             // desc order
-            return d1.compareTo(d2);
         }
     };
 
@@ -119,8 +138,20 @@ public class Recipe implements Serializable {
         public int compare(Recipe i1, Recipe i2) {
             String d1 = i1.getServings();
             String d2 = i2.getServings();
+
+            if(Integer.parseInt(d1)<Integer.parseInt(d2)){
+                return -1;
+
+            }else if(Integer.parseInt(d1)>Integer.parseInt(d2)){
+                return 1;
+            }else{//if equal
+                return 0;
+            }
+
+           // Log.d("Yeet", String.valueOf(d1.compareTo(d2)));
+
+            //d2.replace()
             // desc order
-            return d1.compareTo(d2);
         }
     };
 
