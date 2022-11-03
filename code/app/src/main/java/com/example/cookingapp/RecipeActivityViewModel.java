@@ -123,6 +123,7 @@ public class RecipeActivityViewModel extends ViewModel {
                         ArrayList<Recipe> updated = recipes.getValue();
                         updated.set(position, recipe);
                         recipes.setValue(updated);
+                        Log.d(TAG, "Recipe Edited");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

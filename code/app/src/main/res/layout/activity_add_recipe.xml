@@ -311,7 +311,7 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/custom_button"
                 android:fontFamily="@font/karma_medium"
-                android:onClick="onAddRecipeConfirm"
+                android:onClick="onAddOrEditRecipeConfirmHandler"
                 android:text="Confirm"
                 android:textAllCaps="false"
                 android:textSize="20dp" />
