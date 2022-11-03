@@ -1,9 +1,12 @@
 package com.example.cookingapp;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.app.Activity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -53,7 +56,7 @@ public class RecipesActivityTest {
     public void addRecipeTest(){
         // check we are in the right activity
         solo.assertCurrentActivity("Wrong Activity", RecipesActivity.class);
-
+        solo.sleep(2000);
         // click add recipe button
         FloatingActionButton msButton = (FloatingActionButton) solo.getView(
                 R.id.recipe_add_button);
@@ -64,15 +67,30 @@ public class RecipesActivityTest {
         EditText titleTextView = (EditText) solo.getView(R.id.add_recipe_title_editText);
         EditText servingsTextView = (EditText) solo.getView(R.id.add_recipe_servings_editText);
         Button submitButton = (Button) solo.getView(R.id.add_recipe_confirm_button);
-        solo.enterText(titleTextView, "Apple Pie");
+        solo.enterText(titleTextView, "addRecipeTest");
         solo.enterText(servingsTextView, "2");
         solo.clickOnView(submitButton);
         solo.clearEditText(titleTextView);
         solo.clearEditText(servingsTextView);
 
-        // check that the recipe has been added to the list
+        // check that the recipe is seen on the screen
         solo.assertCurrentActivity("Wrong Activity", RecipesActivity.class);
-        assertTrue(solo.waitForText("Apple Pie", 1, 2000));
+        assertTrue(solo.waitForText("addRecipeTest", 1, 2000));
+
+        // check that the recipe has been added to the list
+        RecipesActivity activity = (RecipesActivity) solo.getCurrentActivity();
+        final ListView recipeList = activity.recipeListView;
+        Recipe recipe = (Recipe) recipeList.getItemAtPosition(recipeList.getCount() - 1);
+        assertEquals("addRecipeTest", recipe.getTitle());
+
+        // delete recipe
+        solo.clickOnView(recipeList.getChildAt(0));
+        solo.clickOnView(solo.getView(android.R.id.button2));
+        solo.clickOnView(solo.getView(android.R.id.button2));
+
+        // check delete recipe
+        recipe = (Recipe) recipeList.getItemAtPosition(0);
+        assertNotEquals("addRecipeTest", recipe.getTitle());
     }
 
     /**
