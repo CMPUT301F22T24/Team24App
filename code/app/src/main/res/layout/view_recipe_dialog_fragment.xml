@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recipe_dialog_scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -193,12 +194,13 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/view_recipe_fragment_Ingredients_textView"
+                <ListView
+                    android:id="@+id/view_recipe_fragment_ingredient_listView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="ADD INGREDIENTS HERE"
-                    android:textSize="20dp" />
+                    android:layout_height="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:padding="5dp" />
 
             </LinearLayout>
 

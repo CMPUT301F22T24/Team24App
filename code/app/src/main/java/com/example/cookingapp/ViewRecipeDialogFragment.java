@@ -12,16 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +36,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class ViewRecipeDialogFragment extends DialogFragment {
 
+
     TextView titleTextView;
     TextView prepTimeTextView;
     TextView numServingsTextView;
@@ -37,11 +44,15 @@ public class ViewRecipeDialogFragment extends DialogFragment {
     TextView commentsTextView;
     ImageView recipePictureImageView;
 
+    ListView ingredientListView;
+    ArrayList<RecipeIngredient> ingredientList;
+    RecipeIngredientAdapter recipeIngredientAdapter;
     // TODO: ADD Ingredients
     private OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
         void onEdit(Recipe recipe);
+
         void onDelete(Recipe recipe);
     }
 
@@ -91,7 +102,35 @@ public class ViewRecipeDialogFragment extends DialogFragment {
             recipePictureImageView.setImageBitmap(StringToBitMap(recipe.getImage()));
         }
         //TODO Ingredients
+        // initialize add ingredient to recipe list items
+        ingredientListView = view.findViewById(R.id.view_recipe_fragment_ingredient_listView);
+        ingredientList = new ArrayList<>();
+        recipeIngredientAdapter = new RecipeIngredientAdapter(getActivity(), ingredientList);
+        ingredientListView.setAdapter(recipeIngredientAdapter);
 
+        // The listView is inside a ScrollView. This causes errors such as only 1 item to show
+        // NestedScrollView did not work so we'll use this fix instead
+        //https://stackoverflow.com/questions/18367522/android-list-view-inside-a-scroll-view
+        ScrollView mScrollView = view.findViewById(R.id.recipe_dialog_scrollView);
+        ingredientListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                mScrollView.requestDisallowInterceptTouchEvent(true);
+                int action = event.getActionMasked();
+                switch (action) {
+                    case MotionEvent.ACTION_UP:
+                        mScrollView.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return false;
+            }
+        });
+        if (!recipe.getIngredients().isEmpty()) {
+            for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                ingredientList.add(recipe.getIngredients().get(i));
+            }
+            recipeIngredientAdapter.notifyDataSetChanged();
+        }
         // Get action from user
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
