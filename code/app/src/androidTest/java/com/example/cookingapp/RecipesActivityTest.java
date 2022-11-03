@@ -82,15 +82,15 @@ public class RecipesActivityTest {
         final ListView recipeList = activity.recipeListView;
         Recipe recipe = (Recipe) recipeList.getItemAtPosition(recipeList.getCount() - 1);
         assertEquals("addRecipeTest", recipe.getTitle());
-
+        int countBefore = recipeList.getCount();
         // delete recipe
-        solo.clickOnView(recipeList.getChildAt(0));
+        int childCount = recipeList.getChildCount();
+        solo.clickOnView(recipeList.getChildAt(childCount - 1));
         solo.clickOnView(solo.getView(android.R.id.button2));
         solo.clickOnView(solo.getView(android.R.id.button2));
-
+        solo.sleep(2000);
         // check delete recipe
-        recipe = (Recipe) recipeList.getItemAtPosition(0);
-        assertNotEquals("addRecipeTest", recipe.getTitle());
+        assertEquals(countBefore - 1, recipeList.getCount());
     }
 
     /**
