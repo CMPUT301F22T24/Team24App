@@ -267,9 +267,21 @@
                     android:textStyle="bold"></TextView>
 
                 <Button
+                    android:id="@+id/add_recipe_delete_ingredient_button"
+                    android:layout_width="27dp"
+                    android:layout_height="34dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:fontFamily="@font/karma_medium"
+                    android:text="Del"
+                    android:textAllCaps="false"
+                    android:textSize="15dp"/>
+
+                <Button
                     android:id="@+id/add_recipe_add_ingredient_button"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="27dp"
+                    android:layout_height="34dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
