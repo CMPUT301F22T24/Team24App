@@ -42,7 +42,7 @@ public class ViewRecipeDialogFragment extends DialogFragment {
 
     public interface OnFragmentInteractionListener {
         void onEdit(Recipe recipe);
-        //void onDelete(Ingredient ingredient);
+        void onDelete(Recipe recipe);
     }
 
     static ViewRecipeDialogFragment newInstance(Recipe recipe) {
@@ -98,12 +98,12 @@ public class ViewRecipeDialogFragment extends DialogFragment {
                 .setView(view)
                 .setCancelable(false)
                 .setNeutralButton("Cancel", null)
-//                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        listener.onDelete(recipe);
-//                    }
-//                })
+                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        listener.onDelete(recipe);
+                    }
+                })
                 .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

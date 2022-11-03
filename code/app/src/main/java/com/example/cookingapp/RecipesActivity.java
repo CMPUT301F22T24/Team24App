@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -115,6 +117,27 @@ public class RecipesActivity extends AppCompatActivity implements ViewRecipeDial
         activityResultLauncher.launch(intent);
     }
 
+    public void onDelete(Recipe recipe) {
+        // Confirm user wants to delete ingredient
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true)
+                .setTitle("Delete " + recipe.getTitle()+ "?")
+                .setMessage("You will not be able to undo this action!")
+                .setNegativeButton("Delete",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //  delete and update list
+                                viewModel.deleteRecipe(recipe);
+                            }
+                        })
+                .setPositiveButton(android.R.string.cancel, null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // to change color
+        // dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED);
+    }
     /**
      * <p>
      * Initializes the sort spinner
