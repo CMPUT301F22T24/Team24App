@@ -1,5 +1,6 @@
 package com.example.cookingapp;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -25,6 +26,7 @@ import android.widget.Spinner;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.sql.Array;
 import java.util.ArrayList;
 
 /**
@@ -35,14 +37,20 @@ import java.util.ArrayList;
 public class AddRecipeActivity extends AppCompatActivity {
     ImageView image;
     EditText title, servings, comments;
-    ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>(); //TODO: implement the ingredient list
-    ListView ingredientList;
     NumberPicker hourPicker, minPicker;
     Spinner categorySpinner;
     ArrayAdapter categorySpinnerAdapter;
     ActivityResultLauncher<String> getImage;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    Button add;
     Button confirm;
     Uri imageUri = null;
+
+
+    ListView ingredientListView;
+    ArrayList<Ingredient> ingredientList;
+    IngredientAdapter ingredientAdapter;
+    ArrayList<Ingredient> emptyList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +62,12 @@ public class AddRecipeActivity extends AppCompatActivity {
         title = findViewById(R.id.add_recipe_title_editText);
         servings = findViewById(R.id.add_recipe_servings_editText);
         comments = findViewById(R.id.add_recipe_comments_editText);
-        ingredientList = findViewById(R.id.recipe_ingredient_list);
+        ingredientListView = findViewById(R.id.recipe_ingredient_list);
         image = findViewById(R.id.add_recipe_imageView);
         minPicker = findViewById(R.id.min_numberPicker);
         hourPicker = findViewById(R.id.hour_numberPicker);
         categorySpinner = findViewById(R.id.add_recipe_category_spinner);
+        add = findViewById(R.id.add_recipe_add_ingredient_button);
         confirm = findViewById(R.id.add_recipe_confirm_button);
         image.setClickable(true);
 
@@ -68,6 +77,25 @@ public class AddRecipeActivity extends AppCompatActivity {
         initCategorySpinner();
         initNumberPickers();
         onImageClick();
+
+        ingredientListView = findViewById(R.id.recipe_ingredient_list);
+        ingredientList = new ArrayList<Ingredient>();
+        ingredientAdapter = new IngredientAdapter(this, ingredientList);
+        ingredientListView.setAdapter(ingredientAdapter);
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent intent = result.getData();
+                    Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
+                    if (ingredient != null) {
+                        ingredientList.add(ingredient);
+                        ingredientAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -96,7 +124,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             System.out.println("something went wrong"); // TODO: change this into an error log
         }
 
-        Recipe recipe = new Recipe(recipeTitle,recipeServings,recipeCategory,recipeComments,recipePrepTime,ingredients,recipeImageBitMap);
+        ArrayList<Ingredient> test = (ArrayList<Ingredient>)ingredientList.clone();
+        Recipe recipe = new Recipe(recipeTitle,recipeServings,recipeCategory,recipeComments,recipePrepTime,ingredientList,recipeImageBitMap);
         Intent intent = new Intent(this, RecipesActivity.class);
         intent.putExtra("recipe", recipe);
         setResult(RESULT_OK, intent);
@@ -202,4 +231,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
     };
 
+    public void addIngredientToRecipe(View view) {
+        Intent intent = new Intent(this, AddIngredientActivity.class);
+        intent.putExtra("default", -1);
+        activityResultLauncher.launch(intent);
+    }
 }

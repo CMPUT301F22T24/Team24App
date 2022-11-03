@@ -64,13 +64,23 @@ public class RecipeActivityViewModel extends ViewModel {
      * </p>
      */
     public void addRecipe(@NonNull Recipe recipe) {
+        Log.e("test", recipe.getIngredients().get(0).getDescription());
+        Log.e("test", recipe.getIngredients().get(1).getDescription());
+//        ArrayList<Ingredient> ingredients = new ArrayList<>();
+//        Ingredient ingredient;
+//        ingredient = recipe.getIngredients().get(0);
+//        Log.e("test", ingredient.getDescription());
+//        ingredients.add(ingredient);
+
+
         HashMap<String, Object> data = new HashMap<>();
         data.put("title", recipe.getTitle());
         data.put("servings", recipe.getServings());
         data.put("category", recipe.getCategory());
         data.put("comments", recipe.getComments());
         data.put("prepTime",recipe.getPrepTime());
-        data.put("ingredients", recipe.getIngredients());
+        ;
+
         data.put("image", recipe.getImage());
         db = FirebaseFirestore.getInstance();
         db.collection("Recipe").add(data)

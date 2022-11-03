@@ -274,7 +274,8 @@
                     android:textStyle="bold">
                 </TextView>
                 <Button
-                    android:id="@+id/add_ingredient_button"
+                    android:id="@+id/add_recipe_add_ingredient_button"
+                    android:onClick="addIngredientToRecipe"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
