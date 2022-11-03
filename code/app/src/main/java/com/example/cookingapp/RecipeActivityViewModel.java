@@ -67,8 +67,9 @@ public class RecipeActivityViewModel extends ViewModel {
      * </p>
      */
     public void addRecipe(@NonNull Recipe recipe) {
-        Log.e("test", recipe.getIngredients().get(0).getDescription());
-        Log.e("test", recipe.getIngredients().get(1).getDescription());
+//        String s = recipe.getIngredients().get(0).getDescription();
+//        Log.e("test", s);
+
 //        ArrayList<Ingredient> ingredients = new ArrayList<>();
 //        Ingredient ingredient;
 //        ingredient = recipe.getIngredients().get(0);

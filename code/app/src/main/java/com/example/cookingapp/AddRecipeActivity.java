@@ -125,7 +125,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         }
 
         ArrayList<Ingredient> test = (ArrayList<Ingredient>)ingredientList.clone();
-        Recipe recipe = new Recipe(recipeTitle,recipeServings,recipeCategory,recipeComments,recipePrepTime,ingredientList,recipeImageBitMap);
+        Recipe recipe = new Recipe(recipeTitle,recipeServings,recipeCategory,recipeComments,recipePrepTime,test,recipeImageBitMap);
         Intent intent = new Intent(this, RecipesActivity.class);
         intent.putExtra("recipe", recipe);
         setResult(RESULT_OK, intent);
