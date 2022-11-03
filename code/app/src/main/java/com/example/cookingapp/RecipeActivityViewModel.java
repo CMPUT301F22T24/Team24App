@@ -121,7 +121,7 @@ public class RecipeActivityViewModel extends ViewModel {
         String id = oldRecipe.getDocumentId();
 
         db = FirebaseFirestore.getInstance();
-        db.collection("Ingredients").document(id).set(data)
+        db.collection("Recipe").document(id).set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -149,7 +149,7 @@ public class RecipeActivityViewModel extends ViewModel {
      */
     public void deleteRecipe(@NonNull Recipe recipe) {
         db = FirebaseFirestore.getInstance();
-        db.collection("Ingredients").document(recipe.getDocumentId()).delete()
+        db.collection("Recipe").document(recipe.getDocumentId()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
