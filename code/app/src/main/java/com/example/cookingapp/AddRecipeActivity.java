@@ -62,7 +62,6 @@ public class AddRecipeActivity extends AppCompatActivity {
     RecipeIngredientAdapter recipeIngredientAdapter;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,23 +140,29 @@ public class AddRecipeActivity extends AppCompatActivity {
             } else {
                 image.setImageBitmap(StringToBitMap(recipe.getImage()));
             }
-
+            // Handle ingredients
+            if (!recipe.getIngredients().isEmpty()) {
+                for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                    ingredientList.add(recipe.getIngredients().get(i));
+                }
+                recipeIngredientAdapter.notifyDataSetChanged();
+            }
         }
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == RESULT_OK) {
-                            Intent intent = result.getData();
-                            RecipeIngredient recipeIngredient = (RecipeIngredient) intent.getSerializableExtra("recipeIngredient");
-                            if (recipeIngredient != null) {
-                                // retrieved recipeIngredient successfully from addRecipeIngredient activity
-                                ingredientList.add(recipeIngredient);
-                                recipeIngredientAdapter.notifyDataSetChanged();
-                            }
-                        }
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent intent = result.getData();
+                    RecipeIngredient recipeIngredient = (RecipeIngredient) intent.getSerializableExtra("recipeIngredient");
+                    if (recipeIngredient != null) {
+                        // retrieved recipeIngredient successfully from addRecipeIngredient activity
+                        ingredientList.add(recipeIngredient);
+                        recipeIngredientAdapter.notifyDataSetChanged();
                     }
-                });
+                }
+            }
+        });
     }
 
     /**
