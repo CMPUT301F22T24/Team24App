@@ -53,7 +53,7 @@ public class RecipesActivityTest {
      * Add a recipe to the listview and check the recipe title using assertTrue
      */
     @Test
-    public void addRecipeTest(){
+    public void addAndDeleteRecipeTest(){
         // check we are in the right activity
         solo.assertCurrentActivity("Wrong Activity", RecipesActivity.class);
         solo.sleep(2000);
