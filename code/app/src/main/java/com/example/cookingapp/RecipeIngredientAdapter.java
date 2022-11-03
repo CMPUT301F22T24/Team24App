@@ -46,7 +46,7 @@ public class RecipeIngredientAdapter extends ArrayAdapter<RecipeIngredient> {
 
         if(view == null) {
             view = LayoutInflater.from(context)
-                    .inflate(R.layout.ingredient_list_item, parent, false);
+                    .inflate(R.layout.recipe_ingredient_list_item, parent, false);
         }
 
         RecipeIngredient ingredient = ingredientList.get(position);
