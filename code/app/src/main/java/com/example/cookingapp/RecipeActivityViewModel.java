@@ -9,10 +9,13 @@ import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Date;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
@@ -89,6 +92,42 @@ public class RecipeActivityViewModel extends ViewModel {
                         Log.d(TAG, "Data failed to be added");
                     }
                 });
+    }
+
+    public void editRecipe(@NonNull Recipe recipe, int position) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("title", recipe.getTitle());
+        data.put("servings", recipe.getServings());
+        data.put("category", recipe.getCategory());
+        data.put("comments", recipe.getComments());
+        data.put("prepTime", recipe.getPrepTime());
+        data.put("ingredients", recipe.getIngredients());
+        data.put("image", recipe.getImage());
+
+
+        ArrayList<Recipe> updated = recipes.getValue();
+        Recipe oldRecipe = updated.get(position);
+        String id = oldRecipe.getDocumentId();
+
+        db = FirebaseFirestore.getInstance();
+        db.collection("Ingredients").document(id).set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        // Remember to setup the document id for the new ingredient
+                        // or you will get a null document id the next time
+                        recipe.setDocumentId(id); //
+                        ArrayList<Recipe> updated = recipes.getValue();
+                        updated.set(position, recipe);
+                        recipes.setValue(updated);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
     }
 
     /**
