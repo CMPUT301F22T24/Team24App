@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +29,9 @@ import java.util.Collections;
  */
 public class IngredientsActivity extends AppCompatActivity implements ViewIngredientDialogFragment.OnFragmentInteractionListener{
 
+
+    private final int EDIT_OK = 1;
+
     ListView ingredientListView;
     ArrayList<Ingredient> ingredientList;
     IngredientAdapter ingredientAdapter;
@@ -36,6 +40,7 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
 
     Spinner sortBySpinner;
     CustomSpinnerAdapter sortBySpinnerAdapter;
+    int position = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +78,20 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
                                viewModel.addIngredient(ingredient);
                             }
                         }
+                        if (result.getResultCode() == EDIT_OK) {
+                            Intent intent = result.getData();
+                            Ingredient ingredient = (Ingredient) intent.getSerializableExtra("ingredient");
+                            if (ingredient != null) {
+                                viewModel.editIngredient(ingredient, position);
+                            }
+                        }
                     }
                 });
 
         ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                position = i; // for use in editing
                 ViewIngredientDialogFragment.newInstance(ingredientList.get(i)).show(getSupportFragmentManager(), "VIEW_INGREDIENT");
             }//onItemClick
         });
@@ -88,12 +101,17 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
     // TODO: change add button color
     public void onAddClick(View view) {
         Intent intent = new Intent(this, AddIngredientActivity.class);
+        intent.putExtra("ADD_CODE", 0);
         activityResultLauncher.launch(intent);
     }//onAddClick
 
     @Override
     public void onEdit(Ingredient ingredient) {
         // TODO: edit activity
+        Intent intent = new Intent(this, AddIngredientActivity.class);
+        intent.putExtra("EDIT_CODE", 1);
+        intent.putExtra("ingredient", ingredient);
+        activityResultLauncher.launch(intent);
     }
 
     @Override

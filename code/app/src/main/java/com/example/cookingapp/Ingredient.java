@@ -56,7 +56,7 @@ public class Ingredient implements Serializable {
     // ArrayAdapter uses toString to display stuff to the list View
     // so we can override the toString to tell ArrayAdapter how to display and ingredient object
     public String toString() {
-        String date = getStringDate();
+        String date = bestBeforeDate.toString();
         return String.format("%s | %s | %s | %s", description, date, location, category);
     }
 
