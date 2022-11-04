@@ -21,11 +21,31 @@ import java.time.zone.ZoneRules;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+    Purpose: saves state of ingredients list when app orientation changes and when returning to Ingredient Activity
+
+    design rationale:
+        Attributes:
+            ingredients: MutableLiveData<ArrayList<Ingredient>> list of ingredients
+        Methods:
+            loadIngredients - Retrieves ingredients from firebase database
+            getIngredients - returns ingredients list
+            addIngredient - add given ingredient to firebase db
+            editIngredient - edit ingredient at given location in list to firebase db
+            deleteIngredient - delete given ingredient and update firebase db
+
+    outstanding issues: none
+*/
 public class IngredientsActivityViewModel extends ViewModel {
 
     final String TAG = "IngredientsActivity";
     private FirebaseFirestore db;
     private MutableLiveData<ArrayList<Ingredient>> ingredients;
+
+    /**
+     * Returns LiveData list of ingredients
+     * @return ingredients LiveData list of ingredients
+     */
     public LiveData<ArrayList<Ingredient>> getIngredients() {
         if(ingredients == null) {
             ingredients = new MutableLiveData<>();
@@ -33,7 +53,10 @@ public class IngredientsActivityViewModel extends ViewModel {
         }
         return ingredients;
     }
-
+    /**
+     * Retrieves ingredients from firebase database and assigns ingredients list to
+     * MutableLiveData<ArrayList<Ingredient>> ingredients.
+     */
     private void loadIngredients() {
         // fetch from db
         db = FirebaseFirestore.getInstance();
@@ -53,6 +76,12 @@ public class IngredientsActivityViewModel extends ViewModel {
                 });
     }
 
+    /**
+     * adds given ingredient to firebase database
+     *
+     * @param ingredient ingredient to add to db
+     *
+     */
     public void addIngredient(@NonNull Ingredient ingredient) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("description", ingredient.getDescription());
@@ -72,7 +101,7 @@ public class IngredientsActivityViewModel extends ViewModel {
                 ingredients.setValue(updated);
                 Log.d(TAG, "Data added successfully");
             }
-    }).addOnFailureListener(new OnFailureListener() {
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "Data failed to be added");
@@ -80,6 +109,14 @@ public class IngredientsActivityViewModel extends ViewModel {
         });
     }
 
+    /**
+     * edits ingredient to given ingredient attributes at given position in the list
+     * and update value in firebase database
+     *
+     * @param ingredient ingredient to take edit properties from
+     * @param position position of ingredient to edit in the list
+     *
+     */
     public void editIngredient(@NonNull Ingredient ingredient, int position) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("description", ingredient.getDescription());
@@ -115,6 +152,12 @@ public class IngredientsActivityViewModel extends ViewModel {
     }
 
 
+    /**
+     * delete ingredient in firebase database
+     *
+     * @param ingredient ingredient to delete
+     *
+     */
     public void deleteIngredient(@NonNull Ingredient ingredient) {
         db = FirebaseFirestore.getInstance();
         db.collection("Ingredients").document(ingredient.getDocumentId()).delete()

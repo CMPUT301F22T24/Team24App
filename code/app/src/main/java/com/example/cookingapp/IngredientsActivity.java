@@ -25,10 +25,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * The Ingredients activity class, allowing users to add, edit and delete and sort ingredient entries
- */
-public class IngredientsActivity extends AppCompatActivity implements ViewIngredientDialogFragment.OnFragmentInteractionListener{
+    Purpose: Lists all food
+    design rationale:
+        Notes: uses viewModel to save data when screen rotates or when returning to activity
+        Attributes:
+            layout variables:
+                ingredientAdapter
+                ingredientListView
 
+            activityResultLauncher - used to launch the addIngredientActivity and expect result
+                onActivityResult() - update list and layout variables with add / edit action received
+
+        Methods:
+            onCreate - initialize layout variables
+            onEdit() - from ViewIngredientDialogFragment.OnFragmentInteractionListener handles sending edit ingredient information to AddIngredientActivity
+            onAdd() - from ViewIngredientDialogFragment.OnFragmentInteractionListener handles sending add ingredient information to AddIngredientActivity
+
+    outstanding issues: need to rename AddIngredientActivity as it also handles editing
+*/
+public class IngredientsActivity extends AppCompatActivity implements ViewIngredientDialogFragment.OnFragmentInteractionListener{
 
     private final int EDIT_OK = 1;
 

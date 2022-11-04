@@ -16,6 +16,29 @@ import androidx.fragment.app.DialogFragment;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+
+/**
+Purpose: dialog fragment to view all ingredient properties
+design rationale:
+    Notes: handles edit and delete actions
+    Attributes:
+        layout variables:
+            descriptionTextView
+            locationTextView
+            categoryTextView
+            bestBeforeDateTextView
+            amountTextView
+            unitTextView
+
+        listener - OnFragmentInteractionListener to handle edit and delete of ingredient
+       OnFragmentInteractionListener - interface to define onEdit() and onDelete()
+    Methods:
+        newInstance - creates a new instance of ViewIngredientDialogFragment with ingredient as argument
+        onAttach - check if OnFragmentInteractionListener is implemented in caller
+        onCreateDialog - update layout views with ingredient properties
+
+outstanding issues: none
+*/
 public class ViewIngredientDialogFragment extends DialogFragment {
 
     TextView descriptionTextView;
@@ -25,9 +48,9 @@ public class ViewIngredientDialogFragment extends DialogFragment {
     TextView amountTextView;
     TextView unitTextView;
 
-    /*
+    /**
     Purpose: handle delete and edit ingredient
-    design rationale: implemented in MainActivity
+    design rationale: implemented in IngredientsActivity
     */
     private OnFragmentInteractionListener listener;
     public interface OnFragmentInteractionListener {
@@ -35,6 +58,11 @@ public class ViewIngredientDialogFragment extends DialogFragment {
         void onDelete(Ingredient ingredient);
     }
 
+    /**
+     Creates new instance of ViewIngredientDialogFragment
+     @param ingredient ingredient to view
+     @return fragment fragment of type ViewIngredientDialogFragment
+     */
     static ViewIngredientDialogFragment newInstance(Ingredient ingredient) {
         Bundle args = new Bundle();
         args.putSerializable("ingredient", ingredient);
@@ -44,6 +72,9 @@ public class ViewIngredientDialogFragment extends DialogFragment {
         return fragment;
     }
 
+    /**
+     assigns listener and trows error if Activity does not implement OnFragmentInteractionListener
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -54,6 +85,9 @@ public class ViewIngredientDialogFragment extends DialogFragment {
         }
     }
 
+    /**
+     builds and creates dialog fragment
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
