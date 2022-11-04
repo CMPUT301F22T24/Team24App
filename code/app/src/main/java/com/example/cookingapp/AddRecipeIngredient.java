@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * AddRecipeIngredient allows users to add ingredient to recipe.
+ */
 public class AddRecipeIngredient extends AppCompatActivity {
 
     EditText descriptionEditText;

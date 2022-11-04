@@ -11,6 +11,11 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
+/**
+ * This is CustomSpinnerAdapter class.
+ * We implement a custom adapter to display a spinner item with image, text etc.
+ */
+
 public class CustomSpinnerAdapter extends ArrayAdapter<String> {
 
     public CustomSpinnerAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {

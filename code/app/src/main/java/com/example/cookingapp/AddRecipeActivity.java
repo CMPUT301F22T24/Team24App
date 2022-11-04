@@ -41,7 +41,7 @@ import java.util.List;
 
 /**
  * <p>
- * This is the add recipe activity class. It is the activity responsible for adding new recipes :)
+ * This is the add recipe activity class. It is the activity responsible for adding new recipes, editing recipe.
  * </p>
  */
 public class AddRecipeActivity extends AppCompatActivity {
@@ -68,7 +68,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     ArrayList<RecipeIngredient> ingredientList;
     RecipeIngredientAdapter recipeIngredientAdapter;
 
-
+    /**
+     * The main activity of Recipe, allowing users to add, edit and delete recipe entries
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

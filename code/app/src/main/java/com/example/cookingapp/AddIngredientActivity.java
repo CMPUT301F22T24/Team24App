@@ -33,6 +33,9 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The Ingredients activity class, allowing users to add, edit and delete ingredient entries
+ */
 public class AddIngredientActivity extends AppCompatActivity {
     int receivedCode; // code this activity receives
     private final int EDIT_OK = 1;
@@ -138,9 +141,10 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     }//onCreate
 
-
-
-
+    /**
+     * onSelectLocation allows users to select a location for ingredient
+     * @param view
+     */
     public void onSelectLocation(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter your desired location");
@@ -174,7 +178,10 @@ public class AddIngredientActivity extends AppCompatActivity {
         builder.show();
     }//onSelectLocation
 
-
+    /**
+     * onSelectCategory allows users to select the category for ingredient.
+     * @param view
+     */
     public void onSelectCategory(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter your desired category");
@@ -208,7 +215,10 @@ public class AddIngredientActivity extends AppCompatActivity {
         builder.show();
     }//onSelectCategory
 
-
+    /**
+     * onSelectUnit allows users to select the unit of ingredients
+     * @param view
+     */
     public void onSelectUnit(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter your desired unit");
@@ -242,8 +252,10 @@ public class AddIngredientActivity extends AppCompatActivity {
         builder.show();
     }//onSelectUnit
 
-
-
+    /**
+     * onConfirm allows users to confirm their input for ingredient.
+     * @param view
+     */
     public void onConfirm(View view){
 
         String description = descriptionEditText.getText().toString();// String = description input
@@ -275,7 +287,10 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     }//ConfirmAdd
 
-
+    /**
+     * setDate allows users to select a expired date for ingredient.
+     * @param view
+     */
     public void setDate(View view){
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -318,7 +333,9 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     }//setDate
 
-    // Used to disable/enable confirm button based on edit text inputs
+    /**
+     * EditTextWatcher used to disable/enable confirm button based on edit text inputs
+     */
     private class EditTextWatcher implements TextWatcher {
 
         @Override
@@ -337,7 +354,10 @@ public class AddIngredientActivity extends AppCompatActivity {
         }
     }
 
-    // Used to disable/enable confirm button based on spinner selections
+
+    /**
+     * SpinnerItemSelectedListener is used to disable/enable confirm button based on spinner selections
+     */
     private class SpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
