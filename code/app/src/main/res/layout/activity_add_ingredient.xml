@@ -23,8 +23,8 @@
             android:fontFamily="@font/karma_medium"
             android:text="Add Ingredient"
             android:textColor="#E9E5E5"
-            android:textSize="30dp"
-            android:textStyle="bold"></TextView>
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <!--Ingredient Description-->
         <LinearLayout
@@ -39,7 +39,7 @@
                 android:text="Description"
                 android:padding="5dp"
                 android:fontFamily="@font/karma_medium"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="#E9E5E5"
                 android:textStyle="bold">
             </TextView>
@@ -75,7 +75,7 @@
                 android:text="Location"
                 android:padding="5dp"
                 android:fontFamily="@font/karma_medium"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="#E9E5E5"
                 android:textStyle="bold" />
 
@@ -89,6 +89,28 @@
                 android:textColor="#E9E5E5"
                 android:popupBackground="#343231"/>
         </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <Button
+            android:id="@+id/new_location_button"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1.5"
+            android:background = "@drawable/custom_button"
+            android:fontFamily="@font/karma_medium"
+            android:onClick="onSelectLocation"
+            android:text="New Location"
+            android:textAllCaps="false"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+
 
         <!--Ingredient Category-->
         <LinearLayout
@@ -105,7 +127,7 @@
                 android:fontFamily="@font/karma_medium"
                 android:text="Category"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold">
             </TextView>
 
@@ -117,6 +139,26 @@
                 android:backgroundTint="#EC524E"
                 android:popupBackground="#343231"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/new_category_button"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.5"
+                android:background = "@drawable/custom_button"
+                android:fontFamily="@font/karma_medium"
+                android:onClick="onSelectCategory"
+                android:text="New Category"
+                android:textAllCaps="false"
+                android:textSize="13sp" />
+        </LinearLayout>
+
 
         <!--Ingredient Unit-->
         <LinearLayout
@@ -146,6 +188,25 @@
                 android:popupBackground="#343231"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/new_unit_button"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1.5"
+                android:background = "@drawable/custom_button"
+                android:fontFamily="@font/karma_medium"
+                android:onClick="onSelectUnit"
+                android:text="New unit"
+                android:textAllCaps="false"
+                android:textSize="13sp" />
+        </LinearLayout>
+
         <!--Ingredient Expiry Date-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,7 +229,7 @@
                     android:padding="5dp"
                     android:text="Expiry Date"
                     android:textColor="#E9E5E5"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -179,7 +240,7 @@
                     android:padding="5dp"
                     android:text="yyyy-mm-dd"
                     android:textColor="#E9E5E5"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
 
@@ -218,12 +279,12 @@
                         android:fontFamily="@font/karma_medium"
                         android:text="Amount"
                         android:textColor="#E9E5E5"
-                        android:textSize="20dp"
+                        android:textSize="20sp"
                         android:textStyle="bold"/>
                     <EditText
                         android:id="@+id/add_ingredient_amount_editText"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:backgroundTint="#ED524E"
                         android:fontFamily="@font/karma_medium"
                         android:layout_weight="1"
@@ -257,7 +318,7 @@
                 android:onClick="onConfirm"
                 android:text="Confirm"
                 android:textAllCaps="false"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 

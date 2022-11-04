@@ -101,6 +101,8 @@ public class Recipe implements Serializable {
         public int compare(Recipe i1, Recipe i2) {
             String d1 = i1.getTitle();
             String d2 = i2.getTitle();
+            d1=d1.toLowerCase();
+            d2=d2.toLowerCase();
 
             // desc order
             return d1.compareTo(d2);
@@ -161,6 +163,8 @@ public class Recipe implements Serializable {
         public int compare(Recipe i1, Recipe i2) {
             String d1 = i1.getCategory();
             String d2 = i2.getCategory();
+            d1=d1.toLowerCase();
+            d2=d2.toLowerCase();
             // desc order
             return d1.compareTo(d2);
         }

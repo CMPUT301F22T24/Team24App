@@ -10,6 +10,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -28,6 +29,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +39,11 @@ public class AddIngredientActivity extends AppCompatActivity {
     int resultCode = RESULT_OK; // default is add
     // receive 1 -> do edit instead -> set resultCode = 1 so onResult knows to do edit
     // receive nothing -> do add -> set resultCode as RESULT_OK
+
+    private String Location_Text = "";
+    private String Category_Text = "";
+    private String Unit_Text = "";
+
 
     LocalDate expiryDate;
     TextView titleTextView;
@@ -59,6 +66,11 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     Button confirmButton;
 
+    Button SelectLocation;
+    Button SelectCategory;
+    Button SelectUnit;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +89,12 @@ public class AddIngredientActivity extends AppCompatActivity {
         amountEditText.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(3, 2)});
         confirmButton = findViewById(R.id.add_ingredient_confirm_button);
 
+        SelectLocation=findViewById(R.id.new_location_button);
+        SelectCategory=findViewById(R.id.new_category_button);
+        SelectUnit=findViewById(R.id.new_unit_button);
+
+
+
         initLocationSpinner();
         initCategorySpinner();
         initUnitSpinner();
@@ -92,12 +110,142 @@ public class AddIngredientActivity extends AppCompatActivity {
             bestBeforeDateTextView.setText(ingredient.getBestBeforeDate().toString());
             amountEditText.setText(ingredient.getAmount().toString());
 
-            locationSpinner.setSelection(locationSpinnerAdapter.getPosition(ingredient.getLocation()));
-            categorySpinner.setSelection(categorySpinnerAdapter.getPosition(ingredient.getCategory()));
-            unitSpinner.setSelection(unitSpinnerAdapter.getPosition(ingredient.getUnit()));
+
+            Log.d("Yep1", String.valueOf(locationSpinnerAdapter.getPosition(ingredient.getLocation())));
+            Log.d("Yep2", String.valueOf(categorySpinnerAdapter.getPosition(ingredient.getCategory())));
+            Log.d("Yep3", String.valueOf(unitSpinnerAdapter.getPosition(ingredient.getLocation())));
+
+
+            if(locationSpinnerAdapter.getPosition(ingredient.getLocation())!=-1){
+                locationSpinner.setSelection(locationSpinnerAdapter.getPosition(ingredient.getLocation()));
+            }else{
+                SelectLocation.setText(ingredient.getLocation());
+                Location_Text= ingredient.getLocation();
+
+            }
+
+            if(categorySpinnerAdapter.getPosition(ingredient.getCategory())!=-1){
+                categorySpinner.setSelection(categorySpinnerAdapter.getPosition(ingredient.getCategory()));
+            }else{
+                SelectCategory.setText(ingredient.getCategory());
+                Category_Text= ingredient.getCategory();
+            }
+
+            if(unitSpinnerAdapter.getPosition(ingredient.getUnit())!=-1){
+                unitSpinner.setSelection(unitSpinnerAdapter.getPosition(ingredient.getUnit()));
+            }else{
+                SelectUnit.setText(ingredient.getUnit());
+                Unit_Text= ingredient.getUnit();
+            }
+
         }
 
     }//onCreate
+
+
+
+
+    public void onSelectLocation(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter your desired location");
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+// Set up the buttons
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Location_Text = input.getText().toString();
+                if(Location_Text.replace(" ","").isEmpty()){
+                    Toast.makeText(getApplicationContext(),"No input was given",Toast.LENGTH_SHORT).show();
+                }else if(Location_Text.length() > 30){
+                    Toast.makeText(getApplicationContext(),"Length must not exceed 30 characters",Toast.LENGTH_SHORT).show();
+                }else{
+                    SelectLocation.setText(Location_Text);
+                    locationSpinner.setSelection(3);
+                    isConfirmButtonEnabled();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }//onSelectLocation
+
+
+    public void onSelectCategory(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter your desired category");
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+// Set up the buttons
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Category_Text = input.getText().toString();
+                if(Category_Text.replace(" ","").isEmpty()){
+                    Toast.makeText(getApplicationContext(),"No input was given",Toast.LENGTH_SHORT).show();
+                }else if(Category_Text.length() > 30){
+                    Toast.makeText(getApplicationContext(),"Length must not exceed 30 characters",Toast.LENGTH_SHORT).show();
+                }else{
+                    SelectCategory.setText(Category_Text);
+                    categorySpinner.setSelection(3);
+                    isConfirmButtonEnabled();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }//onSelectCategory
+
+
+    public void onSelectUnit(View view){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter your desired unit");
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+// Set up the buttons
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Unit_Text = input.getText().toString();
+                if(Unit_Text.replace(" ","").isEmpty()){
+                    Toast.makeText(getApplicationContext(),"No input was given",Toast.LENGTH_SHORT).show();
+                }else if(Unit_Text.length() > 30){
+                    Toast.makeText(getApplicationContext(),"Length must not exceed 30 characters",Toast.LENGTH_SHORT).show();
+                }else{
+                    SelectUnit.setText(Unit_Text);
+                    unitSpinner.setSelection(3);
+                    isConfirmButtonEnabled();
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+    }//onSelectUnit
+
 
 
     public void onConfirm(View view){
@@ -109,30 +257,18 @@ public class AddIngredientActivity extends AppCompatActivity {
         LocalDate bestBeforeDate = LocalDate.parse(bestBeforeDateTextView.getText().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String unit = unitSpinner.getSelectedItem().toString();
 
-        // TODO: have warnings messaged displayed at the bottom telling user what is missing?
-        /*
-        if((description.replace(" ", "")).isEmpty() || (location.replace(" ", "")).isEmpty() || (category.replace(" ", "")).isEmpty()  || (amount.replace(" ", "")).isEmpty()) {//if user input is empty..
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-            return;
 
-        }else if( Double.parseDouble(amount) < 0 ){//checks if user input count is zero
-            Toast.makeText(this, "Amount cannot be less than zero", Toast.LENGTH_SHORT).show();
-            //Log.d("Checking","2");
-            return;
-        }else if(description.length() > 30){
-            Toast.makeText(this, "Number of characters in description should not exceed 30", Toast.LENGTH_SHORT).show();
-            return;
-        }else if(category.length() > 30){
-            Toast.makeText(this, "Number of characters in category should not exceed 30", Toast.LENGTH_SHORT).show();
-            return;
-        }else if(location.length() > 30){
-            Toast.makeText(this, "Number of characters in location should not exceed 30", Toast.LENGTH_SHORT).show();
-            return;
+        if(location.isEmpty()){
+            location=Location_Text;
+        }
+        if(category.isEmpty()){
+            category=Category_Text;
+        }
+        if(unit.isEmpty()){
+            unit=Unit_Text;
         }
 
-        double roundToHundredth  = Math.round(Double.parseDouble(amount) * 100.0) / 100.0;//Converts an input of say "12.1234" to 12.12. Rounds up.
-        amount = String.valueOf(roundToHundredth);//turn amount back into string
-        */
+
 
         // return ingredient to IngredientsActivity
         Ingredient ingredient = new Ingredient(description, bestBeforeDate, location, Double.parseDouble(amount), unit, category);
@@ -164,14 +300,13 @@ public class AddIngredientActivity extends AppCompatActivity {
                         .setNegativeButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                expiryDate = LocalDate.of(year, month+1, dayOfMonth);
-                                bestBeforeDateTextView.setText(expiryDate.toString());
+
                             }
                         })
                         .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                selectExpiryDateButton.callOnClick();
+
                             }
                         });
                     AlertDialog dialog = builder.create();
@@ -210,6 +345,21 @@ public class AddIngredientActivity extends AppCompatActivity {
     private class SpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if(!Objects.equals((String) locationSpinner.getSelectedItem(), "") ){
+                Location_Text = "";
+                SelectLocation.setText("New Location");
+
+            }
+            if(!Objects.equals((String) categorySpinner.getSelectedItem(), "") ){
+                Category_Text = "";
+                SelectCategory.setText("New Category");
+
+            }if(!Objects.equals((String) unitSpinner.getSelectedItem(), "") ){
+                Unit_Text = "";
+                SelectUnit.setText("New Unit");
+            }
+
+
             isConfirmButtonEnabled();
         }
 
@@ -230,7 +380,10 @@ public class AddIngredientActivity extends AppCompatActivity {
         locationSpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, locations);
         locationSpinner.setAdapter(locationSpinnerAdapter);
         locationSpinner.setSelection(locationSpinnerAdapter.getCount());
+
         locationSpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
+
+
     }
 
     private void initCategorySpinner() {
@@ -244,7 +397,9 @@ public class AddIngredientActivity extends AppCompatActivity {
         categorySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, categories);
         categorySpinner.setAdapter(categorySpinnerAdapter);
         categorySpinner.setSelection(categorySpinnerAdapter.getCount());
+
         categorySpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
+
     }
 
     private void initUnitSpinner() {
@@ -258,6 +413,7 @@ public class AddIngredientActivity extends AppCompatActivity {
         unitSpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, units);
         unitSpinner.setAdapter(unitSpinnerAdapter);
         unitSpinner.setSelection(unitSpinnerAdapter.getCount());
+
         unitSpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
     }
 
@@ -283,11 +439,20 @@ public class AddIngredientActivity extends AppCompatActivity {
         String description = descriptionEditText.getText().toString().trim();
         String date = bestBeforeDateTextView.getText().toString();
         String location = locationSpinner.getSelectedItem().toString();
+        if(location.isEmpty()){
+            location=Location_Text;
+        }
         String amount = amountEditText.getText().toString();
         String unit = unitSpinner.getSelectedItem().toString();
+        if(unit.isEmpty()) {
+            unit = Unit_Text;
+        }
         String category = categorySpinner.getSelectedItem().toString();
+        if(category.isEmpty()) {
+            category = Category_Text;
+        }
 
-        // TODO: can amount have decimals? if so, restrict for a min amount of precision
+
         confirmButton.setEnabled(
             !description.isEmpty() && description.length() <= 30
             && !date.equals("yyyy-mm-dd")

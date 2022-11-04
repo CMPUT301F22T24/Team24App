@@ -1,5 +1,7 @@
 package com.example.cookingapp;
 
+import android.util.Log;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.Exclude;
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * The Ingredient object class
@@ -135,6 +138,8 @@ public class Ingredient implements Serializable {
         public int compare(Ingredient i1, Ingredient i2) {
             String d1 = i1.getDescription();
             String d2 = i2.getDescription();
+            d1=d1.toLowerCase();
+            d2=d2.toLowerCase();
             // desc order
             return d1.compareTo(d2);
         }
@@ -155,6 +160,9 @@ public class Ingredient implements Serializable {
         public int compare(Ingredient i1, Ingredient i2) {
             String d1 = i1.getLocation();
             String d2 = i2.getLocation();
+            d1=d1.toLowerCase();
+            d2=d2.toLowerCase();
+
             // desc order
             return d1.compareTo(d2);
         }
@@ -165,6 +173,8 @@ public class Ingredient implements Serializable {
         public int compare(Ingredient i1, Ingredient i2) {
             String d1 = i1.getCategory();
             String d2 = i2.getCategory();
+            d1=d1.toLowerCase();
+            d2=d2.toLowerCase();
             // desc order
             return d1.compareTo(d2);
         }
