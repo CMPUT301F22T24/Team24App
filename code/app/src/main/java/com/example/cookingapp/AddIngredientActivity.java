@@ -111,10 +111,6 @@ public class AddIngredientActivity extends AppCompatActivity {
             amountEditText.setText(ingredient.getAmount().toString());
 
 
-            Log.d("Yep1", String.valueOf(locationSpinnerAdapter.getPosition(ingredient.getLocation())));
-            Log.d("Yep2", String.valueOf(categorySpinnerAdapter.getPosition(ingredient.getCategory())));
-            Log.d("Yep3", String.valueOf(unitSpinnerAdapter.getPosition(ingredient.getLocation())));
-
 
             if(locationSpinnerAdapter.getPosition(ingredient.getLocation())!=-1){
                 locationSpinner.setSelection(locationSpinnerAdapter.getPosition(ingredient.getLocation()));

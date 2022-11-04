@@ -151,10 +151,7 @@ public class Recipe implements Serializable {
                 return 0;
             }
 
-           // Log.d("Yeet", String.valueOf(d1.compareTo(d2)));
 
-            //d2.replace()
-            // desc order
         }
     };
 
