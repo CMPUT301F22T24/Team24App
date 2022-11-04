@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Title"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Recipe Title"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Preparation Time"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Preparation Time"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -69,14 +69,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Number of Servings"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/view_recipe_fragment_num_servings_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="Number of Servings" />
 
         </LinearLayout>
@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Category"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:text="Category"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Comments"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -137,7 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ADD Comments HERE"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -160,7 +160,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Image"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -168,7 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ADD IMAGE"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -191,15 +191,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Ingredients"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <ListView
                     android:id="@+id/view_recipe_fragment_ingredient_listView"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_weight="1"
                     android:padding="5dp"
                     android:dividerHeight="12.0sp"
                     />
