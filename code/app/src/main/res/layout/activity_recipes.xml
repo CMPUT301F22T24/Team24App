@@ -34,13 +34,18 @@
             android:popupBackground="#343231"/>
     </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <ListView
         android:id="@+id/recipe_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:padding="5dp"
-        android:layout_weight="1"
+        android:dividerHeight="12.0sp"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -56,5 +61,5 @@
         android:focusable="true"
         android:contentDescription="add recipe"
          />
-
+    </FrameLayout>
 </LinearLayout>

@@ -34,13 +34,17 @@
             android:popupBackground="#343231"/>
     </LinearLayout>
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ListView
         android:id="@+id/ingredient_list"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:padding="5dp"
-        android:layout_weight="1"
         android:dividerHeight="12.0sp"
         />
 
@@ -57,5 +61,6 @@
         android:tint="@color/black"
         android:contentDescription="add ingredient"
         app:srcCompat="@drawable/ic_baseline_playlist_add_24" />
+    </FrameLayout>
 
 </LinearLayout>
