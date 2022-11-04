@@ -18,6 +18,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,7 +69,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
 
         // initialize variables
-        // TODO: make it so that they cannot click submit without all values being filled
         titleTextView = findViewById(R.id.recipe_title_textView);
         title = findViewById(R.id.add_recipe_title_editText);
         servings = findViewById(R.id.add_recipe_servings_editText);
@@ -79,6 +79,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         categorySpinner = findViewById(R.id.add_recipe_category_spinner);
         add = findViewById(R.id.add_recipe_add_ingredient_button);
         confirm = findViewById(R.id.add_recipe_confirm_button);
+        confirm.setEnabled(false);
         image.setClickable(true);
 
         title.addTextChangedListener(addRecipeTextWatcher);
@@ -212,7 +213,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
             recipeImageBitMap = BitMapToString(scaled);
         } catch (Exception e) {
-            System.out.println("something went wrong"); // TODO: change this into an error log
+            System.out.println("something went wrong");
         }
 
         Recipe recipe = new Recipe(recipeTitle, recipeServings, recipeCategory, recipeComments, recipePrepTime, ingredientList, recipeImageBitMap);
@@ -238,7 +239,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
             recipeImageBitMap = BitMapToString(scaled);
         } catch (Exception e) {
-            System.out.println("something went wrong"); // TODO: change this into an error log
+            System.out.println("something went wrong");
         }
 
         Recipe recipe = new Recipe(recipeTitle, recipeServings, recipeCategory, recipeComments, recipePrepTime, ingredientList, recipeImageBitMap);
@@ -271,16 +272,34 @@ public class AddRecipeActivity extends AppCompatActivity {
      * </p>
      */
     private void initCategorySpinner() {
-        // TODO: add ability for user to add categories to list/adapter
         ArrayList<String> locations = new ArrayList<String>() {{
             add("Breakfast");
             add("Lunch");
             add("Dinner");
             add("Snack");
+            add("");
         }};
         categorySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, locations);
         categorySpinner.setAdapter(categorySpinnerAdapter);
         categorySpinner.setSelection(categorySpinnerAdapter.getCount());
+        categorySpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
+    }
+
+    /**
+     * <p>
+     * Used to disable/enable confirm button based on spinner selections
+     * </p>
+     */
+    private class SpinnerItemSelectedListener implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            isConfirmButtonEnabled();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
     }
 
     /**
@@ -336,10 +355,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String usernameInput = title.getText().toString().trim();
-            String passwordInput = servings.getText().toString().trim();
-
-            confirm.setEnabled(!usernameInput.isEmpty() && !passwordInput.isEmpty());
+            isConfirmButtonEnabled();
         }
 
         @Override
@@ -352,5 +368,17 @@ public class AddRecipeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddRecipeIngredient.class);
 
         activityResultLauncher.launch(intent);
+    }
+
+    /**
+     * <p>
+     * Enables the confirm button once certain fields are entered
+     * </p>
+     */
+    private void isConfirmButtonEnabled() {
+        String usernameInput = title.getText().toString().trim();
+        String passwordInput = servings.getText().toString().trim();
+        String categoryInput = categorySpinner.getSelectedItem().toString();
+        confirm.setEnabled(!usernameInput.isEmpty() && !passwordInput.isEmpty() && !categoryInput.equals(""));
     }
 }

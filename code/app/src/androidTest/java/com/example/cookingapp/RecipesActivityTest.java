@@ -51,6 +51,7 @@ public class RecipesActivityTest {
 
     /**
      * Add a recipe to the listview and check the recipe title using assertTrue
+     * then deletes the recipe
      */
     @Test
     public void addAndDeleteRecipeTest(){
