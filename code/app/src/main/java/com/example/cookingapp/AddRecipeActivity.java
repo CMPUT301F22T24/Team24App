@@ -6,9 +6,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -56,7 +59,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> activityResultLauncher;
     Button add;
     Button confirm;
+    Button deleteIngredientButton;
+    Integer selectedIngredientPosition = null;
     Uri imageUri = null;
+    View oldSelection = null;
 
     ListView ingredientListView;
     ArrayList<RecipeIngredient> ingredientList;
@@ -78,6 +84,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         hourPicker = findViewById(R.id.hour_numberPicker);
         categorySpinner = findViewById(R.id.add_recipe_category_spinner);
         add = findViewById(R.id.add_recipe_add_ingredient_button);
+        deleteIngredientButton = findViewById(R.id.add_recipe_delete_ingredient_button);
         confirm = findViewById(R.id.add_recipe_confirm_button);
         confirm.setEnabled(false);
         image.setClickable(true);
@@ -115,6 +122,44 @@ public class AddRecipeActivity extends AppCompatActivity {
         onImageClick();
         Bundle info = getIntent().getExtras();
         receivedCode = info.getInt("EDIT_CODE"); // try to look for an edit request
+
+        //delete ingredients in add recipe
+        ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if((selectedIngredientPosition == null)){
+                    selectedIngredientPosition = i;
+                    oldSelection = view;
+                    view.setBackgroundColor(Color.parseColor("#FF9A9595"));
+                }else if((selectedIngredientPosition != i)){
+                    clearSelection();
+                    selectedIngredientPosition = i;
+                    oldSelection = view;
+                    view.setBackgroundColor(Color.parseColor("#FF9A9595"));
+                }else if((selectedIngredientPosition == i)){
+                    oldSelection = view;
+                    view.setBackgroundColor(Color.parseColor("#FF9A9595"));
+                }
+            }
+            private void clearSelection() {
+                if(oldSelection != null) {
+                    oldSelection.setBackgroundColor(Color.parseColor("#ED524E"));
+                }
+            }
+        });
+
+        deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!ingredientList.isEmpty() && selectedIngredientPosition!= null) {
+                    ingredientList.remove(Integer.parseInt(selectedIngredientPosition.toString()));
+                    recipeIngredientAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+
         if (receivedCode == EDIT_OK) {
             // edit request received so change descriptors
             resultCode = EDIT_OK; // tell onResult that it came from edit
@@ -148,6 +193,42 @@ public class AddRecipeActivity extends AppCompatActivity {
                 }
                 recipeIngredientAdapter.notifyDataSetChanged();
             }
+
+
+            //delete ingredients in edit recipe
+            ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    if((selectedIngredientPosition == null)){
+                        selectedIngredientPosition = i;
+                        oldSelection = view;
+                        view.setBackgroundColor(Color.parseColor("#FF9A9595"));
+                    }else if((selectedIngredientPosition != i)){
+                        clearSelection();
+                        selectedIngredientPosition = i;
+                        oldSelection = view;
+                        view.setBackgroundColor(Color.parseColor("#FF9A9595"));
+                    }else if((selectedIngredientPosition == i)){
+                        oldSelection = view;
+                        view.setBackgroundColor(Color.parseColor("#FF9A9595"));
+                    }
+                }
+                private void clearSelection() {
+                    if(oldSelection != null) {
+                        oldSelection.setBackgroundColor(Color.parseColor("#ED524E"));
+                    }
+                }
+            });
+
+            deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!ingredientList.isEmpty() && selectedIngredientPosition!= null) {
+                        ingredientList.remove(Integer.parseInt(selectedIngredientPosition.toString()));
+                        recipeIngredientAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
         }
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -366,7 +447,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     public void addIngredientToRecipe(View view) {
         Intent intent = new Intent(this, AddRecipeIngredient.class);
-
         activityResultLauncher.launch(intent);
     }
 
