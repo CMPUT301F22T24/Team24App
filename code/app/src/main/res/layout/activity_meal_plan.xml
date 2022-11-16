@@ -39,11 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:background="#343231"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:maxWidth="50dp"
             android:maxHeight="50dp"
             android:scaleType="fitCenter"
-            android:src="@mipmap/left_arrow" />
+            android:src="@mipmap/left_arrow_meal_plan" />
 
         <TextView
             android:layout_width="match_parent"
@@ -60,12 +60,12 @@
             android:id="@+id/next_week_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@mipmap/right_arrow"
+            android:src="@mipmap/right_arrow_meal_plan"
             android:layout_weight="0.5"
             android:maxWidth="10dp"
             android:maxHeight="10dp"
             android:scaleType="fitCenter"
-            android:background="#343231"/>
+            android:background="?attr/selectableItemBackgroundBorderless"/>
     </LinearLayout>
 
     <FrameLayout
