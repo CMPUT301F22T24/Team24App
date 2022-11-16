@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     Button ingredients;
     Button recipes;
+    Button mealPlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ingredients = findViewById(R.id.main_ingredient_button);
         recipes = findViewById(R.id.main_recipe_button);
+        mealPlan = findViewById(R.id.main_meal_plan_button);
     }
 
     /**
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public void startIngredientList(View view) {
         startActivity(new Intent(MainActivity.this, IngredientsActivity.class));
 
-    }//startIngredientList
+    }
 
     /**
      *
@@ -37,5 +39,15 @@ public class MainActivity extends AppCompatActivity {
     public void startRecipeList(View view) {
         startActivity(new Intent(MainActivity.this, RecipesActivity.class));
 
-    }//startRecipeList
+    }
+
+    /**
+     *
+     * @param view
+     * commences the activity_recipe_list.xml
+     */
+    public void startMealPlanList(View view) {
+        startActivity(new Intent(MainActivity.this, MealPlanActivity.class));
+
+    }
 }
