@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:background="1E1E1E"
+            android:background="#343231"
             android:maxWidth="50dp"
             android:maxHeight="50dp"
             android:scaleType="fitCenter"
@@ -65,7 +65,7 @@
             android:maxWidth="10dp"
             android:maxHeight="10dp"
             android:scaleType="fitCenter"
-            android:background="1E1E1E"/>
+            android:background="#343231"/>
     </LinearLayout>
 
     <FrameLayout
