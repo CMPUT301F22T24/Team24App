@@ -5,17 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MealPlanActivity extends AppCompatActivity {
     ListView mealPlanListView;
+    TextView currentWeek;
     ArrayList<MealPlan> mealPlanList;
+    ArrayList<LocalDate> week;
     MealPlanAdapter mealPlanAdapter;
     ActivityResultLauncher<Intent> activityResultLauncher;
     MealPlanActivityViewModel viewModel;
+    LocalDate currSunday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,18 +33,50 @@ public class MealPlanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meal_plan);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // set the buttons and text view
+        currentWeek = findViewById(R.id.current_week);
+
         // initialize the array adapter for the list of meal plans
         mealPlanListView= findViewById(R.id.meal_plan_list);
         mealPlanList = new ArrayList<>();
-        Recipe recipe = new Recipe();
-        recipe.setTitle("testing");
-        Ingredient ingredient = new Ingredient();
-        ingredient.setDescription("hola");
-        MealPlan meal1 = new MealPlan(new Date(), recipe,recipe,recipe,null,null,null);
-        MealPlan meal2 = new MealPlan(new Date(), null,recipe,null,null,null,ingredient);
-        mealPlanList.add(meal1);
-        mealPlanList.add(meal2);
         mealPlanAdapter = new MealPlanAdapter(this, mealPlanList);
         mealPlanListView.setAdapter(mealPlanAdapter);
+
+        currSunday =
+                LocalDate.now( ZoneId.systemDefault())
+                        .with( TemporalAdjusters.previous( DayOfWeek.SUNDAY ) );
+        setWeek(currSunday);
+
+    }
+
+    public void onClickNextWeek(View view){
+        currSunday = currSunday.plusDays(7);
+        setWeek(currSunday);
+    }
+
+    public void onClickPrevWeek(View view){
+        currSunday = currSunday.minusDays(7);
+        setWeek(currSunday);
+    }
+
+    public void setWeek(LocalDate currDate){
+        // clear the week
+        week = new ArrayList<>();
+
+        // get the days of the week
+        MealPlan meal;
+        for(int i = 0; i < 7; i++){
+            week.add(currDate);
+            meal = new MealPlan(currDate,null,null,null,null,null,null);
+            mealPlanList.add(meal);
+            currDate =  currDate.plusDays(1);
+        }
+
+        // update the current week
+        LocalDate firstDay = week.get(0);
+        LocalDate lastDay = week.get(6);
+        String currWeek = firstDay.getMonth().toString().substring(0,3) + " " + Integer.toString(firstDay.getDayOfMonth())
+                +" - " + lastDay.getMonth().toString().substring(0,3) + " " + Integer.toString(lastDay.getDayOfMonth());
+        currentWeek.setText(currWeek);
     }
 }

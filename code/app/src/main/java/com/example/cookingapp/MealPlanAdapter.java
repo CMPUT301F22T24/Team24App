@@ -10,11 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * <p>
@@ -50,7 +46,7 @@ public class MealPlanAdapter extends ArrayAdapter<MealPlan> {
 
 
         // set all of the required fields for each item in the list
-        dayOfWeek.setText(getDayStringOld(mealPlan.getDate(),new Locale("en")));
+        dayOfWeek.setText(mealPlan.getDate().getDayOfWeek().toString());
 
         String breakfast_title = mealPlan.getBreakfastRecipe() != null ?
                 mealPlan.getBreakfastRecipe().getTitle(): mealPlan.getBreakfastIngredient() != null ?
@@ -69,11 +65,6 @@ public class MealPlanAdapter extends ArrayAdapter<MealPlan> {
 
 
         return view;
-    }
-
-    public static String getDayStringOld(Date date, Locale locale) {
-        DateFormat formatter = new SimpleDateFormat("EEEE", locale);
-        return formatter.format(date);
     }
 
 }
