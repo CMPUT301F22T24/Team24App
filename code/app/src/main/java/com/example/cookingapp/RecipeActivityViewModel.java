@@ -27,6 +27,7 @@ public class RecipeActivityViewModel extends ViewModel {
     final String TAG = "RecipesActivity";
     private FirebaseFirestore db;
     private MutableLiveData<ArrayList<Recipe>> recipes;
+
     public LiveData<ArrayList<Recipe>> getRecipe() {
         if(recipes == null) {
             recipes = new MutableLiveData<>();
@@ -75,9 +76,8 @@ public class RecipeActivityViewModel extends ViewModel {
         data.put("comments", recipe.getComments());
         data.put("prepTime",recipe.getPrepTime());
         data.put("ingredients", recipe.getIngredients());
-        ;
-
         data.put("image", recipe.getImage());
+
         db = FirebaseFirestore.getInstance();
         db.collection("Recipe").add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

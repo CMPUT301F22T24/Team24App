@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class MealPlan implements Serializable {
-    private LocalDate date;
+    private String date;
 
     /* How to differentiate between recipe and ingredient ? */
     private Recipe breakfastRecipe;
@@ -20,7 +20,7 @@ public class MealPlan implements Serializable {
     @DocumentId
     private String documentId; // for data base
 
-    public MealPlan(LocalDate date, Recipe breakfastRecipe, Recipe lunchRecipe, Recipe dinnerRecipe, Ingredient breakfastIngredient, Ingredient lunchIngredient, Ingredient dinnerIngredient) {
+    public MealPlan(String date, Recipe breakfastRecipe, Recipe lunchRecipe, Recipe dinnerRecipe, Ingredient breakfastIngredient, Ingredient lunchIngredient, Ingredient dinnerIngredient) {
         this.date = date;
         this.breakfastRecipe = breakfastRecipe;
         this.lunchRecipe = lunchRecipe;
@@ -30,7 +30,7 @@ public class MealPlan implements Serializable {
         this.dinnerIngredient = dinnerIngredient;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 

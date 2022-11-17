@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -46,7 +47,7 @@ public class MealPlanAdapter extends ArrayAdapter<MealPlan> {
 
 
         // set all of the required fields for each item in the list
-        dayOfWeek.setText(mealPlan.getDate().getDayOfWeek().toString());
+        dayOfWeek.setText(LocalDate.parse(mealPlan.getDate()).getDayOfWeek().toString());
 
         String breakfast_title = mealPlan.getBreakfastRecipe() != null ?
                 mealPlan.getBreakfastRecipe().getTitle(): mealPlan.getBreakfastIngredient() != null ?

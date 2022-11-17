@@ -7,30 +7,40 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
+
 /**
  * <p>
  * This is the class for the meal plan view model for the data base
  * </p>
  */
 public class MealPlanActivityViewModel extends ViewModel {
-    // TODO: write the query so that only the recipes between certain dates are shown
+    // TODO: write the query so that only the mealPlans between certain dates are shown
 
     final String TAG = "MealPlanActivity";
     private FirebaseFirestore db;
-    private MutableLiveData<ArrayList<MealPlan>> mealPlans;
-    public LiveData<ArrayList<MealPlan>> getMealPlan() {
-        if(mealPlans == null) {
-            mealPlans = new MutableLiveData<>();
-            loadMealPlan();
-        }
+    private ArrayList<MealPlan> mealPlans;
+
+    public ArrayList<MealPlan> getMealPlan(String day) {
+        mealPlans = new ArrayList<>();
+        loadMealPlan(day);
         return mealPlans;
     }
 
@@ -40,16 +50,24 @@ public class MealPlanActivityViewModel extends ViewModel {
      * and stores them in an array list
      * </p>
      */
-    private void loadMealPlan() {
+    private void loadMealPlan(String day) {
         // fetch from db
         db = FirebaseFirestore.getInstance();
-        db.collection("MealPlan").get()
-                .addOnSuccessListener(new OnSuccessListener<>() {
+        db.collection("MealPlan").whereEqualTo("date", day).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        ArrayList<MealPlan> query = new ArrayList<>(queryDocumentSnapshots.toObjects(MealPlan.class));
-                        mealPlans.setValue(query);
-                        Log.d(TAG, "Data retrieved successfully");
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Gson gson = new Gson();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                JsonElement jsonElement = gson.toJsonTree(document.getData());
+                                MealPlan meal = gson.fromJson(jsonElement, MealPlan.class);
+                                mealPlans.add(meal);
+                            }
+                            Log.d(TAG, "Data retrieved successfully");
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -82,9 +100,6 @@ public class MealPlanActivityViewModel extends ViewModel {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         mealPlan.setDocumentId(documentReference.getId());
-                        ArrayList<MealPlan> updated = mealPlans.getValue();
-                        updated.add(mealPlan);
-                        mealPlans.setValue(updated);
                         Log.d(TAG, "Data added successfully");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -96,6 +111,7 @@ public class MealPlanActivityViewModel extends ViewModel {
     }
 
     public void editMealPlan(@NonNull MealPlan mealPlan, int position) {
+        /*
         HashMap<String, Object> data = new HashMap<>();
         data.put("date", mealPlan.getDate());
         data.put("breakfastRecipe", mealPlan.getBreakfastRecipe());
@@ -129,6 +145,8 @@ public class MealPlanActivityViewModel extends ViewModel {
                     }
                 });
 
+         */
+
     }
 
     /**
@@ -138,6 +156,7 @@ public class MealPlanActivityViewModel extends ViewModel {
      * </p>
      */
     public void deleteMealPlan(@NonNull MealPlan mealPlan) {
+        /*
         db = FirebaseFirestore.getInstance();
         db.collection("MealPlan").document(mealPlan.getDocumentId()).delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -154,6 +173,9 @@ public class MealPlanActivityViewModel extends ViewModel {
                         Log.d(TAG, "Data failed to be deleted");
                     }
                 });
+
+         */
     }
+
 }
 
