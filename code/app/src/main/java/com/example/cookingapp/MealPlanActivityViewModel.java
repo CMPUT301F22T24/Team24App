@@ -45,10 +45,10 @@ public class MealPlanActivityViewModel extends ViewModel {
     private MutableLiveData<ArrayList<MealPlan>> mealPlans;
 
     public LiveData<ArrayList<MealPlan>> getMealPlan(String day) {
-        if (mealPlans == null) {
-            mealPlans = new MutableLiveData<>();
-            loadMealPlan(day);
-        }
+
+        mealPlans = new MutableLiveData<>();
+        loadMealPlan(day);
+
         return mealPlans;
     }
 
@@ -67,6 +67,10 @@ public class MealPlanActivityViewModel extends ViewModel {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         ArrayList<MealPlan> query = new ArrayList<>();
+                        mealPlans.setValue(new ArrayList<>());
+                        if (documentSnapshot.getData() == null)
+                            return;
+
                         Map<String, Object> week = (Map<String, Object>) documentSnapshot.getData();
                         for (Map.Entry<String, Object> day : week.entrySet()) {
                             Map<String, DocumentReference> referenceMap = (Map<String, DocumentReference>) day.getValue();
@@ -87,7 +91,6 @@ public class MealPlanActivityViewModel extends ViewModel {
                                 documentSnapshotTask.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        // System.out.println(documentSnapshot.toObject(Recipe.class));
                                         switch (field) {
                                             case "breakfastRecipe":
                                                 breakfastRecipe[0] = documentSnapshot.toObject(Recipe.class);
@@ -111,7 +114,6 @@ public class MealPlanActivityViewModel extends ViewModel {
                             Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
                                 @Override
                                 public void onSuccess(List<Object> objects) {
-                                    System.out.println("reee");
                                     MealPlan mealPlan = new MealPlan(day.getKey(), breakfastRecipe[0], lunchRecipe[0], dinnerRecipe[0], null, null, null);
                                     mealPlan.setDocumentId(documentSnapshot.getId());
                                     query.add(mealPlan);
@@ -119,11 +121,6 @@ public class MealPlanActivityViewModel extends ViewModel {
                                 }
                             });
                         }
-                        System.out.println(query);
-                        for (MealPlan m : query) {
-                            System.out.println(m);
-                        }
-
                         Log.d(TAG, "Data added successfully");
                     }
                 })

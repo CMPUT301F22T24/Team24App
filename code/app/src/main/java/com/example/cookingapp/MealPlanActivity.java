@@ -69,20 +69,21 @@ public class MealPlanActivity extends AppCompatActivity {
         for(int i = 0; i < 7; i++){
             week.add(currDate);
             meal = new MealPlan(currDate.toString(),null,null,null,null,null,null);
-            mealPlanList.add(meal);
-            getFromDB(currDate.toString());
+            // mealPlanList.add(meal);
             currDate =  currDate.plusDays(1);
         }
 
         // update the current week
         LocalDate firstDay = week.get(0);
         LocalDate lastDay = week.get(6);
+        getFromDB(firstDay.toString());
         String currWeek = firstDay.getMonth().toString().substring(0,3) + " " + Integer.toString(firstDay.getDayOfMonth())
                 +" - " + lastDay.getMonth().toString().substring(0,3) + " " + Integer.toString(lastDay.getDayOfMonth());
         currentWeek.setText(currWeek);
     }
 
     public void getFromDB(String day) {
+        System.out.println(day);
         viewModel = new ViewModelProvider(this).get(MealPlanActivityViewModel.class);
         viewModel.getMealPlan(day).observe(this, new Observer<ArrayList<MealPlan>>() {
             @Override
