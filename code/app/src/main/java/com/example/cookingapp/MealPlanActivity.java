@@ -2,6 +2,7 @@ package com.example.cookingapp;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -20,12 +21,12 @@ public class MealPlanActivity extends AppCompatActivity {
     ListView mealPlanListView;
     TextView currentWeek;
     ArrayList<MealPlan> mealPlanList;
-    ArrayList<MealPlan> dbMeal;
     ArrayList<LocalDate> week;
     MealPlanAdapter mealPlanAdapter;
     ActivityResultLauncher<Intent> activityResultLauncher;
     MealPlanActivityViewModel viewModel;
-    LocalDate currSunday;
+    LocalDate currMonday;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,26 +43,21 @@ public class MealPlanActivity extends AppCompatActivity {
         mealPlanAdapter = new MealPlanAdapter(this, mealPlanList);
         mealPlanListView.setAdapter(mealPlanAdapter);
 
-        currSunday =
+        currMonday =
                 LocalDate.now( ZoneId.systemDefault())
-                        .with( TemporalAdjusters.previous( DayOfWeek.SUNDAY ) );
-        //Recipe recipe = new Recipe();
-        //recipe.setTitle("testing");
-        //MealPlan testMeal = new MealPlan(currSunday.toString(),recipe,null,null,null,null,null);
+                        .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
 
-        //viewModel = new ViewModelProvider(this).get(MealPlanActivityViewModel.class);
-        //viewModel.addMealPlan(testMeal);
-        setWeek(currSunday);
+        setWeek(currMonday);
     }
 
     public void onClickNextWeek(View view){
-        currSunday = currSunday.plusDays(7);
-        setWeek(currSunday);
+        currMonday = currMonday.plusDays(7);
+        setWeek(currMonday);
     }
 
     public void onClickPrevWeek(View view){
-        currSunday = currSunday.minusDays(7);
-        setWeek(currSunday);
+        currMonday = currMonday.minusDays(7);
+        setWeek(currMonday);
     }
 
     public void setWeek(LocalDate currDate){
@@ -74,7 +70,7 @@ public class MealPlanActivity extends AppCompatActivity {
             week.add(currDate);
             meal = new MealPlan(currDate.toString(),null,null,null,null,null,null);
             mealPlanList.add(meal);
-            getFromDB(currDate.toString(),i);
+            getFromDB(currDate.toString());
             currDate =  currDate.plusDays(1);
         }
 
@@ -86,12 +82,18 @@ public class MealPlanActivity extends AppCompatActivity {
         currentWeek.setText(currWeek);
     }
 
-    public void getFromDB(String day, int position) {
+    public void getFromDB(String day) {
         viewModel = new ViewModelProvider(this).get(MealPlanActivityViewModel.class);
-        ArrayList<MealPlan> arrayMeal = viewModel.getMealPlan(day);
-        if (arrayMeal.size() >= 1) {
-            MealPlan meal = arrayMeal.get(0);
-            mealPlanList.add(position,meal);
-        }
+        viewModel.getMealPlan(day).observe(this, new Observer<ArrayList<MealPlan>>() {
+            @Override
+            public void onChanged(ArrayList<MealPlan> mealPlans) {
+                if (mealPlans != null) {
+                    mealPlanList = mealPlans;
+                    mealPlanAdapter = new MealPlanAdapter(getApplicationContext(), mealPlans);
+                    mealPlanListView.setAdapter(mealPlanAdapter);
+                }
+                mealPlanAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
