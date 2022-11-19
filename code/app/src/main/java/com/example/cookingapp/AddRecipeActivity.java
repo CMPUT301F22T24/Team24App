@@ -7,11 +7,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,16 +27,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +65,11 @@ public class AddRecipeActivity extends AppCompatActivity {
     Button add;
     Button confirm;
     Button deleteIngredientButton;
+    ImageButton openGallery;
+    ImageButton openCamera;
     Integer selectedIngredientPosition = null;
-    Uri imageUri = null;
+    Bitmap imageBitMap = null;
+    //Uri imageUri = null;
     View oldSelection = null;
 
     ListView ingredientListView;
@@ -82,7 +90,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         title = findViewById(R.id.add_recipe_title_editText);
         servings = findViewById(R.id.add_recipe_servings_editText);
         comments = findViewById(R.id.add_recipe_comments_editText);
-        image = findViewById(R.id.add_recipe_imageView);
+        image = findViewById(R.id.recipe_Image);
+        openGallery = findViewById(R.id.open_gallery);
+        openCamera = findViewById(R.id.open_camera);
         minPicker = findViewById(R.id.min_numberPicker);
         hourPicker = findViewById(R.id.hour_numberPicker);
         categorySpinner = findViewById(R.id.add_recipe_category_spinner);
@@ -90,7 +100,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         deleteIngredientButton = findViewById(R.id.add_recipe_delete_ingredient_button);
         confirm = findViewById(R.id.add_recipe_confirm_button);
         confirm.setEnabled(false);
-        image.setClickable(true);
 
         title.addTextChangedListener(addRecipeTextWatcher);
         servings.addTextChangedListener(addRecipeTextWatcher);
@@ -237,7 +246,15 @@ public class AddRecipeActivity extends AppCompatActivity {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == RESULT_OK) {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Bundle bundle = result.getData().getExtras();
+                    Bitmap bitmap = (Bitmap) bundle.get("data");
+
+                    if(bitmap != null){
+                        image.setImageBitmap(bitmap);
+                        imageBitMap = bitmap;
+                    }
+
                     Intent intent = result.getData();
                     RecipeIngredient recipeIngredient = (RecipeIngredient) intent.getSerializableExtra("recipeIngredient");
                     if (recipeIngredient != null) {
@@ -292,9 +309,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         String recipePrepTime = String.valueOf(prepTimeHours) + " hrs " + String.valueOf(prepTimeMinutes) + " min";
         String recipeImageBitMap = null;
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            int nh = (int) (bitmap.getHeight() * (512.0 / bitmap.getWidth()));
-            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
+            int nh = (int) (imageBitMap.getHeight() * (512.0 / imageBitMap.getWidth()));
+            Bitmap scaled = Bitmap.createScaledBitmap(imageBitMap, 512, nh, true);
             recipeImageBitMap = BitMapToString(scaled);
         } catch (Exception e) {
             System.out.println("something went wrong");
@@ -318,9 +334,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         String recipePrepTime = String.valueOf(prepTimeHours) + " hrs " + String.valueOf(prepTimeMinutes) + " min";
         String recipeImageBitMap = null;
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-            int nh = (int) (bitmap.getHeight() * (512.0 / bitmap.getWidth()));
-            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
+            int nh = (int) (imageBitMap.getHeight() * (512.0 / imageBitMap.getWidth()));
+            Bitmap scaled = Bitmap.createScaledBitmap(imageBitMap, 512, nh, true);
             recipeImageBitMap = BitMapToString(scaled);
         } catch (Exception e) {
             System.out.println("something went wrong");
@@ -399,6 +414,10 @@ public class AddRecipeActivity extends AppCompatActivity {
         hourPicker.setMinValue(0);
     }
 
+    private Bitmap UriToBitMap(Uri uri) throws IOException {
+        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+        return bitmap;
+    }
     /**
      * <p>
      * This method is called when the user clicks to choose an image. It redirects them to the
@@ -413,14 +432,37 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onActivityResult(Uri result) {
                 image.setImageURI(result);
-                imageUri = result;
+                try {
+                    imageBitMap = UriToBitMap(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-        image.setOnClickListener(new View.OnClickListener() {
+        openGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getImage.launch("image/*");
+            }
+        });
+
+        openCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                if (intent.resolveActivity(getPackageManager()) != null){
+                    //activityResultLauncher.launch(intent);
+                    try {
+                        activityResultLauncher.launch(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(AddRecipeActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(AddRecipeActivity.this, "Does not support this action",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
