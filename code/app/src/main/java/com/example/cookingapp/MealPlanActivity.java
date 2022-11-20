@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MealPlanActivity extends AppCompatActivity {
     ListView mealPlanListView;
@@ -63,13 +65,13 @@ public class MealPlanActivity extends AppCompatActivity {
     public void setWeek(LocalDate currDate){
         // clear the week
         week = new ArrayList<>();
-
+        mealPlanList.clear();
         // get the days of the week
         MealPlan meal;
         for(int i = 0; i < 7; i++){
             week.add(currDate);
             meal = new MealPlan(currDate.toString(),null,null,null,null,null,null);
-            // mealPlanList.add(meal);
+            mealPlanList.add(meal);
             currDate =  currDate.plusDays(1);
         }
 
@@ -89,8 +91,15 @@ public class MealPlanActivity extends AppCompatActivity {
             @Override
             public void onChanged(ArrayList<MealPlan> mealPlans) {
                 if (mealPlans != null) {
-                    mealPlanList = mealPlans;
-                    mealPlanAdapter = new MealPlanAdapter(getApplicationContext(), mealPlans);
+                    ArrayList<MealPlan> newMeals = mealPlanList;
+                    int ind;
+                    for(int i = 0; i < mealPlans.size();i++){
+                        ind = week.indexOf(LocalDate.parse(mealPlans.get(i).getDate()));
+                        newMeals.remove(ind);
+                        newMeals.add(ind,mealPlans.get(i));
+                    }
+                    mealPlanList = newMeals;
+                    mealPlanAdapter = new MealPlanAdapter(getApplicationContext(), newMeals);
                     mealPlanListView.setAdapter(mealPlanAdapter);
                 }
                 mealPlanAdapter.notifyDataSetChanged();
