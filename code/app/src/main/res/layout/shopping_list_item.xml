@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:orientation="horizontal"
+    android:background="#343231"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
+
+
+    <CheckBox
+        android:id="@+id/shopping_list_"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:buttonTint="#ED524E"
+        android:text="" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/shopping_list_ingredient_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/karma_medium"
+            android:text="Potato"
+            android:textColor="#E9E5E5"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/shopping_list_ingredient_count_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/karma_medium"
+            android:text="Count: 5kg"
+            android:textColor="#E9E5E5"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/shopping_list_ingredient_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/karma_medium"
+            android:text="Category: vegetable"
+            android:textColor="#E9E5E5"
+            android:textSize="20sp"
+             />
+
+        <TextView
+            android:id="@+id/shopping_list_ingredient_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/karma_medium"
+            android:text="Location: Pantry"
+            android:textColor="#E9E5E5"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

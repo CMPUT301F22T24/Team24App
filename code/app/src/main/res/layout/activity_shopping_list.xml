@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#343231">
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="5dp"
+        android:layout_margin="5dp">
+        <Button
+            android:id="@+id/new_ingredient_button"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1.5"
+            android:background = "@drawable/custom_button"
+            android:fontFamily="@font/karma_medium"
+            android:text="New Ingredient"
+            android:textAllCaps="false"
+            android:textSize="13sp" />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Sort By:"
+            android:textColor="#ED524E"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/shopping_list_sortBy_spinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#EC524E"
+            android:popupBackground="#343231"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="5dp"
+        android:layout_margin="5dp">
+
+        <ImageButton
+            android:id="@+id/previous_shopping_week_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:maxWidth="50dp"
+            android:maxHeight="50dp"
+            android:scaleType="fitCenter"
+            android:onClick="onClickPrevWeek"
+            android:src="@mipmap/left_arrow_meal_plan" />
+
+        <TextView
+            android:id="@+id/current_shopping_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Oct 10 - Oct 16"
+            android:textAlignment="center"
+            android:textColor="#E9E5E5"
+            android:layout_weight="2"
+            android:textSize="30sp" />
+
+        <ImageButton
+            android:id="@+id/next_shopping_week_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/right_arrow_meal_plan"
+            android:layout_weight="0.5"
+            android:maxWidth="10dp"
+            android:maxHeight="10dp"
+            android:scaleType="fitCenter"
+            android:onClick="onClickNextWeek"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/shopping_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:dividerHeight="12.0sp"
+
+        />
+
+
+
+</LinearLayout>
