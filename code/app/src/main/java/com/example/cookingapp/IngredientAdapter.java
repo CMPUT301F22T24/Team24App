@@ -57,14 +57,14 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
         TextView ingredientLocation = view.findViewById(R.id.ingredient_list_item_location);
         TextView ingredientAmount = view.findViewById(R.id.ingredient_list_item_amount);
 
-
+        String DescUnitCombo = ingredient.getAmount().toString() + ingredient.getUnit();
         ingredientDescription.setText(ingredient.getDescription());
 
         ingredientCategory.setText(ingredient.getCategory());
 
         ingredientLocation.setText(ingredient.getLocation());
 
-        ingredientAmount.setText(ingredient.getAmount().toString());
+        ingredientAmount.setText(DescUnitCombo);
         return view;
     }
 }
