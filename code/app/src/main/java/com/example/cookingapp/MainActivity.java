@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     Button ingredients;
     Button recipes;
     Button mealPlan;
+    Button ShoppingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         ingredients = findViewById(R.id.main_ingredient_button);
         recipes = findViewById(R.id.main_recipe_button);
         mealPlan = findViewById(R.id.main_meal_plan_button);
+        ShoppingList = findViewById(R.id.main_shopping_list_button);
     }
 
     /**
@@ -48,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void startMealPlanList(View view) {
         startActivity(new Intent(MainActivity.this, MealPlanActivity.class));
+
+    }
+    /**
+     *
+     * @param view
+     * commences the activity_recipe_list.xml
+     */
+    public void startShoppingList(View view) {
+        startActivity(new Intent(MainActivity.this, ShoppingListActivity.class));
 
     }
 }
