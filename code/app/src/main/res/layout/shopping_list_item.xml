@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/karma_medium"
-            android:text="Category: vegetable"
+            android:text="Category: Vegetable"
             android:textColor="#E9E5E5"
             android:textSize="20sp"
              />

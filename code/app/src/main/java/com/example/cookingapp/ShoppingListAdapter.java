@@ -12,19 +12,20 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class ShoppingListAdapter extends ArrayAdapter<Ingredient> {
+public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 
-    private ArrayList<Ingredient> ingredientList;
+    private ArrayList<ShoppingList> shoppingL;
     private Context context;
     /**
+     *
      * Constructor of the ShoppingListAdapter
      * @param context
-     * @param ingredientList
+     * @param shoppingL
      */
-    public ShoppingListAdapter(@NonNull Context context, @NonNull ArrayList<Ingredient> ingredientList) {
-        super(context,0, ingredientList);
+    public ShoppingListAdapter(@NonNull Context context, @NonNull ArrayList<ShoppingList> shoppingL) {
+        super(context,0, shoppingL);
         this.context = context;
-        this.ingredientList = ingredientList;
+        this.shoppingL = shoppingL;
     }
 
     @NonNull
@@ -37,22 +38,25 @@ public class ShoppingListAdapter extends ArrayAdapter<Ingredient> {
                     .inflate(R.layout.shopping_list_item, parent, false);
         }
 
-        Ingredient ingredient = ingredientList.get(position);
+        ShoppingList shoppingList = shoppingL.get(position);
 
 
-        TextView ingredientDescription = view.findViewById(R.id.ingredient_list_item_description);
-        TextView ingredientCategory = view.findViewById(R.id.ingredient_list_item_category);
-        TextView ingredientUnit = view.findViewById(R.id.ingredient_list_item_location);
-        TextView ingredientAmount = view.findViewById(R.id.ingredient_list_item_amount);
+
+        TextView ShoppingIngredientDescription = view.findViewById(R.id.shopping_list_ingredient_name);
+        TextView ShoppingIngredientCategory = view.findViewById(R.id.shopping_list_ingredient_category);
+        TextView ShoppingIngredientUnit = view.findViewById(R.id.shopping_list_ingredient_location);
+        TextView ShoppingIngredientAmount = view.findViewById(R.id.shopping_list_ingredient_count_unit);
 
 
-        ingredientDescription.setText(ingredient.getDescription());
+        ShoppingIngredientDescription.setText(shoppingList.getDescription());
 
-        ingredientCategory.setText(ingredient.getCategory());
+        ShoppingIngredientCategory.setText(shoppingList.getCategory());
 
-        ingredientUnit.setText(ingredient.getUnit());
+        ShoppingIngredientUnit.setText(shoppingList.getUnit());
 
-        ingredientAmount.setText(ingredient.getAmount().toString());
+        String temp=shoppingList.getAmount().toString() + shoppingList.getUnit();
+        ShoppingIngredientAmount.setText(temp);
+
         return view;
     }
 }
