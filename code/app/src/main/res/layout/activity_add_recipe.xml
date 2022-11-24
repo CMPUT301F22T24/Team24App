@@ -26,7 +26,7 @@
             android:text="Add Recipe"
             android:textColor="#E9E5E5"
             android:textSize="30dp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold"/>
 
         <!--Recipe Title-->
         <LinearLayout
@@ -43,7 +43,7 @@
                 android:text="Title"
                 android:textColor="#E9E5E5"
                 android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/add_recipe_title_editText"
@@ -57,7 +57,7 @@
                 android:minHeight="48dp"
                 android:padding="5dp"
                 android:textColor="#E9E5E5"
-                android:textColorHint="#99E9E5E5"></EditText>
+                android:textColorHint="#99E9E5E5"/>
 
         </LinearLayout>
 
@@ -77,7 +77,7 @@
                 android:text="Preparation Time"
                 android:textColor="#E9E5E5"
                 android:textSize="20sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                     android:paddingVertical="30dp"
                     android:text="hrs"
                     android:textColor="#E9E5E5"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <NumberPicker
                     android:id="@+id/min_numberPicker"
@@ -137,7 +137,7 @@
                 android:text="Number of Servings"
                 android:textColor="#E9E5E5"
                 android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/add_recipe_servings_editText"
@@ -152,7 +152,7 @@
                 android:minHeight="48dp"
                 android:padding="5dp"
                 android:textColor="#E9E5E5"
-                android:textColorHint="#99E9E5E5"></EditText>
+                android:textColorHint="#99E9E5E5"/>
 
         </LinearLayout>
 
@@ -200,7 +200,7 @@
                 android:text="Comments"
                 android:textColor="#E9E5E5"
                 android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/add_recipe_comments_editText"
@@ -214,7 +214,7 @@
                 android:minHeight="48dp"
                 android:padding="5dp"
                 android:textColor="#E9E5E5"
-                android:textColorHint="#99E9E5E5"></EditText>
+                android:textColorHint="#99E9E5E5"/>
 
         </LinearLayout>
 
@@ -233,7 +233,7 @@
                 android:text="Upload Image"
                 android:textColor="#E9E5E5"
                 android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
             <ImageView
                 android:id="@+id/recipe_Image"
                 android:layout_width="match_parent"
@@ -285,7 +285,7 @@
                     android:text="Ingredients"
                     android:textColor="#E9E5E5"
                     android:textSize="20dp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/add_recipe_delete_ingredient_button"
