@@ -1,5 +1,7 @@
 package com.example.cookingapp;
 
+import com.google.firebase.firestore.DocumentId;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -12,7 +14,8 @@ public class ShoppingList implements Serializable {
     private String category;
     private Boolean isChecked;
 
-
+    @DocumentId
+    private String documentId;
 
     public ShoppingList() {
         this.description = null;
@@ -89,5 +92,13 @@ public class ShoppingList implements Serializable {
 
     public void setChecked(Boolean checked) {
         isChecked = checked;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 }//ShoppingList

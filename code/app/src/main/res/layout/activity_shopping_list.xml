@@ -1,16 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#343231"
+    android:fillViewport="true"
     tools:context=".ShoppingListActivity">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
 
+    <TextView
+        android:id="@+id/add_ingredient_title_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/karma_medium"
+        android:text="Shopping List"
+        android:textColor="#E9E5E5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        />
+    </LinearLayout>
 
 
     <LinearLayout
@@ -30,7 +53,7 @@
             android:fontFamily="@font/karma_medium"
             android:text="New Ingredient"
             android:textAllCaps="false"
-            android:textSize="13sp" />
+            android:textSize="11sp" />
         <TextView
             android:layout_width="100dp"
             android:layout_height="35dp"
@@ -38,7 +61,7 @@
             android:fontFamily="@font/karma_medium"
             android:text="Sort By:"
             android:textColor="#ED524E"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/shopping_list_sortBy_spinner"
@@ -93,16 +116,53 @@
             android:onClick="onClickNextWeek"
             android:background="?attr/selectableItemBackgroundBorderless"/>
     </LinearLayout>
-    <ListView
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <ListView
         android:id="@+id/shopping_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:padding="5dp"
-        android:dividerHeight="12.0sp"
+        android:dividerHeight="12.0sp" />
 
-        />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/done_shopping_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background = "@drawable/custom_button"
+                android:fontFamily="@font/karma_medium"
+                android:text="Done Shopping"
+                android:textAllCaps="false"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
 
 
-</LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+</ScrollView>

@@ -10,13 +10,49 @@
     android:paddingEnd="5dp">
 
 
-    <CheckBox
-        android:id="@+id/shopping_list_"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <NumberPicker
+        android:id="@+id/first_numeric"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
         android:layout_weight="2"
-        android:buttonTint="#ED524E"
-        android:text="" />
+        android:theme="@style/AppTheme.Picker" />
+
+    <TextView
+        android:id="@+id/decimal_left"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/karma_medium"
+        android:text="."
+        android:textColor="#E9E5E5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_gravity="bottom" />
+
+    <NumberPicker
+        android:id="@+id/second_numeric"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:layout_weight="2"
+        android:theme="@style/AppTheme.Picker" />
+    <TextView
+        android:id="@+id/decimal_right"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/karma_medium"
+        android:text="."
+        android:textColor="#E9E5E5"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_gravity="bottom" />
+
+    <NumberPicker
+        android:id="@+id/third_numeric"
+        android:layout_width="wrap_content"
+        android:layout_height="90dp"
+        android:layout_weight="2"
+        android:theme="@style/AppTheme.Picker" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -43,7 +79,8 @@
             android:fontFamily="@font/karma_medium"
             android:text="Count: 5kg"
             android:textColor="#E9E5E5"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
