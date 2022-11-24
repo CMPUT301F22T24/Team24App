@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Base64;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,7 +77,9 @@ public class ViewMealPlanActivity extends AppCompatActivity {
         String day = Integer.toString(currentDate.getDayOfMonth());
         String year = Integer.toString(currentDate.getYear());
         String fullDate = month + " " + day + "," + year;
-        date.setText(fullDate);
+        SpannableString content = new SpannableString(fullDate);
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        date.setText(content);
     }
 
     public void setBreakfast(){
@@ -100,6 +104,7 @@ public class ViewMealPlanActivity extends AppCompatActivity {
             breakfastName.setText(null);
             prepTimeBreakfast.setText(null);
             servingsBreakfast.setText(null);
+            breakfastImage.setImageBitmap(null);
         }
 
     }
@@ -125,6 +130,7 @@ public class ViewMealPlanActivity extends AppCompatActivity {
             lunchName.setText(null);
             prepTimeLunch.setText(null);
             servingsLunch.setText(null);
+            lunchImage.setImageBitmap(null);
         }
 
     }
@@ -151,6 +157,7 @@ public class ViewMealPlanActivity extends AppCompatActivity {
             dinnerName.setText(null);
             prepTimeDinner.setText(null);
             servingsDinner.setText(null);
+            dinnerImage.setImageBitmap(null);
         }
 
     }
