@@ -1,6 +1,9 @@
 package com.example.cookingapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,6 +22,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class MealPlanActivity extends AppCompatActivity {
     ListView mealPlanListView;
@@ -27,14 +32,14 @@ public class MealPlanActivity extends AppCompatActivity {
     MealPlanAdapter mealPlanAdapter;
     ActivityResultLauncher<Intent> activityResultLauncher;
     MealPlanActivityViewModel viewModel;
-    LocalDate currMonday;
-
+    private static LocalDate currMonday = LocalDate.now( ZoneId.systemDefault())
+            .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // set the buttons and text view
         currentWeek = findViewById(R.id.current_week);
@@ -45,11 +50,24 @@ public class MealPlanActivity extends AppCompatActivity {
         mealPlanAdapter = new MealPlanAdapter(this, mealPlanList);
         mealPlanListView.setAdapter(mealPlanAdapter);
 
-        currMonday =
-                LocalDate.now( ZoneId.systemDefault())
-                        .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
-
         setWeek(currMonday);
+        onClickItem();
+    }
+
+    public void onClickItem(){
+        mealPlanListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                MealPlan meal = mealPlanList.get(i);
+                viewMeal(meal);
+            }//onItemClick
+        });
+    }
+
+    public void viewMeal(MealPlan meal){
+        Intent intent = new Intent(MealPlanActivity.this, ViewMealPlanActivity.class);
+        intent.putExtra("meal",meal);
+        startActivity(intent);
     }
 
     public void onClickNextWeek(View view){
@@ -90,6 +108,8 @@ public class MealPlanActivity extends AppCompatActivity {
         viewModel.getMealPlan(day).observe(this, new Observer<ArrayList<MealPlan>>() {
             @Override
             public void onChanged(ArrayList<MealPlan> mealPlans) {
+                ArrayList<MealPlan> meals = mealPlans;
+                System.out.println(meals);
                 if (mealPlans != null) {
                     ArrayList<MealPlan> newMeals = mealPlanList;
                     int ind;

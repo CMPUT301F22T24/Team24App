@@ -19,6 +19,7 @@
         android:layout_margin="5dp">
 
         <TextView
+            android:id="@+id/date_chosen"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginStart="5dp"
@@ -49,7 +50,6 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/day_of_the_week"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="8"
@@ -126,9 +126,12 @@
             </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/breakfast_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
             tools:srcCompat="@mipmap/camera" />
 
     </LinearLayout>
@@ -230,6 +233,9 @@
             android:id="@+id/lunch_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
             tools:srcCompat="@mipmap/camera" />
 
     </LinearLayout>
@@ -330,6 +336,9 @@
             android:id="@+id/dinner_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
             tools:srcCompat="@mipmap/camera" />
 
     </LinearLayout>
