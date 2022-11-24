@@ -312,6 +312,14 @@
                     android:textAllCaps="false"
                     android:textSize="15dp" />
 
+                <Button
+                    android:id="@+id/add_recipe_select_from_storage_button"
+                    android:layout_width="83dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onSelectFromStorage"
+                    android:text="Choose" />
+
             </LinearLayout>
 
             <ListView

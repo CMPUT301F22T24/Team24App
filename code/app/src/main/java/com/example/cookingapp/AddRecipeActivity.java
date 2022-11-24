@@ -384,6 +384,12 @@ public class AddRecipeActivity extends AppCompatActivity {
         categorySpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
     }
 
+    public void onSelectFromStorage(View view) {
+        Intent intent = new Intent(this, SelectFromStorage.class);
+        intent.putExtra("acode", 10);
+        activityResultLauncher.launch(intent);
+    }
+
     /**
      * <p>
      * Used to disable/enable confirm button based on spinner selections
