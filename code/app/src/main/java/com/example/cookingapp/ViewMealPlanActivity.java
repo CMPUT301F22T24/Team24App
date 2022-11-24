@@ -1,27 +1,23 @@
 package com.example.cookingapp;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Base64;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class ViewMealPlanActivity extends AppCompatActivity {
+public class ViewMealPlanActivity extends AppCompatActivity  implements ViewRecipeDialogFragment.OnFragmentInteractionListener,ViewIngredientDialogFragment.OnFragmentInteractionListener,AddMealPlanDialogFragment.OnFragmentInteractionListener {
     TextView prepTimeBreakfast;
     TextView prepTimeLunch;
     TextView prepTimeDinner;
@@ -34,6 +30,9 @@ public class ViewMealPlanActivity extends AppCompatActivity {
     ImageView breakfastImage;
     ImageView lunchImage;
     ImageView dinnerImage;
+    LinearLayout breakfastLayout;
+    LinearLayout lunchLayout;
+    LinearLayout dinnerLayout;
     TextView date;
     MealPlan mealPlan;
 
@@ -56,12 +55,18 @@ public class ViewMealPlanActivity extends AppCompatActivity {
         breakfastImage = findViewById(R.id.breakfast_image);
         lunchImage = findViewById(R.id.lunch_image);
         dinnerImage = findViewById(R.id.dinner_image);
+        breakfastLayout = findViewById(R.id.breakfast_layout);
+        lunchLayout = findViewById(R.id.lunch_layout);
+        dinnerLayout = findViewById(R.id.dinner_layout);
 
         getData();
         setDate();
         setBreakfast();
         setLunch();
         setDinner();
+        onBreakfastClick();
+        onLunchClick();
+        onDinnerClick();
     }
 
     public void getData(){
@@ -162,6 +167,65 @@ public class ViewMealPlanActivity extends AppCompatActivity {
 
     }
 
+    public void onBreakfastClick(){
+        breakfastLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ( mealPlan.getBreakfastRecipe() != null){
+                    Recipe breakfast = mealPlan.getBreakfastRecipe();
+                    ViewRecipeDialogFragment.newInstance(breakfast).show(getSupportFragmentManager(), "VIEW_RECIPE");
+
+                } else if (mealPlan.getBreakfastIngredient() != null) {
+                    Ingredient breakfast = mealPlan.getBreakfastIngredient();
+                    ViewIngredientDialogFragment.newInstance(breakfast).show(getSupportFragmentManager(), "VIEW_INGREDIENT");
+
+                } else {
+                    AddMealPlanDialogFragment.newInstance(mealPlan,"breakfast").show(getSupportFragmentManager(), "ADD_MEAL");
+                }
+
+            }
+        });
+    }
+
+    public void onLunchClick(){
+        lunchLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ( mealPlan.getLunchRecipe() != null){
+                    Recipe lunch = mealPlan.getLunchRecipe();
+                    ViewRecipeDialogFragment.newInstance(lunch).show(getSupportFragmentManager(), "VIEW_RECIPE");
+
+                } else if (mealPlan.getLunchIngredient() != null) {
+                    Ingredient lunch = mealPlan.getLunchIngredient();
+                    ViewIngredientDialogFragment.newInstance(lunch).show(getSupportFragmentManager(), "VIEW_INGREDIENT");
+
+
+                } else {
+                    AddMealPlanDialogFragment.newInstance(mealPlan,"lunch").show(getSupportFragmentManager(), "ADD_MEAL");
+                }
+            }
+        });
+    }
+
+    public void onDinnerClick(){
+        dinnerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ( mealPlan.getDinnerRecipe() != null){
+                    Recipe dinner = mealPlan.getDinnerRecipe();
+                    ViewRecipeDialogFragment.newInstance(dinner).show(getSupportFragmentManager(), "VIEW_RECIPE");
+
+                } else if (mealPlan.getDinnerIngredient() != null) {
+                    Ingredient dinner = mealPlan.getDinnerIngredient();
+                    ViewIngredientDialogFragment.newInstance(dinner).show(getSupportFragmentManager(), "VIEW_INGREDIENT");
+
+                } else {
+                    AddMealPlanDialogFragment.newInstance(mealPlan,"dinner").show(getSupportFragmentManager(), "ADD_MEAL");
+                }
+            }
+        });
+    }
+
     /**
      * @param encodedString
      * @return bitmap (from given string)
@@ -177,4 +241,28 @@ public class ViewMealPlanActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onEdit(Recipe recipe) {
+
+    }
+
+    @Override
+    public void onDelete(Recipe recipe) {
+
+    }
+
+    @Override
+    public void onEdit(Ingredient ingredient) {
+
+    }
+
+    @Override
+    public void onDelete(Ingredient ingredient) {
+
+    }
+
+    @Override
+    public void onAddMeal(MealPlan mealplan, String mealType) {
+        // mealType is either "breakfast", "lunch", "dinner"
+    }
 }

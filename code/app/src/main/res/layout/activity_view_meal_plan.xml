@@ -33,6 +33,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/breakfast_layout"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:orientation="horizontal"
@@ -137,6 +138,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lunch_layout"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:orientation="horizontal"
@@ -241,6 +243,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/dinner_layout"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:orientation="horizontal"

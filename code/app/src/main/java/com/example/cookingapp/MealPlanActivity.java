@@ -1,9 +1,6 @@
 package com.example.cookingapp;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,8 +17,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class MealPlanActivity extends AppCompatActivity {
@@ -86,7 +81,7 @@ public class MealPlanActivity extends AppCompatActivity {
         mealPlanList.clear();
         // get the days of the week
         MealPlan meal;
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < 7; i++) {
             week.add(currDate);
             meal = new MealPlan(currDate.toString(),null,null,null,null,null,null);
             mealPlanList.add(meal);
