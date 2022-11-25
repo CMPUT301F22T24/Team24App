@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,9 +13,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
+public class ShoppingListAdapter extends ArrayAdapter<ShoppingListItem> {
 
-    private ArrayList<ShoppingList> shoppingL;
+    private ArrayList<ShoppingListItem> shoppingL;
     private Context context;
     /**
      *
@@ -22,7 +23,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
      * @param context
      * @param shoppingL
      */
-    public ShoppingListAdapter(@NonNull Context context, @NonNull ArrayList<ShoppingList> shoppingL) {
+    public ShoppingListAdapter(@NonNull Context context, @NonNull ArrayList<ShoppingListItem> shoppingL) {
         super(context,0, shoppingL);
         this.context = context;
         this.shoppingL = shoppingL;
@@ -38,27 +39,30 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
                     .inflate(R.layout.shopping_list_item, parent, false);
         }
 
-        ShoppingList shoppingList = shoppingL.get(position);
-
+        ShoppingListItem shoppingList = shoppingL.get(position);
+        CheckBox isCheck =  view.findViewById(R.id.checkBox);
 
 
         TextView ShoppingIngredientDescription = view.findViewById(R.id.shopping_list_ingredient_name);
         TextView ShoppingIngredientCategory = view.findViewById(R.id.shopping_list_ingredient_category);
-        TextView ShoppingIngredientLocation = view.findViewById(R.id.shopping_list_ingredient_location);
         TextView ShoppingIngredientAmount = view.findViewById(R.id.shopping_list_ingredient_count_and_unit);
 
 
-        ShoppingIngredientDescription.setText(shoppingList.getDescription());
+        ShoppingIngredientDescription.setText(shoppingList.getIngredient().getDescription());
 
         String temp;
-        temp="Category: "+shoppingList.getCategory();
+        temp="Category: "+shoppingList.getIngredient().getCategory();
         ShoppingIngredientCategory.setText(temp);
 
-        temp="Location: "+shoppingList.getLocation();
-        ShoppingIngredientLocation.setText(temp);
 
-        temp="Required: "+shoppingList.getAmount().toString() + shoppingList.getUnit();
+
+        temp="Required: "+shoppingList.getIngredient().getAmount() + shoppingList.getIngredient().getUnit();
         ShoppingIngredientAmount.setText(temp);
+
+        if(shoppingList.getChecked()){
+            isCheck.setChecked(true);
+        }
+
 
         return view;
     }

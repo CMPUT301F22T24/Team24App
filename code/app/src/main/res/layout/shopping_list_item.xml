@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:buttonTint="#ED524E"
-            android:clickable="false"
             android:text="" />
 
         <TextView
@@ -99,17 +98,6 @@
             android:textSize="16sp"
              />
 
-        <TextView
-            android:id="@+id/shopping_list_ingredient_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingStart="15dp"
-            android:paddingEnd="0dp"
-            android:fontFamily="@font/karma_medium"
-            android:text="Location: Pantry"
-            android:textColor="#E9E5E5"
-            android:textSize="16sp" />
 
     </LinearLayout>
 

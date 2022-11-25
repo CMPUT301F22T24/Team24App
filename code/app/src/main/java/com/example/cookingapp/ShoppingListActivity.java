@@ -4,43 +4,42 @@ package com.example.cookingapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class ShoppingListActivity extends AppCompatActivity {
 
 
     ListView shoppingListview;
-    ArrayList<ShoppingList> shoppingList;
+    ArrayList<ShoppingListItem> shoppingList;
     ShoppingListAdapter shoppinglistadapter;
-    LocalDate expiryDate;
-    Button FromDate;
-    Button ToDate;
 
+    ArrayList<RecipeIngredient> ingredientList;
+
+
+    ArrayList<LocalDate> week;
+    TextView shopping_list_date_week;
+
+    private static LocalDate currMonday = LocalDate.now( ZoneId.systemDefault())
+            .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
-
-        FromDate = findViewById(R.id.shopping_list_from_date);
-        ToDate = findViewById(R.id.shopping_list_to_date);
-
+        shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
 
 
         shoppingListview = findViewById(R.id.shopping_list);
@@ -48,10 +47,18 @@ public class ShoppingListActivity extends AppCompatActivity {
         shoppinglistadapter = new ShoppingListAdapter(this, shoppingList);
         shoppingListview.setAdapter(shoppinglistadapter);
 
+        ingredientList = new ArrayList<>();
+        ingredientList.add(new RecipeIngredient("Potato","5.0","kg","vegetable"));
+        ingredientList.add(new RecipeIngredient("Tomato","2.77","kg","vegetable"));
 
-        shoppingList.add(new ShoppingList("potato",null, "pantry", 5.0, "kg", "vegetable", false));
-        shoppingList.add(new ShoppingList("Tomato",null, "pantry", 2.0, "kg", "vegetable", false));
-        shoppingList.add(new ShoppingList("Cucumber",null, "Fridge", 5.77, "kg", "vegetable", false));
+
+        Log.d("YesPlease",ingredientList.get(0).getDescription());
+
+        shoppingList.add(new ShoppingListItem(ingredientList.get(0),true));
+        shoppingList.add(new ShoppingListItem(ingredientList.get(1),false));
+
+        //Log.d("YesPlease",shoppingList.get(0).getIngredient().getDescription());
+
 
 
 
@@ -59,50 +66,29 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     }//oncreate
 
-    public void setFirstDate(View view){
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+    public void onClickNextWeekShopping(View view){
+        currMonday = currMonday.plusDays(7);
+        setWeek(currMonday);
+    }//onClickNextWeek
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(ShoppingListActivity.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                // account for android's indexing
-                LocalDate setDate = LocalDate.of(year, month+1, dayOfMonth);
-                LocalDate currentDate = LocalDate.now();
-     {
-                    expiryDate = LocalDate.of(year, month+1, dayOfMonth);
-                    FromDate.setText(expiryDate.toString());
-                }
-            }
-        }, year, month, day);
-        datePickerDialog.show();
+    public void onClickPrevWeekShopping(View view){
+        currMonday = currMonday.minusDays(7);
+        setWeek(currMonday);
+    }//onClickprevWeek
 
-    }//setDate
+    public void setWeek(LocalDate currDate){
+        // clear the week
+        week = new ArrayList<>();
+        shoppingList.clear();
+        // get the days of the week
+        MealPlan meal;
 
-
-
-    public void setSecondDate(View view){
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(ShoppingListActivity.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                // account for android's indexing
-                LocalDate setDate = LocalDate.of(year, month+1, dayOfMonth);
-                LocalDate currentDate = LocalDate.now();
-                {
-                    expiryDate = LocalDate.of(year, month+1, dayOfMonth);
-                    ToDate.setText(expiryDate.toString());
-                }
-            }
-        }, year, month, day);
-        datePickerDialog.show();
-
-    }//setDate
+        // update the current week
+        LocalDate firstDay = week.get(0);
+        LocalDate lastDay = week.get(6);
+        String currWeek = firstDay.getMonth().toString().substring(0,3) + " " + Integer.toString(firstDay.getDayOfMonth())
+                +" - " + lastDay.getMonth().toString().substring(0,3) + " " + Integer.toString(lastDay.getDayOfMonth());
+        shopping_list_date_week.setText(currWeek);
+    }//setWeek
 
 }
