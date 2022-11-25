@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingVertical="10dp"
+        android:paddingVertical="1dp"
         android:paddingHorizontal="5dp"
         android:layout_margin="5dp">
         <TextView
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingVertical="10dp"
+        android:paddingVertical="1dp"
         android:paddingHorizontal="5dp"
         android:layout_margin="5dp">
 
