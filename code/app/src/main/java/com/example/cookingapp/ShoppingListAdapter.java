@@ -44,17 +44,20 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingList> {
 
         TextView ShoppingIngredientDescription = view.findViewById(R.id.shopping_list_ingredient_name);
         TextView ShoppingIngredientCategory = view.findViewById(R.id.shopping_list_ingredient_category);
-        TextView ShoppingIngredientUnit = view.findViewById(R.id.shopping_list_ingredient_location);
-        TextView ShoppingIngredientAmount = view.findViewById(R.id.shopping_list_ingredient_count_unit);
+        TextView ShoppingIngredientLocation = view.findViewById(R.id.shopping_list_ingredient_location);
+        TextView ShoppingIngredientAmount = view.findViewById(R.id.shopping_list_ingredient_count_and_unit);
 
 
         ShoppingIngredientDescription.setText(shoppingList.getDescription());
 
-        ShoppingIngredientCategory.setText(shoppingList.getCategory());
+        String temp;
+        temp="Category: "+shoppingList.getCategory();
+        ShoppingIngredientCategory.setText(temp);
 
-        ShoppingIngredientUnit.setText(shoppingList.getUnit());
+        temp="Location: "+shoppingList.getLocation();
+        ShoppingIngredientLocation.setText(temp);
 
-        String temp=shoppingList.getAmount().toString() + shoppingList.getUnit();
+        temp="Required: "+shoppingList.getAmount().toString() + shoppingList.getUnit();
         ShoppingIngredientAmount.setText(temp);
 
         return view;
