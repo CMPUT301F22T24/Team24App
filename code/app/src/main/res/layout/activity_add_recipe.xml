@@ -312,21 +312,23 @@
                     android:textAllCaps="false"
                     android:textSize="15dp" />
 
+                <Button
+                    android:id="@+id/add_recipe_select_from_storage_button"
+                    android:layout_width="27dp"
+                    android:layout_height="34dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:fontFamily="@font/karma_medium"
+                    android:onClick="onSelectFromStorage"
+                    android:text="Select from Ingredient Storage"
+                    android:textAllCaps="false"
+                    android:textSize="15dp" />
+
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/add_recipe_select_from_storage_button"                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:layout_gravity="end"
-                android:background="@drawable/custom_button"
-                android:fontFamily="@font/karma_medium"
-                android:text="Select from Ingredient Storage"
-                android:onClick="onSelectFromStorage"
-                android:textAllCaps="false"
-                android:textSize="12sp" />
+
 
             <ListView
                 android:id="@+id/recipe_ingredient_list"

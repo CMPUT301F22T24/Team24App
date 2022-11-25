@@ -53,6 +53,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     int receivedCode; // code this activity receives
     private final int EDIT_OK = 1;
     int resultCode = RESULT_OK; // default is add
+    private final int SELECTION_OK = 2;
 
     TextView titleTextView;
     ImageView image;
@@ -260,6 +261,15 @@ public class AddRecipeActivity extends AppCompatActivity {
                     if (recipeIngredient != null) {
                         // retrieved recipeIngredient successfully from addRecipeIngredient activity
                         ingredientList.add(recipeIngredient);
+                        recipeIngredientAdapter.notifyDataSetChanged();
+                    }
+                }
+                if (result.getResultCode() == 2) {
+                    Intent intent = result.getData();
+                    StorageSelection selection = (StorageSelection) intent.getSerializableExtra("list");;
+                    // selection has the list of selected ingredients
+                    for (RecipeIngredient r : selection.getIngredients()) {
+                        ingredientList.add(r);
                         recipeIngredientAdapter.notifyDataSetChanged();
                     }
                 }

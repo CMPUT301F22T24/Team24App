@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -16,7 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
+import java.io.Serializable;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -85,34 +87,6 @@ public class SelectFromStorage extends AppCompatActivity {
             }
         });
 
-
-
-
-//        ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                Toast.makeText(SelectFromStorage.this, "yikers", Toast.LENGTH_SHORT).show();
-//                // use map to see if we should add or remove
-//                Boolean shouldAdd = selections.get(position);
-//                if (selections.get(position) == Boolean.TRUE) {
-//                    // add it to the list
-//                    selectedIngredientList.add(recipeIngredientList.get(position));
-//                    // next time it it selected (unchecked) we will want to remove it
-//                    selections.put(position, Boolean.FALSE);
-//
-//                }
-//
-//                else {
-//                    // map returned false so item has been unselected
-//                    // remove from list
-//                    selectedIngredientList.remove(recipeIngredientList.get(position));
-//                    // next time this item is selected we want to add it
-//                    selections.put(position, Boolean.TRUE);
-//                }
-//            }
-//        });
-
-
     }
 
     // after on create
@@ -120,8 +94,18 @@ public class SelectFromStorage extends AppCompatActivity {
         for (RecipeIngredient r : selectedIngredientList) {
             String s = r.getDescription();
             Log.e("pls", s);
-
         }
+        Intent intent = new Intent(this, AddRecipeActivity.class);
+        StorageSelection selection = new StorageSelection(selectedIngredientList);
+
+        String s = selection.getIngredients().get(0).getDescription();
+        Log.e("test", s);
+
+        intent.putExtra("list", selection);
+        setResult(2, intent);
+        finish();
+
+
 
     }
 }
