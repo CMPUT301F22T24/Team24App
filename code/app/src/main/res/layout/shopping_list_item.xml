@@ -68,7 +68,7 @@
             android:paddingStart="15dp"
             android:paddingEnd="0dp"
             android:fontFamily="@font/karma_medium"
-            android:text="Purchased: 5kg"
+            android:text="Purchased: 0kg"
             android:textColor="#E9E5E5"
             android:textSize="16sp"
             android:textStyle="bold"/>
