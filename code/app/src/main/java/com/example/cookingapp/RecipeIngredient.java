@@ -56,6 +56,7 @@ public class RecipeIngredient implements Serializable {
     }
 
     public String toString() {
-        return String.format("%s | %s | %s | %s", description, amount, unit, category);
+//        return String.format("%s | %s | %s | %s", description, amount, unit, category);
+        return(this.description);
     }
 }
