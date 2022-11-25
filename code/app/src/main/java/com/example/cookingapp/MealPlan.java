@@ -20,6 +20,16 @@ public class MealPlan implements Serializable {
     @DocumentId
     private String documentId; // for data base
 
+    public MealPlan() {
+        this.date = null;
+        this.breakfastRecipe = null;
+        this.lunchRecipe = null;
+        this.dinnerRecipe = null;
+        this.breakfastIngredient = null;
+        this.lunchIngredient = null;
+        this.dinnerIngredient = null;
+    }
+
     public MealPlan(String date, Recipe breakfastRecipe, Recipe lunchRecipe, Recipe dinnerRecipe, Ingredient breakfastIngredient, Ingredient lunchIngredient, Ingredient dinnerIngredient) {
         this.date = date;
         this.breakfastRecipe = breakfastRecipe;
@@ -27,6 +37,34 @@ public class MealPlan implements Serializable {
         this.dinnerRecipe = dinnerRecipe;
         this.breakfastIngredient = breakfastIngredient;
         this.lunchIngredient = lunchIngredient;
+        this.dinnerIngredient = dinnerIngredient;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setBreakfastRecipe(Recipe breakfastRecipe) {
+        this.breakfastRecipe = breakfastRecipe;
+    }
+
+    public void setLunchRecipe(Recipe lunchRecipe) {
+        this.lunchRecipe = lunchRecipe;
+    }
+
+    public void setDinnerRecipe(Recipe dinnerRecipe) {
+        this.dinnerRecipe = dinnerRecipe;
+    }
+
+    public void setBreakfastIngredient(Ingredient breakfastIngredient) {
+        this.breakfastIngredient = breakfastIngredient;
+    }
+
+    public void setLunchIngredient(Ingredient lunchIngredient) {
+        this.lunchIngredient = lunchIngredient;
+    }
+
+    public void setDinnerIngredient(Ingredient dinnerIngredient) {
         this.dinnerIngredient = dinnerIngredient;
     }
 
