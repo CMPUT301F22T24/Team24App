@@ -2,6 +2,7 @@ package com.example.cookingapp;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 
@@ -37,6 +38,10 @@ public class ShoppingListActivity extends AppCompatActivity {
     Spinner sortBySpinner;
     CustomSpinnerAdapter sortBySpinnerAdapter;
 
+    IngredientsActivityViewModel IngredientsViewModel;
+
+    ArrayList<RecipeIngredient> ingredientStorageList;
+
 
     private static LocalDate currMonday = LocalDate.now( ZoneId.systemDefault())
             .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
@@ -47,6 +52,26 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
         initSortBySpinner();
+
+        ingredientStorageList = new ArrayList<>();
+
+        // fetching ingredients from storage and making the map
+        IngredientsViewModel = new ViewModelProvider(this).get(IngredientsActivityViewModel.class);
+        IngredientsViewModel.getIngredients().observe(this, new Observer<ArrayList<Ingredient>>() {
+            @Override
+            public void onChanged(ArrayList<Ingredient> ingredients) {
+                // we have the ingredients array list from the data base
+                ArrayList<Ingredient> ings = ingredients;
+                for(int i=0; i<ingredients.size()-1; i++) {
+                    Ingredient ingredient = ingredients.get(i);
+                    RecipeIngredient r = new RecipeIngredient(ingredient.getDescription(),
+                            Double.toString(ingredient.getAmount()), ingredient.getUnit(), ingredient.getCategory());
+                    ingredientStorageList.add(r);
+                    String s = ingredientStorageList.get(i).getDescription();
+                    Log.e("here", s);
+                }
+            }
+        });
 
         shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
         viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
