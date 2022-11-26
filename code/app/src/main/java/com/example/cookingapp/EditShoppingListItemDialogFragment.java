@@ -29,8 +29,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,7 +45,7 @@ import java.util.ArrayList;
  */
 public class EditShoppingListItemDialogFragment extends DialogFragment {
 
-
+    ShoppingListActivityViewModel viewModel;
     TextView descriptionTextView, unitTextView;
 
     EditText amountEditText, locationEditText;
@@ -53,6 +59,8 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
 
     public interface OnFragmentInteractionListener {
         void onEdit(Recipe recipe);
+
+        void onAdd(Ingredient ingredient);
 
         void onDelete(Recipe recipe);
     }
@@ -68,6 +76,7 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
+        viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
         super.onAttach(context);
 //        if (context instanceof OnFragmentInteractionListener) {
 //            listener = (OnFragmentInteractionListener) context;
@@ -84,9 +93,9 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
 
         descriptionTextView = view.findViewById(R.id.edit_shopping_item_fragment_description_textView);
         locationEditText = view.findViewById(R.id.edit_shopping_item_fragment_location_editText);
-        expiryDatePicker = view.findViewById(R.id.edit_shopping_item_fragment_expiry_datepicker);
+        expiryDatePicker = view.findViewById(R.id.edit_shopping_item_fragment_expiry_datePicker);
         unitTextView = view.findViewById(R.id.edit_shopping_item_fragment_unit_textView);
-
+        amountEditText = view.findViewById(R.id.edit_shopping_item_fragment_amount_editText);
 
         // Display ingredient passed as argument
         ShoppingListItem shoppingListItem = (ShoppingListItem) getArguments().getSerializable("shoppingListItem");
@@ -112,7 +121,27 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
 //                        listener.onEdit(recipe);
 //                    }
 //                })
-                .setPositiveButton("Confirm", null)
+                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        RecipeIngredient toAdd = shoppingListItem.getIngredient();
+                        int year = expiryDatePicker.getYear();
+                        int month = expiryDatePicker.getMonth();
+                        int day = expiryDatePicker.getDayOfMonth();
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, month, day);
+                        Date date = calendar.getTime();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        viewModel.addIngredient(new Ingredient(toAdd.getDescription(),
+                                LocalDate.parse(sdf.format(date)),
+                                String.valueOf(locationEditText.getText()),
+                                Double.parseDouble(String.valueOf(amountEditText.getText())),
+                                toAdd.getUnit(),
+                                toAdd.getCategory()
+                        ));
+
+                    }
+                })
                 .create();
 
     }

@@ -2,6 +2,7 @@ package com.example.cookingapp;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 
 import android.os.Bundle;
@@ -24,7 +25,7 @@ public class ShoppingListActivity extends AppCompatActivity {
     ListView shoppingListview;
     ArrayList<ShoppingListItem> shoppingList;
     ShoppingListAdapter shoppinglistadapter;
-
+    ShoppingListActivityViewModel viewModel;
     ArrayList<RecipeIngredient> ingredientList;
 
 
@@ -40,7 +41,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
         shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
-
+        viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
 
         shoppingListview = findViewById(R.id.shopping_list);
         shoppingList = new ArrayList<>();
@@ -48,20 +49,16 @@ public class ShoppingListActivity extends AppCompatActivity {
         shoppingListview.setAdapter(shoppinglistadapter);
 
         ingredientList = new ArrayList<>();
-        ingredientList.add(new RecipeIngredient("Potato","5.0","kg","vegetable"));
-        ingredientList.add(new RecipeIngredient("Tomato","2.77","kg","vegetable"));
+        ingredientList.add(new RecipeIngredient("Potato", "5.0", "kg", "vegetable"));
+        ingredientList.add(new RecipeIngredient("Tomato", "2.77", "kg", "vegetable"));
 
 
-        Log.d("YesPlease",ingredientList.get(0).getDescription());
+        Log.d("YesPlease", ingredientList.get(0).getDescription());
 
-        shoppingList.add(new ShoppingListItem(ingredientList.get(0),true));
-        shoppingList.add(new ShoppingListItem(ingredientList.get(1),false));
+        shoppingList.add(new ShoppingListItem(ingredientList.get(0), true));
+        shoppingList.add(new ShoppingListItem(ingredientList.get(1), true));
 
         //Log.d("YesPlease",shoppingList.get(0).getIngredient().getDescription());
-
-
-
-
 
 
     }//oncreate
@@ -76,7 +73,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         setWeek(currMonday);
     }//onClickprevWeek
 
-    public void setWeek(LocalDate currDate){
+    public void setWeek(LocalDate currDate) {
         // clear the week
         week = new ArrayList<>();
         shoppingList.clear();
@@ -86,8 +83,8 @@ public class ShoppingListActivity extends AppCompatActivity {
         // update the current week
         LocalDate firstDay = week.get(0);
         LocalDate lastDay = week.get(6);
-        String currWeek = firstDay.getMonth().toString().substring(0,3) + " " + Integer.toString(firstDay.getDayOfMonth())
-                +" - " + lastDay.getMonth().toString().substring(0,3) + " " + Integer.toString(lastDay.getDayOfMonth());
+        String currWeek = firstDay.getMonth().toString().substring(0, 3) + " " + Integer.toString(firstDay.getDayOfMonth())
+                + " - " + lastDay.getMonth().toString().substring(0, 3) + " " + Integer.toString(lastDay.getDayOfMonth());
         shopping_list_date_week.setText(currWeek);
     }//setWeek
 
@@ -96,6 +93,7 @@ public class ShoppingListActivity extends AppCompatActivity {
             if (shoppingListItem.getChecked()) {
                 Log.d("here", shoppingListItem.getIngredient().getDescription());
                 EditShoppingListItemDialogFragment.newInstance(shoppingListItem).show(getSupportFragmentManager(), "EDIT_SHOPPING_ITEM");
+
             }
         }
 

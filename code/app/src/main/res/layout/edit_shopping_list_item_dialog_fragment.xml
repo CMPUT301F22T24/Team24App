@@ -100,7 +100,7 @@
 
 
                     <DatePicker
-                        android:id="@+id/edit_shopping_item_fragment_expiry_datepicker"
+                        android:id="@+id/edit_shopping_item_fragment_expiry_datePicker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
@@ -137,7 +137,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/edit_shopping_item_fragment_amount_textView"
+                    android:id="@+id/edit_shopping_item_fragment_amount_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Amount Bought"
