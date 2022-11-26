@@ -109,10 +109,9 @@
                 />
         </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="5dp">
 
@@ -122,13 +121,23 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:padding="5dp"
-        android:dividerHeight="12.0sp" />
+        android:dividerHeight="12.0sp"
+            android:layout_weight="2"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:background = "@drawable/custom_button"
+                android:fontFamily="@font/karma_medium"
+                android:onClick="onDoneShopping"
+                android:text="Done Shopping"
+                android:textSize="30sp"
+                />
 
     </LinearLayout>
 
-
-
     </LinearLayout>
-
 
 </ScrollView>
