@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -44,10 +45,10 @@ public class MealPlanActivityViewModel extends ViewModel {
     private FirebaseFirestore db;
     private MutableLiveData<ArrayList<MealPlan>> mealPlans;
 
-    public LiveData<ArrayList<MealPlan>> getMealPlan(String day) {
+    public LiveData<ArrayList<MealPlan>> getMealPlan(ArrayList<String> docIds) {
 
         mealPlans = new MutableLiveData<>();
-        loadMealPlan(day);
+        loadMealPlan(docIds);
 
         return mealPlans;
     }
@@ -59,63 +60,75 @@ public class MealPlanActivityViewModel extends ViewModel {
      * </p>
      */
     // https://stackoverflow.com/questions/51892766/android-firestore-convert-array-of-document-references-to-listpojo
-    private void loadMealPlan(String day) {
+    private void loadMealPlan(ArrayList<String> docIds) {
+
         // fetch from db
         db = FirebaseFirestore.getInstance();
-        db.collection("MealPlan").document(day).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        ArrayList<MealPlan> query = new ArrayList<>();
+        mealPlans.setValue(new ArrayList<>());
+        db.collection("MealPlan").whereIn(FieldPath.documentId(), docIds).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        ArrayList<MealPlan> query = new ArrayList<>();
-                        mealPlans.setValue(new ArrayList<>());
-                        if (documentSnapshot.getData() == null)
-                            return;
+                    public void onSuccess(QuerySnapshot querySnapshot) {
 
-                        Map<String, Object> week = (Map<String, Object>) documentSnapshot.getData();
-                        for (Map.Entry<String, Object> day : week.entrySet()) {
-                            Map<String, DocumentReference> referenceMap = (Map<String, DocumentReference>) day.getValue();
+                        for (DocumentSnapshot document: querySnapshot.getDocuments()) {
+                            Map<String, Object> data = document.getData();
 
                             final Recipe[] breakfastRecipe = {null};
                             final Recipe[] lunchRecipe = {null};
                             final Recipe[] dinnerRecipe = {null};
+                            final Ingredient[] breakfastIngredient = {null};
+                            final Ingredient[] lunchIngredient = {null};
+                            final Ingredient[] dinnerIngredient = {null};
 
                             List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
-                            for (Map.Entry<String, DocumentReference> referenceEntry : referenceMap.entrySet()) {
-                                String field = referenceEntry.getKey();
-                                DocumentReference reference = referenceEntry.getValue();
-                                if (reference == null)
-                                    continue;
+                            for (Map.Entry<String, Object> entry : data.entrySet()) {
 
+                                DocumentReference reference = (DocumentReference) entry.getValue();
                                 Task<DocumentSnapshot> documentSnapshotTask = reference.get();
                                 tasks.add(documentSnapshotTask);
-                                documentSnapshotTask.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        switch (field) {
-                                            case "breakfastRecipe":
-                                                breakfastRecipe[0] = documentSnapshot.toObject(Recipe.class);
-                                                break;
-                                            case "lunchRecipe":
-                                                lunchRecipe[0] = documentSnapshot.toObject(Recipe.class);
-                                                break;
-                                            case "dinnerRecipe":
-                                                dinnerRecipe[0] = documentSnapshot.toObject(Recipe.class);
-                                                break;
-                                        }
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
 
-                                    }
-                                });
+                                documentSnapshotTask
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                            switch (entry.getKey()) {
+
+                                                case "breakfastRecipe":
+                                                    breakfastRecipe[0] = documentSnapshot.toObject(Recipe.class);
+                                                    break;
+                                                case "lunchRecipe":
+                                                    lunchRecipe[0] = documentSnapshot.toObject(Recipe.class);
+                                                    break;
+                                                case "dinnerRecipe":
+                                                    dinnerRecipe[0] = documentSnapshot.toObject(Recipe.class);
+                                                    break;
+                                                case "breakfastIngredient":
+                                                    breakfastIngredient[0] = documentSnapshot.toObject(Ingredient.class);
+                                                    break;
+                                                case "lunchIngredient":
+                                                    lunchIngredient[0] = documentSnapshot.toObject(Ingredient.class);
+                                                    break;
+                                                case "dinnerIngredient":
+                                                    dinnerIngredient[0] = documentSnapshot.toObject(Ingredient.class);
+                                                    break;
+                                            }
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d(TAG, "Data failed to be added");
+                                        }
+                                    });
                             }
                             Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
                                 @Override
                                 public void onSuccess(List<Object> objects) {
-                                    MealPlan mealPlan = new MealPlan(day.getKey(), breakfastRecipe[0], lunchRecipe[0], dinnerRecipe[0], null, null, null);
-                                    mealPlan.setDocumentId(documentSnapshot.getId());
+                                    MealPlan mealPlan = new MealPlan(document.getId(), breakfastRecipe[0], lunchRecipe[0], dinnerRecipe[0],
+                                            breakfastIngredient[0], lunchIngredient[0], dinnerIngredient[0]);
+                                    mealPlan.setDocumentId(document.getId());
                                     query.add(mealPlan);
                                     mealPlans.setValue(query);
                                 }

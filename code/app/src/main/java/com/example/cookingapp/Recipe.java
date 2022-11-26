@@ -14,7 +14,7 @@ import java.util.List;
  * This is the Recipe class. This is the object that defines a recipe.
  * </p>
  */
-public class Recipe implements Serializable {
+public class Recipe implements Serializable, MealPlanChoice {
     private String title;
     private String servings;
     private String category;
@@ -168,7 +168,9 @@ public class Recipe implements Serializable {
     };
 
 
+    @Override
+    public MealPlanChoice scale(int servings) {
 
-
-
+        return null;
+    }
 }

@@ -1,7 +1,13 @@
 package com.example.cookingapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -34,7 +40,8 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
     LinearLayout lunchLayout;
     LinearLayout dinnerLayout;
     TextView date;
-    MealPlan mealPlan;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    ViewMealPlanActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,7 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
         breakfastLayout = findViewById(R.id.breakfast_layout);
         lunchLayout = findViewById(R.id.lunch_layout);
         dinnerLayout = findViewById(R.id.dinner_layout);
+        viewModel = new ViewModelProvider(this).get(ViewMealPlanActivityViewModel.class);
 
         getData();
         setDate();
@@ -67,17 +75,31 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
         onBreakfastClick();
         onLunchClick();
         onDinnerClick();
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == RESULT_OK) {
+                    Intent intent = result.getData();
+                    MealPlanChoice mealPlanChoice = (MealPlanChoice) intent.getSerializableExtra("mealPlanChoice");
+                    if (mealPlanChoice != null) {
+                        // viewModel.addRecipe(recipe);
+                        System.out.println(mealPlanChoice);
+                    }
+                }
+            }
+        });
     }
 
     public void getData(){
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mealPlan = (MealPlan) extras.getSerializable("meal");
+            viewModel.mealPlan = (MealPlan) extras.getSerializable("meal");
         }
     }
 
     public void setDate(){
-        LocalDate currentDate = LocalDate.parse(mealPlan.getDate());
+        LocalDate currentDate = LocalDate.parse(viewModel.mealPlan.getDate());
         String month = currentDate.getMonth().toString();
         String day = Integer.toString(currentDate.getDayOfMonth());
         String year = Integer.toString(currentDate.getYear());
@@ -89,8 +111,8 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
 
     public void setBreakfast(){
         breakfastImage.setImageResource(R.mipmap.camera);
-        if ( mealPlan.getBreakfastRecipe() != null){
-            Recipe breakfast = mealPlan.getBreakfastRecipe();
+        if ( viewModel.mealPlan.getBreakfastRecipe() != null){
+            Recipe breakfast = viewModel.mealPlan.getBreakfastRecipe();
             breakfastName.setText(breakfast.getTitle());
             prepTimeBreakfast.setText(breakfast.getPrepTime());
             servingsBreakfast.setText(breakfast.getServings());
@@ -98,8 +120,8 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
                 breakfastImage.setImageBitmap(StringToBitMap(breakfast.getImage()));
             }
 
-        } else if (mealPlan.getBreakfastIngredient() != null) {
-            Ingredient breakfast = mealPlan.getBreakfastIngredient();
+        } else if (viewModel.mealPlan.getBreakfastIngredient() != null) {
+            Ingredient breakfast = viewModel.mealPlan.getBreakfastIngredient();
             breakfastName.setText(breakfast.getDescription());
             String prepTime = "0hrs 0min";
             prepTimeBreakfast.setText(prepTime);
@@ -116,16 +138,16 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
 
     public void setLunch(){
         lunchImage.setImageResource(R.mipmap.camera);
-        if ( mealPlan.getLunchRecipe() != null){
-            Recipe lunch = mealPlan.getLunchRecipe();
+        if ( viewModel.mealPlan.getLunchRecipe() != null){
+            Recipe lunch = viewModel.mealPlan.getLunchRecipe();
             lunchName.setText(lunch.getTitle());
             prepTimeLunch.setText(lunch.getPrepTime());
             servingsLunch.setText(lunch.getServings());
             if(lunch.getImage() != null){
                 lunchImage.setImageBitmap(StringToBitMap(lunch.getImage()));
             }
-        } else if (mealPlan.getLunchIngredient() != null) {
-            Ingredient lunch = mealPlan.getLunchIngredient();
+        } else if (viewModel.mealPlan.getLunchIngredient() != null) {
+            Ingredient lunch = viewModel.mealPlan.getLunchIngredient();
             lunchName.setText(lunch.getDescription());
             String prepTime = "0hrs 0min";
             prepTimeLunch.setText(prepTime);
@@ -142,8 +164,8 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
 
     public void setDinner(){
         dinnerImage.setImageResource(R.mipmap.camera);
-        if ( mealPlan.getDinnerRecipe() != null){
-            Recipe dinner = mealPlan.getDinnerRecipe();
+        if ( viewModel.mealPlan.getDinnerRecipe() != null){
+            Recipe dinner = viewModel.mealPlan.getDinnerRecipe();
             dinnerName.setText(dinner.getTitle());
             prepTimeDinner.setText(dinner.getPrepTime());
             servingsDinner.setText(dinner.getServings());
@@ -151,8 +173,8 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
                 dinnerImage.setImageBitmap(StringToBitMap(dinner.getImage()));
             }
 
-        } else if (mealPlan.getDinnerIngredient() != null) {
-            Ingredient dinner = mealPlan.getDinnerIngredient();
+        } else if (viewModel.mealPlan.getDinnerIngredient() != null) {
+            Ingredient dinner = viewModel.mealPlan.getDinnerIngredient();
             dinnerName.setText(dinner.getDescription());
             String prepTime = "0hrs 0min";
             prepTimeDinner.setText(prepTime);
@@ -171,16 +193,16 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
         breakfastLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( mealPlan.getBreakfastRecipe() != null){
-                    Recipe breakfast = mealPlan.getBreakfastRecipe();
+                if ( viewModel.mealPlan.getBreakfastRecipe() != null){
+                    Recipe breakfast = viewModel.mealPlan.getBreakfastRecipe();
                     ViewRecipeDialogFragment.newInstance(breakfast).show(getSupportFragmentManager(), "VIEW_RECIPE");
 
-                } else if (mealPlan.getBreakfastIngredient() != null) {
-                    Ingredient breakfast = mealPlan.getBreakfastIngredient();
+                } else if (viewModel.mealPlan.getBreakfastIngredient() != null) {
+                    Ingredient breakfast = viewModel.mealPlan.getBreakfastIngredient();
                     ViewIngredientDialogFragment.newInstance(breakfast).show(getSupportFragmentManager(), "VIEW_INGREDIENT");
 
                 } else {
-                    AddMealPlanDialogFragment.newInstance(mealPlan,"breakfast").show(getSupportFragmentManager(), "ADD_MEAL");
+                    AddMealPlanDialogFragment.newInstance(viewModel.mealPlan,"breakfast").show(getSupportFragmentManager(), "ADD_MEAL");
                 }
 
             }
@@ -191,17 +213,16 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
         lunchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( mealPlan.getLunchRecipe() != null){
-                    Recipe lunch = mealPlan.getLunchRecipe();
+                if ( viewModel.mealPlan.getLunchRecipe() != null){
+                    Recipe lunch = viewModel.mealPlan.getLunchRecipe();
                     ViewRecipeDialogFragment.newInstance(lunch).show(getSupportFragmentManager(), "VIEW_RECIPE");
 
-                } else if (mealPlan.getLunchIngredient() != null) {
-                    Ingredient lunch = mealPlan.getLunchIngredient();
+                } else if (viewModel.mealPlan.getLunchIngredient() != null) {
+                    Ingredient lunch = viewModel.mealPlan.getLunchIngredient();
                     ViewIngredientDialogFragment.newInstance(lunch).show(getSupportFragmentManager(), "VIEW_INGREDIENT");
 
-
                 } else {
-                    AddMealPlanDialogFragment.newInstance(mealPlan,"lunch").show(getSupportFragmentManager(), "ADD_MEAL");
+                    AddMealPlanDialogFragment.newInstance(viewModel.mealPlan,"lunch").show(getSupportFragmentManager(), "ADD_MEAL");
                 }
             }
         });
@@ -211,16 +232,16 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
         dinnerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ( mealPlan.getDinnerRecipe() != null){
-                    Recipe dinner = mealPlan.getDinnerRecipe();
+                if ( viewModel.mealPlan.getDinnerRecipe() != null){
+                    Recipe dinner = viewModel.mealPlan.getDinnerRecipe();
                     ViewRecipeDialogFragment.newInstance(dinner).show(getSupportFragmentManager(), "VIEW_RECIPE");
 
-                } else if (mealPlan.getDinnerIngredient() != null) {
-                    Ingredient dinner = mealPlan.getDinnerIngredient();
+                } else if (viewModel.mealPlan.getDinnerIngredient() != null) {
+                    Ingredient dinner = viewModel.mealPlan.getDinnerIngredient();
                     ViewIngredientDialogFragment.newInstance(dinner).show(getSupportFragmentManager(), "VIEW_INGREDIENT");
 
                 } else {
-                    AddMealPlanDialogFragment.newInstance(mealPlan,"dinner").show(getSupportFragmentManager(), "ADD_MEAL");
+                    AddMealPlanDialogFragment.newInstance(viewModel.mealPlan,"dinner").show(getSupportFragmentManager(), "ADD_MEAL");
                 }
             }
         });
@@ -243,7 +264,8 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
 
     @Override
     public void onEdit(Recipe recipe) {
-
+        Intent intent = new Intent(this, UpdateMealPlanActivity.class);
+        activityResultLauncher.launch(intent);
     }
 
     @Override
@@ -264,5 +286,9 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
     @Override
     public void onAddMeal(MealPlan mealplan, String mealType) {
         // mealType is either "breakfast", "lunch", "dinner"
+        Intent intent = new Intent(this, UpdateMealPlanActivity.class);
+        // intent.putExtra("EDIT_CODE", 1);
+        intent.putExtra("mealPlan", viewModel.mealPlan);
+        activityResultLauncher.launch(intent);
     }
 }

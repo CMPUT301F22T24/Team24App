@@ -9,7 +9,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.time.DayOfWeek;
@@ -27,6 +30,8 @@ public class MealPlanActivity extends AppCompatActivity {
     MealPlanAdapter mealPlanAdapter;
     ActivityResultLauncher<Intent> activityResultLauncher;
     MealPlanActivityViewModel viewModel;
+    ImageButton previousWeekButton;
+    ImageButton nextWeekButton;
     private static LocalDate currMonday = LocalDate.now( ZoneId.systemDefault())
             .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
 
@@ -35,6 +40,9 @@ public class MealPlanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+        previousWeekButton = findViewById(R.id.previous_week_button);
+        nextWeekButton = findViewById(R.id.next_week_button);
 
         // set the buttons and text view
         currentWeek = findViewById(R.id.current_week);
@@ -76,6 +84,13 @@ public class MealPlanActivity extends AppCompatActivity {
     }
 
     public void setWeek(LocalDate currDate){
+
+        // Disable until data fetched
+        previousWeekButton.setImageAlpha(75);
+        previousWeekButton.setEnabled(false);
+        nextWeekButton.setImageAlpha(75);
+        nextWeekButton.setEnabled(false);
+
         // clear the week
         week = new ArrayList<>();
         mealPlanList.clear();
@@ -91,16 +106,19 @@ public class MealPlanActivity extends AppCompatActivity {
         // update the current week
         LocalDate firstDay = week.get(0);
         LocalDate lastDay = week.get(6);
-        getFromDB(firstDay.toString());
+        ArrayList<String> docIds = new ArrayList<>();
+        for (int i = 0; i <= 6; i ++)
+            docIds.add(week.get(i).toString());
+        System.out.println(docIds);
+        getFromDB(docIds);
         String currWeek = firstDay.getMonth().toString().substring(0,3) + " " + Integer.toString(firstDay.getDayOfMonth())
                 +" - " + lastDay.getMonth().toString().substring(0,3) + " " + Integer.toString(lastDay.getDayOfMonth());
         currentWeek.setText(currWeek);
     }
 
-    public void getFromDB(String day) {
-        System.out.println(day);
+    public void getFromDB(ArrayList<String> docIds) {
         viewModel = new ViewModelProvider(this).get(MealPlanActivityViewModel.class);
-        viewModel.getMealPlan(day).observe(this, new Observer<ArrayList<MealPlan>>() {
+        viewModel.getMealPlan(docIds).observe(this, new Observer<ArrayList<MealPlan>>() {
             @Override
             public void onChanged(ArrayList<MealPlan> mealPlans) {
                 ArrayList<MealPlan> meals = mealPlans;
@@ -116,8 +134,15 @@ public class MealPlanActivity extends AppCompatActivity {
                     mealPlanList = newMeals;
                     mealPlanAdapter = new MealPlanAdapter(getApplicationContext(), newMeals);
                     mealPlanListView.setAdapter(mealPlanAdapter);
+
+                    // re-enable buttons
+                    previousWeekButton.setImageAlpha(255);
+                    previousWeekButton.setEnabled(true);
+                    nextWeekButton.setImageAlpha(255);
+                    nextWeekButton.setEnabled(true);
                 }
                 mealPlanAdapter.notifyDataSetChanged();
+
             }
         });
     }

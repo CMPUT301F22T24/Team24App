@@ -18,7 +18,7 @@ import java.util.Locale;
 /**
  * The Ingredient object class
  */
-public class Ingredient implements Serializable {
+public class Ingredient implements Serializable, MealPlanChoice {
     private String description;
     private LocalDate bestBeforeDate;
     private String location;
@@ -179,5 +179,11 @@ public class Ingredient implements Serializable {
             return d1.compareTo(d2);
         }
     };
+
+    @Override
+    public MealPlanChoice scale(int servings) {
+
+        return null;
+    }
 }
 

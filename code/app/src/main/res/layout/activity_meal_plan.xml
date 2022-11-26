@@ -75,7 +75,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <ListView
             android:id="@+id/meal_plan_list"
             android:layout_width="match_parent"
@@ -85,4 +84,5 @@
             android:dividerHeight="12.0sp"
             />
     </FrameLayout>
+
 </LinearLayout>

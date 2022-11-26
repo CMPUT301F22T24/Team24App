@@ -30,6 +30,14 @@
         android:theme="@style/Theme.CookingApp"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateMealPlanActivity"
+            android:exported="false"
+            android:parentActivityName=".ViewMealPlanActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ViewMealPlanActivity"
             android:exported="false"
             android:parentActivityName=".MealPlanActivity">
