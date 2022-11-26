@@ -118,7 +118,7 @@ public class MealPlanActivity extends AppCompatActivity {
 
     public void getFromDB(ArrayList<String> docIds) {
         viewModel = new ViewModelProvider(this).get(MealPlanActivityViewModel.class);
-        viewModel.getMealPlan(docIds).observe(this, new Observer<ArrayList<MealPlan>>() {
+        viewModel.getMealPlans(docIds).observe(this, new Observer<ArrayList<MealPlan>>() {
             @Override
             public void onChanged(ArrayList<MealPlan> mealPlans) {
                 ArrayList<MealPlan> meals = mealPlans;

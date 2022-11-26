@@ -28,6 +28,7 @@ import com.google.gson.JsonElement;
 import java.lang.ref.ReferenceQueue;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -45,10 +46,10 @@ public class MealPlanActivityViewModel extends ViewModel {
     private FirebaseFirestore db;
     private MutableLiveData<ArrayList<MealPlan>> mealPlans;
 
-    public LiveData<ArrayList<MealPlan>> getMealPlan(ArrayList<String> docIds) {
+    public LiveData<ArrayList<MealPlan>> getMealPlans(ArrayList<String> docIds) {
 
         mealPlans = new MutableLiveData<>();
-        loadMealPlan(docIds);
+        loadMealPlans(docIds);
 
         return mealPlans;
     }
@@ -60,7 +61,7 @@ public class MealPlanActivityViewModel extends ViewModel {
      * </p>
      */
     // https://stackoverflow.com/questions/51892766/android-firestore-convert-array-of-document-references-to-listpojo
-    private void loadMealPlan(ArrayList<String> docIds) {
+    private void loadMealPlans(ArrayList<String> docIds) {
 
         // fetch from db
         db = FirebaseFirestore.getInstance();
@@ -92,26 +93,26 @@ public class MealPlanActivityViewModel extends ViewModel {
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-
+                                            String[] refPath = reference.getPath().split("/");
                                             switch (entry.getKey()) {
 
-                                                case "breakfastRecipe":
-                                                    breakfastRecipe[0] = documentSnapshot.toObject(Recipe.class);
+                                                case "breakfast":
+                                                    if (refPath[0].equals("Recipe"))
+                                                        breakfastRecipe[0] = documentSnapshot.toObject(Recipe.class);
+                                                    else if (refPath[0].equals("Ingredients"))
+                                                        breakfastIngredient[0] = documentSnapshot.toObject(Ingredient.class);
                                                     break;
-                                                case "lunchRecipe":
-                                                    lunchRecipe[0] = documentSnapshot.toObject(Recipe.class);
+                                                case "lunch":
+                                                    if (refPath[0].equals("Recipe"))
+                                                        lunchRecipe[0] = documentSnapshot.toObject(Recipe.class);
+                                                    else if (refPath[0].equals("Ingredients"))
+                                                        lunchIngredient[0] = documentSnapshot.toObject(Ingredient.class);
                                                     break;
-                                                case "dinnerRecipe":
-                                                    dinnerRecipe[0] = documentSnapshot.toObject(Recipe.class);
-                                                    break;
-                                                case "breakfastIngredient":
-                                                    breakfastIngredient[0] = documentSnapshot.toObject(Ingredient.class);
-                                                    break;
-                                                case "lunchIngredient":
-                                                    lunchIngredient[0] = documentSnapshot.toObject(Ingredient.class);
-                                                    break;
-                                                case "dinnerIngredient":
-                                                    dinnerIngredient[0] = documentSnapshot.toObject(Ingredient.class);
+                                                case "dinner":
+                                                    if (refPath[0].equals("Recipe"))
+                                                        dinnerRecipe[0] = documentSnapshot.toObject(Recipe.class);
+                                                    else if (refPath[0].equals("Ingredients"))
+                                                        dinnerIngredient[0] = documentSnapshot.toObject(Ingredient.class);
                                                     break;
                                             }
                                         }
@@ -176,45 +177,6 @@ public class MealPlanActivityViewModel extends ViewModel {
                         Log.d(TAG, "Data failed to be added");
                     }
                 });
-    }
-
-    public void editMealPlan(@NonNull MealPlan mealPlan, int position) {
-        /*
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("date", mealPlan.getDate());
-        data.put("breakfastRecipe", mealPlan.getBreakfastRecipe());
-        data.put("lunchRecipe", mealPlan.getLunchRecipe());
-        data.put("dinnerRecipe", mealPlan.getDinnerRecipe());
-        data.put("breakfastIngredient",mealPlan.getBreakfastIngredient());
-        data.put("lunchIngredient", mealPlan.getLunchIngredient());
-        data.put("dinnerIngredient", mealPlan.getDinnerIngredient());
-
-        ArrayList<MealPlan> updated = mealPlans.getValue();
-        MealPlan oldMealPlan = updated.get(position);
-        String id = oldMealPlan.getDocumentId();
-
-        db = FirebaseFirestore.getInstance();
-        db.collection("MealPlan").document(id).set(data)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        // Remember to setup the document id for the new ingredient
-                        // or you will get a null document id the next time
-                        mealPlan.setDocumentId(id); //
-                        ArrayList<MealPlan> updated = mealPlans.getValue();
-                        updated.set(position, mealPlan);
-                        mealPlans.setValue(updated);
-                        Log.d(TAG, "Meal Plan Edited");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-
-         */
-
     }
 
     /**

@@ -23,7 +23,7 @@ import android.widget.Toast;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class ViewMealPlanActivity extends AppCompatActivity  implements ViewRecipeDialogFragment.OnFragmentInteractionListener,ViewIngredientDialogFragment.OnFragmentInteractionListener,AddMealPlanDialogFragment.OnFragmentInteractionListener {
+public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecipeDialogFragment.OnFragmentInteractionListener,ViewIngredientDialogFragment.OnFragmentInteractionListener,AddMealPlanDialogFragment.OnFragmentInteractionListener {
     TextView prepTimeBreakfast;
     TextView prepTimeLunch;
     TextView prepTimeDinner;
@@ -83,8 +83,58 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
                     Intent intent = result.getData();
                     MealPlanChoice mealPlanChoice = (MealPlanChoice) intent.getSerializableExtra("mealPlanChoice");
                     if (mealPlanChoice != null) {
-                        // viewModel.addRecipe(recipe);
-                        System.out.println(mealPlanChoice);
+
+                        System.out.println(viewModel.mealPlan.getDate());
+
+                        if (mealPlanChoice instanceof Recipe) {
+                            Recipe recipe = (Recipe) mealPlanChoice;
+                            switch (viewModel.editType) {
+
+                                case ("breakfast"):
+                                    viewModel.mealPlan.setBreakfastRecipe(recipe);
+                                    viewModel.mealPlan.setBreakfastIngredient(null);
+                                    break;
+
+                                case ("lunch"):
+                                    viewModel.mealPlan.setLunchRecipe(recipe);
+                                    viewModel.mealPlan.setLunchIngredient(null);
+                                    break;
+
+                                case ("dinner"):
+                                    viewModel.mealPlan.setDinnerRecipe(recipe);
+                                    viewModel.mealPlan.setDinnerIngredient(null);
+                                    break;
+                            }
+
+                        }
+                        else if (mealPlanChoice instanceof  Ingredient) {
+
+                            Ingredient ingredient = (Ingredient) mealPlanChoice;
+
+                            switch (viewModel.editType) {
+
+                                case ("breakfast"):
+                                    viewModel.mealPlan.setBreakfastRecipe(null);
+                                    viewModel.mealPlan.setBreakfastIngredient(ingredient);
+                                    break;
+
+                                case ("lunch"):
+                                    viewModel.mealPlan.setLunchRecipe(null);
+                                    viewModel.mealPlan.setLunchIngredient(ingredient);
+                                    break;
+
+                                case ("dinner"):
+                                    viewModel.mealPlan.setDinnerRecipe(null);
+                                    viewModel.mealPlan.setDinnerIngredient(ingredient);
+                                    break;
+                            }
+
+                        }
+
+                        viewModel.updateMealPlan(viewModel.mealPlan, viewModel.mealPlan.getDate());
+                        setBreakfast();
+                        setLunch();
+                        setDinner();
                     }
                 }
             }
@@ -193,6 +243,9 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
         breakfastLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                viewModel.editType = "breakfast";
+
                 if ( viewModel.mealPlan.getBreakfastRecipe() != null){
                     Recipe breakfast = viewModel.mealPlan.getBreakfastRecipe();
                     ViewRecipeDialogFragment.newInstance(breakfast).show(getSupportFragmentManager(), "VIEW_RECIPE");
@@ -213,6 +266,9 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
         lunchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                viewModel.editType = "lunch";
+
                 if ( viewModel.mealPlan.getLunchRecipe() != null){
                     Recipe lunch = viewModel.mealPlan.getLunchRecipe();
                     ViewRecipeDialogFragment.newInstance(lunch).show(getSupportFragmentManager(), "VIEW_RECIPE");
@@ -230,8 +286,12 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
 
     public void onDinnerClick(){
         dinnerLayout.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
+                viewModel.editType = "dinner";
+
                 if ( viewModel.mealPlan.getDinnerRecipe() != null){
                     Recipe dinner = viewModel.mealPlan.getDinnerRecipe();
                     ViewRecipeDialogFragment.newInstance(dinner).show(getSupportFragmentManager(), "VIEW_RECIPE");
@@ -270,17 +330,18 @@ public class ViewMealPlanActivity extends AppCompatActivity  implements ViewReci
 
     @Override
     public void onDelete(Recipe recipe) {
-
+        // TODO: remove delete button
     }
 
     @Override
     public void onEdit(Ingredient ingredient) {
-
+        Intent intent = new Intent(this, UpdateMealPlanActivity.class);
+        activityResultLauncher.launch(intent);
     }
 
     @Override
     public void onDelete(Ingredient ingredient) {
-
+        // TODO: remove delete button
     }
 
     @Override

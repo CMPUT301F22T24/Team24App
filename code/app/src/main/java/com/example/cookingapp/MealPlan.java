@@ -65,4 +65,32 @@ public class MealPlan implements Serializable {
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
     }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setBreakfastRecipe(Recipe breakfastRecipe) {
+        this.breakfastRecipe = breakfastRecipe;
+    }
+
+    public void setLunchRecipe(Recipe lunchRecipe) {
+        this.lunchRecipe = lunchRecipe;
+    }
+
+    public void setDinnerRecipe(Recipe dinnerRecipe) {
+        this.dinnerRecipe = dinnerRecipe;
+    }
+
+    public void setBreakfastIngredient(Ingredient breakfastIngredient) {
+        this.breakfastIngredient = breakfastIngredient;
+    }
+
+    public void setLunchIngredient(Ingredient lunchIngredient) {
+        this.lunchIngredient = lunchIngredient;
+    }
+
+    public void setDinnerIngredient(Ingredient dinnerIngredient) {
+        this.dinnerIngredient = dinnerIngredient;
+    }
 }
