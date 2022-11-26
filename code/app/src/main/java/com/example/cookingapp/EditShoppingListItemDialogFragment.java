@@ -76,7 +76,7 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
+        //viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
         super.onAttach(context);
 //        if (context instanceof OnFragmentInteractionListener) {
 //            listener = (OnFragmentInteractionListener) context;
@@ -90,7 +90,7 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.edit_shopping_list_item_dialog_fragment, null);
-
+        viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
         descriptionTextView = view.findViewById(R.id.edit_shopping_item_fragment_description_textView);
         locationEditText = view.findViewById(R.id.edit_shopping_item_fragment_location_editText);
         expiryDatePicker = view.findViewById(R.id.edit_shopping_item_fragment_expiry_datePicker);
