@@ -140,25 +140,11 @@ public class AddRecipeActivity extends AppCompatActivity {
         ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if((selectedIngredientPosition == null)){
-                    selectedIngredientPosition = i;
-                    oldSelection = view;
-                    view.setBackgroundColor(Color.parseColor("#FF9A9595"));
-                }else if((selectedIngredientPosition != i)){
-                    clearSelection();
-                    selectedIngredientPosition = i;
-                    oldSelection = view;
-                    view.setBackgroundColor(Color.parseColor("#FF9A9595"));
-                }else if((selectedIngredientPosition == i)){
-                    oldSelection = view;
-                    view.setBackgroundColor(Color.parseColor("#FF9A9595"));
-                }
-            }
-            private void clearSelection() {
-                if(oldSelection != null) {
-                    oldSelection.setBackgroundColor(Color.parseColor("#ED524E"));
-                }
+                selectedIngredientPosition = i;
+                String desc = ingredientList.get(i).getDescription();
+                String show = desc + " selected for deletion";
+                Toast.makeText(AddRecipeActivity.this,show,
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -212,25 +198,14 @@ public class AddRecipeActivity extends AppCompatActivity {
             ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if((selectedIngredientPosition == null)){
-                        selectedIngredientPosition = i;
-                        oldSelection = view;
-                        view.setBackgroundColor(Color.parseColor("#FF9A9595"));
-                    }else if((selectedIngredientPosition != i)){
-                        clearSelection();
-                        selectedIngredientPosition = i;
-                        oldSelection = view;
-                        view.setBackgroundColor(Color.parseColor("#FF9A9595"));
-                    }else if((selectedIngredientPosition == i)){
-                        oldSelection = view;
-                        view.setBackgroundColor(Color.parseColor("#FF9A9595"));
-                    }
+                    selectedIngredientPosition = i;
+                    String desc = ingredientList.get(i).getDescription();
+                    String show = desc + " selected for deletion";
+                    Toast.makeText(AddRecipeActivity.this,show,
+                            Toast.LENGTH_SHORT).show();
+
                 }
-                private void clearSelection() {
-                    if(oldSelection != null) {
-                        oldSelection.setBackgroundColor(Color.parseColor("#ED524E"));
-                    }
-                }
+
             });
 
             deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
