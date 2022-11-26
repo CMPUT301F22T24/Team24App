@@ -9,7 +9,9 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -18,6 +20,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ShoppingListActivity extends AppCompatActivity {
 
@@ -31,6 +34,9 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     ArrayList<LocalDate> week;
     TextView shopping_list_date_week;
+    Spinner sortBySpinner;
+    CustomSpinnerAdapter sortBySpinnerAdapter;
+
 
     private static LocalDate currMonday = LocalDate.now( ZoneId.systemDefault())
             .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
@@ -40,6 +46,8 @@ public class ShoppingListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
+        initSortBySpinner();
+
         shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
         viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
 
@@ -51,12 +59,16 @@ public class ShoppingListActivity extends AppCompatActivity {
         ingredientList = new ArrayList<>();
         ingredientList.add(new RecipeIngredient("Potato", "5.0", "kg", "vegetable"));
         ingredientList.add(new RecipeIngredient("Tomato", "2.77", "kg", "vegetable"));
+        ingredientList.add(new RecipeIngredient("Orange", "0.21", "lb", "fruit"));
+        ingredientList.add(new RecipeIngredient("Strawberry", "2.1", "kg", "fruit"));
 
 
         Log.d("YesPlease", ingredientList.get(0).getDescription());
 
         shoppingList.add(new ShoppingListItem(ingredientList.get(0), true));
         shoppingList.add(new ShoppingListItem(ingredientList.get(1), true));
+        shoppingList.add(new ShoppingListItem(ingredientList.get(2), true));
+        shoppingList.add(new ShoppingListItem(ingredientList.get(3), true));
 
         //Log.d("YesPlease",shoppingList.get(0).getIngredient().getDescription());
 
@@ -87,6 +99,54 @@ public class ShoppingListActivity extends AppCompatActivity {
                 + " - " + lastDay.getMonth().toString().substring(0, 3) + " " + Integer.toString(lastDay.getDayOfMonth());
         shopping_list_date_week.setText(currWeek);
     }//setWeek
+
+
+    /**
+     * <p>
+     * Initializes the sort spinner
+     * </p>
+     */
+    private void initSortBySpinner() {
+        sortBySpinner = findViewById(R.id.shopping_list_sortBy_spinner);
+        ArrayList<String> sortBy = new ArrayList<String>() {{
+            add("Title");
+            add("Category");
+            add("");
+        }};
+
+
+        sortBySpinnerAdapter = new CustomSpinnerAdapter(this, R.layout.spinner_item, sortBy);
+        sortBySpinner.setAdapter(sortBySpinnerAdapter);
+        sortBySpinner.setSelection(sortBySpinnerAdapter.getCount());
+
+        sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = parent.getItemAtPosition(position).toString();
+                if ("Category".equals(selection)) {
+                    Collections.sort(shoppingList, ShoppingListItem.ShoppingListItemCategoryComparator);
+                } else {
+                    Collections.sort(shoppingList, ShoppingListItem.ShoppingListItemTitleComparator);
+                }
+                shoppinglistadapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }//onNothingSelected
+        });
+
+
+    }//initSortBySpinner /**
+
+
+
+
+
+
+
+
 
     public void onDoneShopping(View view) {
         for (ShoppingListItem shoppingListItem : shoppingList) {
