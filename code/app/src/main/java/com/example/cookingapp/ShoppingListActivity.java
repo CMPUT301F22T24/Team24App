@@ -91,4 +91,13 @@ public class ShoppingListActivity extends AppCompatActivity {
         shopping_list_date_week.setText(currWeek);
     }//setWeek
 
+    public void onDoneShopping(View view) {
+        for (ShoppingListItem shoppingListItem : shoppingList) {
+            if (shoppingListItem.getChecked()) {
+                Log.d("here", shoppingListItem.getIngredient().getDescription());
+                EditShoppingListItemDialogFragment.newInstance(shoppingListItem).show(getSupportFragmentManager(), "EDIT_SHOPPING_ITEM");
+            }
+        }
+
+    }
 }
