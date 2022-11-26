@@ -71,7 +71,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         shoppingList.add(new ShoppingListItem(ingredientList.get(3), true));
 
         //Log.d("YesPlease",shoppingList.get(0).getIngredient().getDescription());
-
+        setWeek(currMonday);
 
     }//oncreate
 
@@ -85,16 +85,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         setWeek(currMonday);
     }//onClickprevWeek
 
-    public void setWeek(LocalDate currDate) {
+    public void setWeek(LocalDate firstDay) {
         // clear the week
-        week = new ArrayList<>();
-        shoppingList.clear();
-        // get the days of the week
-        MealPlan meal;
-
         // update the current week
-        LocalDate firstDay = week.get(0);
-        LocalDate lastDay = week.get(6);
+        LocalDate lastDay = firstDay.plusDays(6);
         String currWeek = firstDay.getMonth().toString().substring(0, 3) + " " + Integer.toString(firstDay.getDayOfMonth())
                 + " - " + lastDay.getMonth().toString().substring(0, 3) + " " + Integer.toString(lastDay.getDayOfMonth());
         shopping_list_date_week.setText(currWeek);
