@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 
+/**
+ * Test class for Meal Plan
+ */
 public class MealPlanTest {
     private MealPlan mockMealPlan(){return new MealPlan();}
     private Recipe mockRecipe() {
@@ -15,6 +18,9 @@ public class MealPlanTest {
         return new Ingredient();
     }
 
+    /**
+     * Test get and set date
+     */
     @Test
     public void DateTest() {
         LocalDate date = LocalDate.now();
@@ -23,6 +29,9 @@ public class MealPlanTest {
         assertEquals(date.toString(), mealPlan.getDate());
     }
 
+    /**
+     * Test get and set recipes
+     */
     @Test
     public void recipeTests() {
         MealPlan mealPlan = mockMealPlan();
@@ -35,6 +44,9 @@ public class MealPlanTest {
         assertEquals(recipe, mealPlan.getDinnerRecipe());
     }
 
+    /**
+     * Test get and set ingredients
+     */
     @Test
     public void ingredientTests() {
         MealPlan mealPlan = mockMealPlan();

@@ -1,18 +1,12 @@
 package com.example.cookingapp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import android.app.Activity;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
@@ -62,6 +56,5 @@ public class MealPlanActivityTest {
         solo.clickOnView(mealPlanList.getChildAt(0));
         solo.assertCurrentActivity("Wrong Activity", ViewMealPlanActivity.class);
     }
-
 
 }
