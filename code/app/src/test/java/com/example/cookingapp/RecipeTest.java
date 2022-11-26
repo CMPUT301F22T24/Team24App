@@ -5,16 +5,17 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
+/**
+ * Test class for Recipe
+ */
 public class RecipeTest {
     private Recipe mockRecipe() {
         return new Recipe();
     }
 
-    private Ingredient mockIngredient() {
-        return new Ingredient();
-    }
-
+    /**
+     * Test get and set title
+     */
     @Test
     public void titleTest(){
         Recipe recipe = mockRecipe();
@@ -22,6 +23,9 @@ public class RecipeTest {
         assertEquals("Tacos",recipe.getTitle());
     }
 
+    /**
+     * Test get and set servings
+     */
     @Test
     public void servingsTest(){
         Recipe recipe = mockRecipe();
@@ -29,6 +33,9 @@ public class RecipeTest {
         assertEquals("5",recipe.getServings());
     }
 
+    /**
+     * Test get and set category
+     */
     @Test
     public void categoryTest(){
         Recipe recipe = mockRecipe();
@@ -36,6 +43,9 @@ public class RecipeTest {
         assertEquals("Dinner",recipe.getCategory());
     }
 
+    /**
+     * Test get and set comment
+     */
     @Test
     public void commentsTest(){
         Recipe recipe = mockRecipe();
@@ -43,6 +53,9 @@ public class RecipeTest {
         assertEquals("comment", recipe.getComments());
     }
 
+    /**
+     * Test get and set prepTime
+     */
     @Test
     public void prepTimeTest(){
         Recipe recipe = mockRecipe();
@@ -50,6 +63,9 @@ public class RecipeTest {
         assertEquals("5 hours 10 min", recipe.getPrepTime());
     }
 
+    /**
+     * Test get and set image
+     */
     @Test
     public void imageTest(){
         Recipe recipe = mockRecipe();
@@ -57,14 +73,5 @@ public class RecipeTest {
         assertEquals("image", recipe.getImage());
     }
 
-//    @Test
-//    public void ingredientTest(){
-//        Recipe recipe = mockRecipe();
-//        Ingredient ingredient = mockIngredient();
-//        ArrayList<Ingredient> ingredients = new ArrayList<>();
-//        ingredients.add(ingredient);
-//        recipe.setIngredients(ingredients);
-//        assertEquals(ingredients, recipe.getIngredients());
-//    }
 
 }

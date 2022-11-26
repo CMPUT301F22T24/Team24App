@@ -22,6 +22,9 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * This is the MealPlan class, it holds all of the information for a specific daily meal plan
+ */
 public class MealPlanActivity extends AppCompatActivity {
     ListView mealPlanListView;
     TextView currentWeek;
@@ -57,6 +60,9 @@ public class MealPlanActivity extends AppCompatActivity {
         onClickItem();
     }
 
+    /**
+     * This method is invoked when an item is clicked
+     */
     public void onClickItem(){
         mealPlanListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,17 +73,29 @@ public class MealPlanActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method calls the ViewMealPlanActivity allowing for the user to view a meal plan
+     * @param meal: a meal plan that is to be viewed
+     */
     public void viewMeal(MealPlan meal){
         Intent intent = new Intent(MealPlanActivity.this, ViewMealPlanActivity.class);
         intent.putExtra("meal",meal);
         startActivity(intent);
     }
 
+    /**
+     * When the next week is clicked
+     * @param view
+     */
     public void onClickNextWeek(View view){
         currMonday = currMonday.plusDays(7);
         setWeek(currMonday);
     }
 
+    /**
+     * When the previous week is clicked
+     * @param view
+     */
     public void onClickPrevWeek(View view){
         currMonday = currMonday.minusDays(7);
         setWeek(currMonday);
