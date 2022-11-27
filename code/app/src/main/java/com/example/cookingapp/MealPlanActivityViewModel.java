@@ -83,11 +83,33 @@ public class MealPlanActivityViewModel extends ViewModel {
                             final Ingredient[] breakfastIngredient = {null};
                             final Ingredient[] lunchIngredient = {null};
                             final Ingredient[] dinnerIngredient = {null};
+                            final Integer[] breakfastServings = {null};
+                            final Integer[] lunchServings = {null};
+                            final Integer[] dinnerServings = {null};
 
                             List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
                             for (Map.Entry<String, Object> entry : data.entrySet()) {
 
+                                if (!(entry.getValue() instanceof DocumentReference)) {
+
+                                    switch (entry.getKey()) {
+
+                                        case "breakfastServings":
+                                            breakfastServings[0] = (Integer) entry.getValue();
+                                            break;
+                                        case "lunchServings":
+                                            lunchServings[0] = (Integer) entry.getValue();
+                                            break;
+                                        case "dinnerServings":
+                                            dinnerServings[0] = (Integer) entry.getValue();
+                                            break;
+
+                                    }
+                                    continue;
+                                }
+
                                 DocumentReference reference = (DocumentReference) entry.getValue();
+
                                 Task<DocumentSnapshot> documentSnapshotTask = reference.get();
                                 tasks.add(documentSnapshotTask);
                                 all_tasks.add(documentSnapshotTask);
