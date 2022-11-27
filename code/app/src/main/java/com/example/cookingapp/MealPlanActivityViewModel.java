@@ -72,6 +72,8 @@ public class MealPlanActivityViewModel extends ViewModel {
                     @Override
                     public void onSuccess(QuerySnapshot querySnapshot) {
 
+                        List<Task<DocumentSnapshot>> all_tasks = new ArrayList<>();
+
                         for (DocumentSnapshot document: querySnapshot.getDocuments()) {
                             Map<String, Object> data = document.getData();
 
@@ -88,6 +90,7 @@ public class MealPlanActivityViewModel extends ViewModel {
                                 DocumentReference reference = (DocumentReference) entry.getValue();
                                 Task<DocumentSnapshot> documentSnapshotTask = reference.get();
                                 tasks.add(documentSnapshotTask);
+                                all_tasks.add(documentSnapshotTask);
 
                                 documentSnapshotTask
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -131,10 +134,15 @@ public class MealPlanActivityViewModel extends ViewModel {
                                             breakfastIngredient[0], lunchIngredient[0], dinnerIngredient[0]);
                                     mealPlan.setDocumentId(document.getId());
                                     query.add(mealPlan);
-                                    mealPlans.setValue(query);
                                 }
                             });
                         }
+                        Tasks.whenAllSuccess(all_tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                            @Override
+                            public void onSuccess(List<Object> objects) {
+                                mealPlans.setValue(query);
+                            }
+                        });
                         Log.d(TAG, "Data added successfully");
                     }
                 })
