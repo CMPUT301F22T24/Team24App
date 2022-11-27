@@ -95,13 +95,13 @@ public class MealPlanActivityViewModel extends ViewModel {
                                     switch (entry.getKey()) {
 
                                         case "breakfastServings":
-                                            breakfastServings[0] = (Integer) entry.getValue();
+                                            breakfastServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
                                             break;
                                         case "lunchServings":
-                                            lunchServings[0] = (Integer) entry.getValue();
+                                            lunchServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
                                             break;
                                         case "dinnerServings":
-                                            dinnerServings[0] = (Integer) entry.getValue();
+                                            dinnerServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
                                             break;
 
                                     }
@@ -153,8 +153,10 @@ public class MealPlanActivityViewModel extends ViewModel {
                                 @Override
                                 public void onSuccess(List<Object> objects) {
                                     MealPlan mealPlan = new MealPlan(document.getId(), breakfastRecipe[0], lunchRecipe[0], dinnerRecipe[0],
-                                            breakfastIngredient[0], lunchIngredient[0], dinnerIngredient[0]);
-                                    mealPlan.setDocumentId(document.getId());
+                                            breakfastServings[0], lunchServings[0], dinnerServings[0],
+                                            breakfastIngredient[0], lunchIngredient[0], dinnerIngredient[0],
+                                            document.getId());
+                                    // mealPlan.setDocumentId(document.getId());
                                     query.add(mealPlan);
                                 }
                             });
