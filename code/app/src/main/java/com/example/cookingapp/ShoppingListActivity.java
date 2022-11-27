@@ -38,14 +38,15 @@ public class ShoppingListActivity extends AppCompatActivity {
     Spinner sortBySpinner;
     CustomSpinnerAdapter sortBySpinnerAdapter;
 
-    IngredientsActivityViewModel IngredientsViewModel;
+    testmodel model;
 
     ArrayList<RecipeIngredient> ingredientStorageList;
 
 
     private static LocalDate currMonday = LocalDate.now( ZoneId.systemDefault())
             .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
-
+    private static LocalDate currDate = LocalDate.now( ZoneId.systemDefault())
+            .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,21 +56,29 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         ingredientStorageList = new ArrayList<>();
 
-        // fetching ingredients from storage and making the map
-        IngredientsViewModel = new ViewModelProvider(this).get(IngredientsActivityViewModel.class);
-        IngredientsViewModel.getIngredients().observe(this, new Observer<ArrayList<Ingredient>>() {
+        model = new ViewModelProvider(this).get(testmodel.class);
+
+        ArrayList<String> docIds = new ArrayList<>();
+        week = new ArrayList<>();
+        for(int i = 0; i < 7; i++) {
+            week.add(currDate);
+            currDate =  currDate.plusDays(1);
+        }
+        for (int i = 0; i <= 6; i ++)
+            docIds.add(week.get(i).toString());
+
+        for (String s : docIds) {
+            Log.e("test", s);
+        }
+
+        model.getShopping(docIds).observe(this, new Observer<ArrayList<Ingredient>>() {
             @Override
             public void onChanged(ArrayList<Ingredient> ingredients) {
-                // we have the ingredients array list from the data base
-                ArrayList<Ingredient> ings = ingredients;
-                for(int i=0; i<ingredients.size()-1; i++) {
-                    Ingredient ingredient = ingredients.get(i);
-                    RecipeIngredient r = new RecipeIngredient(ingredient.getDescription(),
-                            Double.toString(ingredient.getAmount()), ingredient.getUnit(), ingredient.getCategory());
-                    ingredientStorageList.add(r);
-                    String s = ingredientStorageList.get(i).getDescription();
-                    Log.e("here", s);
-                }
+
+                // get the shoppig
+                String desc = ingredients.get(0).getDescription();
+
+
             }
         });
 
