@@ -25,7 +25,7 @@
             android:fontFamily="@font/karma_medium"
             android:text="Add Recipe"
             android:textColor="#E9E5E5"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"/>
 
         <!--Recipe Title-->
@@ -42,7 +42,7 @@
                 android:padding="5dp"
                 android:text="Title"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <EditText
@@ -136,7 +136,7 @@
                 android:padding="5dp"
                 android:text="Number of Servings"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <EditText
@@ -171,7 +171,7 @@
                 android:padding="5dp"
                 android:text="Category"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Spinner
@@ -199,7 +199,7 @@
                 android:padding="5dp"
                 android:text="Comments"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
 
             <EditText
@@ -232,7 +232,7 @@
                 android:padding="5dp"
                 android:text="Upload Image"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"/>
             <ImageView
                 android:id="@+id/recipe_Image"
@@ -284,7 +284,7 @@
                     android:padding="5dp"
                     android:text="Ingredients"
                     android:textColor="#E9E5E5"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold"/>
 
                 <Button
@@ -297,7 +297,7 @@
                     android:fontFamily="@font/karma_medium"
                     android:text="Del"
                     android:textAllCaps="false"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
                 <Button
                     android:id="@+id/add_recipe_add_ingredient_button"
@@ -310,7 +310,7 @@
                     android:onClick="addIngredientToRecipe"
                     android:text="Add"
                     android:textAllCaps="false"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
 <!--                <Button-->
 <!--                    android:id="@+id/add_recipe_select_from_storage_button"-->
@@ -336,7 +336,7 @@
                 <Button
                     android:id="@+id/add_recipe_select_from_storage_button"
                     android:layout_width="285dp"
-                    android:layout_height="40dp"
+                    android:layout_height="0dp"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/custom_button"
@@ -344,7 +344,8 @@
                     android:onClick="onSelectFromStorage"
                     android:text="Select from Ingredient Storage"
                     android:textAllCaps="false"
-                    android:textSize="15dp" />
+                    android:layout_gravity="end"
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -384,7 +385,7 @@
                 android:onClick="onAddOrEditRecipeConfirmHandler"
                 android:text="Confirm"
                 android:textAllCaps="false"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
