@@ -35,7 +35,7 @@ public class AddRecipeIngredient extends AppCompatActivity {
 
     public void onConfirm(View view) {
         String description = descriptionEditText.getText().toString();
-        String category = descriptionEditText.getText().toString();
+        String category = categoryEditText.getText().toString();
         String unit = unitEditText.getText().toString();
         String amount = amountEditText.getText().toString();
 
