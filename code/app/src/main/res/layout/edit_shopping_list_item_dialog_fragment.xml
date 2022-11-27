@@ -62,7 +62,7 @@
                 android:id="@+id/edit_shopping_item_fragment_location_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ingredient location"
+                android:hint="Ingredient location"
                 android:textSize="20dp" />
 
         </LinearLayout>
@@ -107,8 +107,8 @@
                         android:layout_marginTop="-20dp"
 
                         android:layout_weight="0.1"
-                        android:scaleX="0.9"
-                        android:scaleY="0.9"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
 
                         />
                 </LinearLayout>

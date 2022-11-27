@@ -97,7 +97,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         ingredientList.add(new RecipeIngredient("Strawberry", "2.1", "kg", "fruit"));
 
 
-        shoppingList.add(new ShoppingListItem(ingredientList.get(0), false));
+        shoppingList.add(new ShoppingListItem(ingredientList.get(0), true));
         shoppingList.add(new ShoppingListItem(ingredientList.get(1), false));
         shoppingList.add(new ShoppingListItem(ingredientList.get(2), false));
         shoppingList.add(new ShoppingListItem(ingredientList.get(3), false));

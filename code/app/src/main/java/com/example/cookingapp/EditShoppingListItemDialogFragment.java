@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -47,22 +49,14 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
 
     ShoppingListActivityViewModel viewModel;
     TextView descriptionTextView, unitTextView;
-
     EditText amountEditText, locationEditText;
     DatePicker expiryDatePicker;
+    Button confirmButton;
 
-    ListView ingredientListView;
-    ArrayList<RecipeIngredient> ingredientList;
-    RecipeIngredientAdapter recipeIngredientAdapter;
-    // TODO: ADD Ingredients
     private OnFragmentInteractionListener listener;
 
     public interface OnFragmentInteractionListener {
-        void onEdit(Recipe recipe);
 
-        void onAdd(Ingredient ingredient);
-
-        void onDelete(Recipe recipe);
     }
 
     static EditShoppingListItemDialogFragment newInstance(ShoppingListItem shoppingListItem) {
@@ -74,15 +68,22 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
         return fragment;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlertDialog d = (AlertDialog) getDialog();
+        if (d != null) {
+            confirmButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+            confirmButton.setEnabled(false);
+        }
+
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
-        //viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            listener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context + "must implement OnFragmentInteractionListener");
-//        }
+
     }
 
     @NonNull
@@ -101,27 +102,33 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
         ShoppingListItem shoppingListItem = (ShoppingListItem) getArguments().getSerializable("shoppingListItem");
         descriptionTextView.setText(shoppingListItem.getIngredient().getDescription());
         unitTextView.setText(shoppingListItem.getIngredient().getUnit());
+        TextWatcher textFilledWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (locationEditText.getText().length() >= 1 && amountEditText.getText().length() >= 1) {
+                    confirmButton.setEnabled(true);
+                }
+            }
+        };
+        locationEditText.addTextChangedListener(textFilledWatcher);
+        amountEditText.addTextChangedListener(textFilledWatcher);
         // Get action from user
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
                 .setView(view)
                 .setCancelable(false)
-//                .setNeutralButton("Cancel", null)
-//                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        listener.onDelete(recipe);
-//                    }
-//                })
-//                .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        listener.onEdit(recipe);
-//                    }
-//                })
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         RecipeIngredient toAdd = shoppingListItem.getIngredient();
@@ -144,21 +151,6 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
                 })
                 .create();
 
-    }
-
-    /**
-     * @param encodedString
-     * @return bitmap (from given string)
-     */
-    public Bitmap StringToBitMap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
     }
 
 }
