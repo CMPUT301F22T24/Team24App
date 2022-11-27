@@ -11,7 +11,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
+/**
+ * This is the AddMealPlanDialogFragment class, it pops up when the user needs to add a meal
+ */
 public class AddMealPlanDialogFragment extends DialogFragment {
     private AddMealPlanDialogFragment.OnFragmentInteractionListener listener;
 
@@ -38,7 +40,9 @@ public class AddMealPlanDialogFragment extends DialogFragment {
             throw new RuntimeException(context + "must implement OnFragmentInteractionListener");
         }
     }
-
+    /**
+     * This method sets the dialog
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

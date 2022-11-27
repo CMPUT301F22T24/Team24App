@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * This is the MealPlan class, it holds all of the information for a specific daily meal plan
+ * This is the MealPlanActivity class, is called when meal plan is clicked from the main page
  */
 public class MealPlanActivity extends AppCompatActivity {
     ListView mealPlanListView;
@@ -101,6 +101,10 @@ public class MealPlanActivity extends AppCompatActivity {
         setWeek(currMonday);
     }
 
+    /**
+     * Sets the current week dates and current weeks meal plans
+     * @param currDate
+     */
     public void setWeek(LocalDate currDate){
 
         // Disable until data fetched
@@ -134,6 +138,10 @@ public class MealPlanActivity extends AppCompatActivity {
         currentWeek.setText(currWeek);
     }
 
+    /**
+     * Get the meal plans that are in the database
+     * @param docIds: list of dates to fetch
+     */
     public void getFromDB(ArrayList<String> docIds) {
         viewModel = new ViewModelProvider(this).get(MealPlanActivityViewModel.class);
         viewModel.getMealPlans(docIds).observe(this, new Observer<ArrayList<MealPlan>>() {

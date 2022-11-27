@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.Objects;
-
+/**
+ * This is the ViewMealPlanActivity class, is invoked when a meal plan is clicked to view
+ */
 public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecipeDialogFragment.OnFragmentInteractionListener,ViewIngredientDialogFragment.OnFragmentInteractionListener,AddMealPlanDialogFragment.OnFragmentInteractionListener {
     TextView prepTimeBreakfast;
     TextView prepTimeLunch;
@@ -93,6 +95,7 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
                                 case ("breakfast"):
                                     viewModel.mealPlan.setBreakfastRecipe(recipe);
                                     viewModel.mealPlan.setBreakfastIngredient(null);
+                                    //  viewModel.mealPlan.setBreakfast.setBreakfastServings() to what youpull from servings
                                     break;
 
                                 case ("lunch"):
@@ -141,6 +144,9 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
         });
     }
 
+    /**
+     * This method gets the meal plan when this intent is called
+     */
     public void getData(){
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -148,6 +154,9 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
         }
     }
 
+    /**
+     * uses the meal plan date to set the date
+     */
     public void setDate(){
         LocalDate currentDate = LocalDate.parse(viewModel.mealPlan.getDate());
         String month = currentDate.getMonth().toString();
@@ -159,6 +168,9 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
         date.setText(content);
     }
 
+    /**
+     * Set the breakfast view
+     */
     public void setBreakfast(){
         breakfastImage.setImageResource(R.mipmap.camera);
         if ( viewModel.mealPlan.getBreakfastRecipe() != null){
@@ -186,6 +198,9 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
 
     }
 
+    /**
+     * Set the lunch view
+     */
     public void setLunch(){
         lunchImage.setImageResource(R.mipmap.camera);
         if ( viewModel.mealPlan.getLunchRecipe() != null){
@@ -211,7 +226,9 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
         }
 
     }
-
+    /**
+     * Set the dinner view
+     */
     public void setDinner(){
         dinnerImage.setImageResource(R.mipmap.camera);
         if ( viewModel.mealPlan.getDinnerRecipe() != null){
@@ -248,6 +265,7 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
 
                 if ( viewModel.mealPlan.getBreakfastRecipe() != null){
                     Recipe breakfast = viewModel.mealPlan.getBreakfastRecipe();
+                    // Scale the recipe here or similar occurances
                     ViewRecipeDialogFragment.newInstance(breakfast).show(getSupportFragmentManager(), "VIEW_RECIPE");
 
                 } else if (viewModel.mealPlan.getBreakfastIngredient() != null) {

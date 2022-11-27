@@ -28,6 +28,9 @@ public class MealPlanAdapter extends ArrayAdapter<MealPlan> {
         this.mealPlanList = mealPlanList;
     }
 
+    /**
+     * This method sets all of the list items
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
