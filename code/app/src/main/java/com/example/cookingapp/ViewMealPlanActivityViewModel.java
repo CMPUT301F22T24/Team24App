@@ -30,27 +30,33 @@ public class ViewMealPlanActivityViewModel extends ViewModel {
         // Have to add servings for whichever it corresponds to
         if (mealPlan.getBreakfastRecipe() != null) {
             Recipe recipe = mealPlan.getBreakfastRecipe();
-            data.put("breakfast", db.document("Recipe/"+recipe.getDocumentId()));
+            data.put("breakfast", db.document("Recipe/" + recipe.getDocumentId()));
+            data.put("breakfastServings", mealPlan.getBreakfastServings());
         }
         if (mealPlan.getLunchRecipe() != null) {
             Recipe recipe = mealPlan.getLunchRecipe();
-            data.put("lunch", db.document("Recipe/"+recipe.getDocumentId()));
+            data.put("lunch", db.document("Recipe/" + recipe.getDocumentId()));
+            data.put("lunchServings", mealPlan.getLunchServings());
         }
         if (mealPlan.getDinnerRecipe() != null) {
             Recipe recipe = mealPlan.getDinnerRecipe();
-            data.put("dinner", db.document("Recipe/"+recipe.getDocumentId()));
+            data.put("dinner", db.document("Recipe/" + recipe.getDocumentId()));
+            data.put("dinnerServings", mealPlan.getDinnerServings());
         }
         if (mealPlan.getBreakfastIngredient() != null) {
             Ingredient ingredient = mealPlan.getBreakfastIngredient();
-            data.put("breakfast", db.document("Ingredients/"+ingredient.getDocumentId()));
+            data.put("breakfast", db.document("Ingredients/" + ingredient.getDocumentId()));
+            data.put("breakfastServings", mealPlan.getBreakfastServings());
         }
         if (mealPlan.getLunchIngredient() != null) {
             Ingredient ingredient = mealPlan.getLunchIngredient();
-            data.put("lunch", db.document("Ingredients/"+ingredient.getDocumentId()));
+            data.put("lunch", db.document("Ingredients/" + ingredient.getDocumentId()));
+            data.put("lunchServings", mealPlan.getLunchServings());
         }
         if (mealPlan.getDinnerIngredient() != null) {
             Ingredient ingredient = mealPlan.getDinnerIngredient();
-            data.put("dinner", db.document("Ingredients/"+ingredient.getDocumentId()));
+            data.put("dinner", db.document("Ingredients/" + ingredient.getDocumentId()));
+            data.put("dinnerServings", mealPlan.getDinnerServings());
         }
 
         db = FirebaseFirestore.getInstance();

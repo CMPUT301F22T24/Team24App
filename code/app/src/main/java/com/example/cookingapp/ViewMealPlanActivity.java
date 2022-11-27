@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -84,6 +85,8 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
                 if (result.getResultCode() == RESULT_OK) {
                     Intent intent = result.getData();
                     MealPlanChoice mealPlanChoice = (MealPlanChoice) intent.getSerializableExtra("mealPlanChoice");
+                    int servings = (int) intent.getSerializableExtra("numServingsSelected");
+                    Log.d("vmpa", String.valueOf(servings));
                     if (mealPlanChoice != null) {
 
                         System.out.println(viewModel.mealPlan.getDate());
@@ -95,17 +98,20 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
                                 case ("breakfast"):
                                     viewModel.mealPlan.setBreakfastRecipe(recipe);
                                     viewModel.mealPlan.setBreakfastIngredient(null);
+                                    viewModel.mealPlan.setBreakfastServings(servings);
                                     //  viewModel.mealPlan.setBreakfast.setBreakfastServings() to what youpull from servings
                                     break;
 
                                 case ("lunch"):
                                     viewModel.mealPlan.setLunchRecipe(recipe);
                                     viewModel.mealPlan.setLunchIngredient(null);
+                                    viewModel.mealPlan.setLunchServings(servings);
                                     break;
 
                                 case ("dinner"):
                                     viewModel.mealPlan.setDinnerRecipe(recipe);
                                     viewModel.mealPlan.setDinnerIngredient(null);
+                                    viewModel.mealPlan.setDinnerServings(servings);
                                     break;
                             }
 
@@ -119,16 +125,19 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
                                 case ("breakfast"):
                                     viewModel.mealPlan.setBreakfastRecipe(null);
                                     viewModel.mealPlan.setBreakfastIngredient(ingredient);
+                                    viewModel.mealPlan.setBreakfastServings(servings);
                                     break;
 
                                 case ("lunch"):
                                     viewModel.mealPlan.setLunchRecipe(null);
                                     viewModel.mealPlan.setLunchIngredient(ingredient);
+                                    viewModel.mealPlan.setLunchServings(servings);
                                     break;
 
                                 case ("dinner"):
                                     viewModel.mealPlan.setDinnerRecipe(null);
                                     viewModel.mealPlan.setDinnerIngredient(ingredient);
+                                    viewModel.mealPlan.setDinnerServings(servings);
                                     break;
                             }
 
@@ -266,6 +275,7 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
                 if ( viewModel.mealPlan.getBreakfastRecipe() != null){
                     Recipe breakfast = viewModel.mealPlan.getBreakfastRecipe();
                     // Scale the recipe here or similar occurances
+
                     ViewRecipeDialogFragment.newInstance(breakfast).show(getSupportFragmentManager(), "VIEW_RECIPE");
 
                 } else if (viewModel.mealPlan.getBreakfastIngredient() != null) {
