@@ -119,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="5"
+                android:layout_weight="15"
                 android:dividerHeight="12.0sp"
                 android:padding="5dp" />
 

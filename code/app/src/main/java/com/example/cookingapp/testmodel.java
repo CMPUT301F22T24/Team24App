@@ -7,32 +7,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.local.ReferenceSet;
-import com.google.firestore.v1.MapValue;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 
-import java.lang.ref.ReferenceQueue;
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -50,7 +37,7 @@ public class testmodel extends ViewModel {
     private MutableLiveData<ArrayList<MealPlan>> mealPlans;
     private MutableLiveData<ArrayList<Ingredient>> ingredients;
     private MutableLiveData<ArrayList<ShoppingListItem>> shopping;
-    private MutableLiveData<ArrayList<Ingredient>> mealIngredients;
+    private MutableLiveData<ArrayList<RecipeIngredient>> mealIngredients;
 
     public LiveData<ArrayList<Ingredient>> getShopping(ArrayList<String> docIds) {
 
@@ -64,8 +51,16 @@ public class testmodel extends ViewModel {
         // i have both lists
 
         ArrayList<Ingredient> mealIngredients = new ArrayList<>();
+        ArrayList<RecipeIngredient>shoppingStuff = new ArrayList<>();
 
         ArrayList<MealPlan> meals = mealPlans.getValue();
+
+
+
+
+        HashMap <String, Double> ingredientStorageMap = new HashMap<String , Double>();
+        HashMap <String, Double> mealPlanStorageMap = new HashMap<String ,Double>();
+
 
         for (MealPlan m : meals) {
             if (m.getLunchIngredient() != null) {
@@ -75,14 +70,110 @@ public class testmodel extends ViewModel {
             }
         }
 
-        // for all of meal plans add recipes to arecipe list
-        // for all of meal plans add ingredients to the ingredient list
 
 
-        // we have the meal plans and the ingredients
-        // we need to return the shopping list
+        //Nima's Code begins here:
 
-        // now we have the meal plans and the ingredients
+        for (Ingredient x : mealIngredients){//Load ingredientStorage ingredients into hashmap. Just the description, unit and Category
+            String temp = x.getDescription()  + x.getUnit()  + x.getCategory();
+            ingredientStorageMap.put(temp, x.getAmount());
+
+        }
+
+
+            for (MealPlan m : meals){//Load mealPlan ingredients into second hashmap. Just the description, unit and category.
+                if(m.getBreakfastIngredient() != null){
+                    String temp = m.getBreakfastIngredient().getDescription()  + m.getBreakfastIngredient().getUnit()  + m.getBreakfastIngredient().getCategory();
+                    mealPlanStorageMap.put(temp, m.getBreakfastIngredient().getAmount());
+
+                }//if
+                if(m.getLunchIngredient() != null){
+                    String temp = m.getLunchIngredient().getDescription() + m.getLunchIngredient().getUnit()  + m.getLunchIngredient().getCategory();
+                    mealPlanStorageMap.put(temp, m.getLunchIngredient().getAmount());
+                }//if
+                 if(m.getDinnerIngredient() != null){
+                    String temp = m.getDinnerIngredient().getDescription()  + m.getDinnerIngredient().getUnit()  + m.getDinnerIngredient().getCategory();
+                    mealPlanStorageMap.put(temp, m.getDinnerIngredient().getAmount());
+                }//if
+
+
+        }//for
+
+
+
+
+
+
+
+        for(Map.Entry<String, Double> m : mealPlanStorageMap.entrySet()){
+            for(Map.Entry<String, Double> x : ingredientStorageMap.entrySet()){
+                if(x.getKey().equals( m.getKey())){//if ingredient of mealPlan == ingredient of ingredientStorage
+                    if( x.getValue() > 0.0) {// if ingredient amount not zero
+                        double temp = x.getValue() - m.getValue();// amount storage - amount mealPlan
+
+                        if(temp < 0.0){// if it turns out mealPlan amount was less than storage amount
+                            temp = temp * -1.0;//make positive
+                            x.setValue(0.0);// set storage amount to 0
+                            m.setValue(temp);// set mealplant amount to what is left
+
+                        }else if (temp >= 0.0){//if it turns out storage amount is greater than amount mealPlan
+                            x.setValue(temp);// set Mealplan amount to what is left
+                            m.setValue(0.0);// set storage amount to 0
+
+                        }
+
+                    }
+
+                }
+            }//for
+        }//for
+
+
+        //By now, the subtraction is done between storage and mealPlan. you should have the mealPlan hashmap set with what is left.
+        //So now we must throw the results into a new list: shoppingList
+
+
+
+
+        //Setup for the following: for all mealplan, iterate through our hashmap keys to find a match. if match found, shoppingStuff.add( mealPlan ingredient ) EXCEPT WITH NEW AMOUNT.
+        for(MealPlan m : meals){
+            String temp = "";
+            if(m.getBreakfastIngredient() != null){
+                temp = m.getBreakfastIngredient().getDescription()  + m.getBreakfastIngredient().getUnit()  + m.getBreakfastIngredient().getCategory();
+                for(Map.Entry<String, Double> z : mealPlanStorageMap.entrySet()){
+                    String temp2 = z.getKey();
+                    if(temp.contentEquals(temp2)){
+                        shoppingStuff.add(new RecipeIngredient(m.getBreakfastIngredient().getDescription(), Double.toString(z.getValue()), m.getBreakfastIngredient().getUnit(), m.getBreakfastIngredient().getUnit()));
+                    }//if
+                }//for
+            }//if
+            if(m.getLunchIngredient() != null){
+                temp = m.getLunchIngredient().getDescription() + m.getLunchIngredient().getUnit()  + m.getLunchIngredient().getCategory();
+                for(Map.Entry<String, Double> z : mealPlanStorageMap.entrySet()){
+                    String temp2 = z.getKey();
+                    if(temp.contentEquals(temp2)){
+                        shoppingStuff.add(new RecipeIngredient(m.getLunchIngredient().getDescription(), Double.toString(z.getValue()), m.getLunchIngredient().getUnit(), m.getLunchIngredient().getUnit()));
+                    }//if
+                }//for
+            }//if
+            if(m.getDinnerIngredient() != null){
+                temp = m.getDinnerIngredient().getDescription()  + m.getDinnerIngredient().getUnit()  + m.getDinnerIngredient().getCategory();
+                for(Map.Entry<String, Double> z : mealPlanStorageMap.entrySet()){
+                    String temp2 = z.getKey();
+                    if(temp.contentEquals(temp2)){
+                        shoppingStuff.add(new RecipeIngredient(m.getDinnerIngredient().getDescription(), Double.toString(z.getValue()), m.getDinnerIngredient().getUnit(), m.getDinnerIngredient().getUnit()));
+                    }//if
+                }//for
+            }//if
+
+        }//if
+
+
+
+        //And finally, return shoppingStuff(Not done yet)
+        //THE END
+
+
 
         return ingredients;
     }
