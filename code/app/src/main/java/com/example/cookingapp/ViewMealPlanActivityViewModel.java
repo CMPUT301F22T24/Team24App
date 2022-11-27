@@ -27,6 +27,7 @@ public class ViewMealPlanActivityViewModel extends ViewModel {
     public void updateMealPlan(@NonNull MealPlan mealPlan, String documentID) {
         db = FirebaseFirestore.getInstance();
         HashMap<String, Object> data = new HashMap<>();
+        // Have to add servings for whichever it corresponds to
         if (mealPlan.getBreakfastRecipe() != null) {
             Recipe recipe = mealPlan.getBreakfastRecipe();
             data.put("breakfast", db.document("Recipe/"+recipe.getDocumentId()));

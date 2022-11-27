@@ -52,9 +52,13 @@ public class UpdateMealPlanActivity extends AppCompatActivity {
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
                                 Intent intent = new Intent(getBaseContext(), ViewMealPlanActivity.class);
                                 intent.putExtra("mealPlanChoice", mealPlanChoices.get(position));
+                                // Have to return servings in here
+                                // Have to intent.putExtra(servings)
                                 setResult(RESULT_OK, intent);
+
                                 finish();
                             }
                         })

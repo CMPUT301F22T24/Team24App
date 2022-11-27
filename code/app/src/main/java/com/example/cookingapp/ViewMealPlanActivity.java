@@ -95,6 +95,7 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
                                 case ("breakfast"):
                                     viewModel.mealPlan.setBreakfastRecipe(recipe);
                                     viewModel.mealPlan.setBreakfastIngredient(null);
+                                    //  viewModel.mealPlan.setBreakfast.setBreakfastServings() to what youpull from servings
                                     break;
 
                                 case ("lunch"):
@@ -264,6 +265,7 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
 
                 if ( viewModel.mealPlan.getBreakfastRecipe() != null){
                     Recipe breakfast = viewModel.mealPlan.getBreakfastRecipe();
+                    // Scale the recipe here or similar occurances
                     ViewRecipeDialogFragment.newInstance(breakfast).show(getSupportFragmentManager(), "VIEW_RECIPE");
 
                 } else if (viewModel.mealPlan.getBreakfastIngredient() != null) {

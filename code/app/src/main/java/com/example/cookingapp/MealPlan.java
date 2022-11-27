@@ -16,6 +16,7 @@ public class MealPlan implements Serializable {
     private Recipe breakfastRecipe;
     private Recipe lunchRecipe;
     private Recipe dinnerRecipe;
+    private Integer breakfastServings, lunchServings, dinnerServings;
     private Ingredient breakfastIngredient;
     private Ingredient lunchIngredient;
     private Ingredient dinnerIngredient;
@@ -28,6 +29,9 @@ public class MealPlan implements Serializable {
         this.breakfastRecipe = null;
         this.lunchRecipe = null;
         this.dinnerRecipe = null;
+        this.breakfastServings = null;
+        this.lunchServings = null;
+        this.dinnerServings = null;
         this.breakfastIngredient = null;
         this.lunchIngredient = null;
         this.dinnerIngredient = null;
@@ -38,12 +42,31 @@ public class MealPlan implements Serializable {
         this.breakfastRecipe = breakfastRecipe;
         this.lunchRecipe = lunchRecipe;
         this.dinnerRecipe = dinnerRecipe;
+        this.breakfastServings = null;
+        this.lunchServings = null;
+        this.dinnerServings = null;
         this.breakfastIngredient = breakfastIngredient;
         this.lunchIngredient = lunchIngredient;
         this.dinnerIngredient = dinnerIngredient;
     }
+
+    public MealPlan(String date, Recipe breakfastRecipe, Recipe lunchRecipe, Recipe dinnerRecipe, Integer breakfastServings, Integer lunchServings, Integer dinnerServings, Ingredient breakfastIngredient, Ingredient lunchIngredient, Ingredient dinnerIngredient, String documentId) {
+        this.date = date;
+        this.breakfastRecipe = breakfastRecipe;
+        this.lunchRecipe = lunchRecipe;
+        this.dinnerRecipe = dinnerRecipe;
+        this.breakfastServings = breakfastServings;
+        this.lunchServings = lunchServings;
+        this.dinnerServings = dinnerServings;
+        this.breakfastIngredient = breakfastIngredient;
+        this.lunchIngredient = lunchIngredient;
+        this.dinnerIngredient = dinnerIngredient;
+        this.documentId = documentId;
+    }
+
     /**
      * sets the date of the meal plan
+     *
      * @param date : the date of this daily meal plan
      */
     public void setDate(String date) {
@@ -125,16 +148,43 @@ public class MealPlan implements Serializable {
 
     /**
      * gets the dinnerRecipe of the meal plan
+     *
      * @return dinnerRecipe
      */
     public Recipe getDinnerRecipe() {
         return dinnerRecipe;
     }
 
+    public Integer getBreakfastServings() {
+        return breakfastServings;
+    }
+
+    public void setBreakfastServings(Integer breakfastServings) {
+        this.breakfastServings = breakfastServings;
+    }
+
+    public Integer getLunchServings() {
+        return lunchServings;
+    }
+
+    public void setLunchServings(Integer lunchServings) {
+        this.lunchServings = lunchServings;
+    }
+
+    public Integer getDinnerServings() {
+        return dinnerServings;
+    }
+
+    public void setDinnerServings(Integer dinnerServings) {
+        this.dinnerServings = dinnerServings;
+    }
+
     /**
      * gets the breakfastIngredient of the meal plan
+     *
      * @return breakfastIngredient
      */
+
     public Ingredient getBreakfastIngredient() {
         return breakfastIngredient;
     }
