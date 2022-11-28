@@ -49,132 +49,6 @@ public class testmodel extends ViewModel {
         loadIngredients();
 
         // i have both lists
-
-        ArrayList<Ingredient> mealIngredients = new ArrayList<>();
-        ArrayList<RecipeIngredient>shoppingStuff = new ArrayList<>();
-
-        ArrayList<MealPlan> meals = mealPlans.getValue();
-
-
-
-
-        HashMap <String, Double> ingredientStorageMap = new HashMap<String , Double>();
-        HashMap <String, Double> mealPlanStorageMap = new HashMap<String ,Double>();
-
-
-        for (MealPlan m : meals) {
-            if (m.getLunchIngredient() != null) {
-                String s = m.getLunchIngredient().getDescription();
-                Log.e("test", s);
-
-            }
-        }
-
-
-
-        //Nima's Code begins here:
-
-        for (Ingredient x : mealIngredients){//Load ingredientStorage ingredients into hashmap. Just the description, unit and Category
-            String temp = x.getDescription()  + x.getUnit()  + x.getCategory();
-            ingredientStorageMap.put(temp, x.getAmount());
-
-        }
-
-
-            for (MealPlan m : meals){//Load mealPlan ingredients into second hashmap. Just the description, unit and category.
-                if(m.getBreakfastIngredient() != null){
-                    String temp = m.getBreakfastIngredient().getDescription()  + m.getBreakfastIngredient().getUnit()  + m.getBreakfastIngredient().getCategory();
-                    mealPlanStorageMap.put(temp, m.getBreakfastIngredient().getAmount());
-
-                }//if
-                if(m.getLunchIngredient() != null){
-                    String temp = m.getLunchIngredient().getDescription() + m.getLunchIngredient().getUnit()  + m.getLunchIngredient().getCategory();
-                    mealPlanStorageMap.put(temp, m.getLunchIngredient().getAmount());
-                }//if
-                 if(m.getDinnerIngredient() != null){
-                    String temp = m.getDinnerIngredient().getDescription()  + m.getDinnerIngredient().getUnit()  + m.getDinnerIngredient().getCategory();
-                    mealPlanStorageMap.put(temp, m.getDinnerIngredient().getAmount());
-                }//if
-
-
-        }//for
-
-
-
-
-
-
-
-        for(Map.Entry<String, Double> m : mealPlanStorageMap.entrySet()){
-            for(Map.Entry<String, Double> x : ingredientStorageMap.entrySet()){
-                if(x.getKey().equals( m.getKey())){//if ingredient of mealPlan == ingredient of ingredientStorage
-                    if( x.getValue() > 0.0) {// if ingredient amount not zero
-                        double temp = x.getValue() - m.getValue();// amount storage - amount mealPlan
-
-                        if(temp < 0.0){// if it turns out mealPlan amount was less than storage amount
-                            temp = temp * -1.0;//make positive
-                            x.setValue(0.0);// set storage amount to 0
-                            m.setValue(temp);// set mealplant amount to what is left
-
-                        }else if (temp >= 0.0){//if it turns out storage amount is greater than amount mealPlan
-                            x.setValue(temp);// set Mealplan amount to what is left
-                            m.setValue(0.0);// set storage amount to 0
-
-                        }
-
-                    }
-
-                }
-            }//for
-        }//for
-
-
-        //By now, the subtraction is done between storage and mealPlan. you should have the mealPlan hashmap set with what is left.
-        //So now we must throw the results into a new list: shoppingList
-
-
-
-
-        //Setup for the following: for all mealplan, iterate through our hashmap keys to find a match. if match found, shoppingStuff.add( mealPlan ingredient ) EXCEPT WITH NEW AMOUNT.
-        for(MealPlan m : meals){
-            String temp = "";
-            if(m.getBreakfastIngredient() != null){
-                temp = m.getBreakfastIngredient().getDescription()  + m.getBreakfastIngredient().getUnit()  + m.getBreakfastIngredient().getCategory();
-                for(Map.Entry<String, Double> z : mealPlanStorageMap.entrySet()){
-                    String temp2 = z.getKey();
-                    if(temp.contentEquals(temp2)){
-                        shoppingStuff.add(new RecipeIngredient(m.getBreakfastIngredient().getDescription(), Double.toString(z.getValue()), m.getBreakfastIngredient().getUnit(), m.getBreakfastIngredient().getUnit()));
-                    }//if
-                }//for
-            }//if
-            if(m.getLunchIngredient() != null){
-                temp = m.getLunchIngredient().getDescription() + m.getLunchIngredient().getUnit()  + m.getLunchIngredient().getCategory();
-                for(Map.Entry<String, Double> z : mealPlanStorageMap.entrySet()){
-                    String temp2 = z.getKey();
-                    if(temp.contentEquals(temp2)){
-                        shoppingStuff.add(new RecipeIngredient(m.getLunchIngredient().getDescription(), Double.toString(z.getValue()), m.getLunchIngredient().getUnit(), m.getLunchIngredient().getUnit()));
-                    }//if
-                }//for
-            }//if
-            if(m.getDinnerIngredient() != null){
-                temp = m.getDinnerIngredient().getDescription()  + m.getDinnerIngredient().getUnit()  + m.getDinnerIngredient().getCategory();
-                for(Map.Entry<String, Double> z : mealPlanStorageMap.entrySet()){
-                    String temp2 = z.getKey();
-                    if(temp.contentEquals(temp2)){
-                        shoppingStuff.add(new RecipeIngredient(m.getDinnerIngredient().getDescription(), Double.toString(z.getValue()), m.getDinnerIngredient().getUnit(), m.getDinnerIngredient().getUnit()));
-                    }//if
-                }//for
-            }//if
-
-        }//if
-
-
-
-        //And finally, return shoppingStuff(Not done yet)
-        //THE END
-
-
-
         return ingredients;
     }
 
@@ -204,7 +78,7 @@ public class testmodel extends ViewModel {
      * </p>
      */
     // https://stackoverflow.com/questions/51892766/android-firestore-convert-array-of-document-references-to-listpojo
-    private void loadMealPlans(ArrayList<String> docIds) {
+    private ArrayList<MealPlan> loadMealPlans(ArrayList<String> docIds) {
 
         // fetch from db
         db = FirebaseFirestore.getInstance();
@@ -215,6 +89,8 @@ public class testmodel extends ViewModel {
                     @Override
                     public void onSuccess(QuerySnapshot querySnapshot) {
 
+                        List<Task<DocumentSnapshot>> all_tasks = new ArrayList<>();
+
                         for (DocumentSnapshot document: querySnapshot.getDocuments()) {
                             Map<String, Object> data = document.getData();
 
@@ -224,13 +100,36 @@ public class testmodel extends ViewModel {
                             final Ingredient[] breakfastIngredient = {null};
                             final Ingredient[] lunchIngredient = {null};
                             final Ingredient[] dinnerIngredient = {null};
+                            final Integer[] breakfastServings = {null};
+                            final Integer[] lunchServings = {null};
+                            final Integer[] dinnerServings = {null};
 
                             List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
                             for (Map.Entry<String, Object> entry : data.entrySet()) {
 
+                                if (!(entry.getValue() instanceof DocumentReference)) {
+
+                                    switch (entry.getKey()) {
+
+                                        case "breakfastServings":
+                                            breakfastServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
+                                            break;
+                                        case "lunchServings":
+                                            lunchServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
+                                            break;
+                                        case "dinnerServings":
+                                            dinnerServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
+                                            break;
+
+                                    }
+                                    continue;
+                                }
+
                                 DocumentReference reference = (DocumentReference) entry.getValue();
+
                                 Task<DocumentSnapshot> documentSnapshotTask = reference.get();
                                 tasks.add(documentSnapshotTask);
+                                all_tasks.add(documentSnapshotTask);
 
                                 documentSnapshotTask
                                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -271,13 +170,56 @@ public class testmodel extends ViewModel {
                                 @Override
                                 public void onSuccess(List<Object> objects) {
                                     MealPlan mealPlan = new MealPlan(document.getId(), breakfastRecipe[0], lunchRecipe[0], dinnerRecipe[0],
-                                            breakfastIngredient[0], lunchIngredient[0], dinnerIngredient[0]);
-                                    mealPlan.setDocumentId(document.getId());
+                                            breakfastServings[0], lunchServings[0], dinnerServings[0],
+                                            breakfastIngredient[0], lunchIngredient[0], dinnerIngredient[0],
+                                            document.getId());
+                                    // mealPlan.setDocumentId(document.getId());
                                     query.add(mealPlan);
-                                    mealPlans.setValue(query);
                                 }
                             });
                         }
+                        Tasks.whenAllSuccess(all_tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                            @Override
+                            public void onSuccess(List<Object> objects) {
+                                mealPlans.setValue(query);
+                                db = FirebaseFirestore.getInstance();
+                                db.collection("Ingredients").get()
+                                        .addOnSuccessListener(new OnSuccessListener<>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                ArrayList<Ingredient> iquery = new ArrayList<>(queryDocumentSnapshots.toObjects(Ingredient.class));
+                                                int len = query.size();
+                                                String s = Integer.toString(len);
+                                                Log.e("test", s);
+
+                                                int i = iquery.size();
+                                                String t = Integer.toString(i);
+                                                Log.e("test", t);
+
+                                                String test = query.get(0).getDate();
+                                                Log.e("test", test);
+
+                                                //        loadMealPlans(docIds);
+
+                                                // query -- meal plan query
+                                                // iquery -- ingredients query
+
+
+//                                                ingredients.setValue(query);
+
+                                                Log.d(TAG, "Data retrieved successfully");
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d(TAG, "Data failed to be retrieved");
+                                            }
+                                        });
+
+
+                                // here
+                            }
+                        });
                         Log.d(TAG, "Data added successfully");
                     }
                 })
@@ -287,7 +229,9 @@ public class testmodel extends ViewModel {
 
                     }
                 });
+        return query;
     }
+
 
     /**
      * <p>
