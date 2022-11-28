@@ -70,21 +70,11 @@
             android:paddingHorizontal="5dp"
             android:paddingVertical="1dp">
 
-            <ImageButton
-                android:id="@+id/shopping_list_previous_week_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:maxWidth="50dp"
-                android:maxHeight="50dp"
-                android:onClick="onClickPrevWeekShopping"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/left_arrow_meal_plan" />
+
 
             <TextView
                 android:id="@+id/shopping_list_current_week"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_weight="2"
@@ -94,17 +84,7 @@
                 android:textColor="#E9E5E5"
                 android:textSize="30sp" />
 
-            <ImageButton
-                android:id="@+id/shopping_list_next_week_button"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:maxWidth="10dp"
-                android:maxHeight="10dp"
-                android:onClick="onClickNextWeekShopping"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/right_arrow_meal_plan" />
+
         </LinearLayout>
 
 

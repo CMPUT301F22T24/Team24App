@@ -78,9 +78,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         for (int i = 0; i <= 6; i ++)
             docIds.add(week.get(i).toString());
 
-        for (String s : docIds) {
-            Log.e("test", s);
-        }
+
 
         model.getShopping(docIds).observe(this, new Observer<ArrayList<RecipeIngredient>>() {
             @Override
@@ -88,7 +86,6 @@ public class ShoppingListActivity extends AppCompatActivity {
                 for (RecipeIngredient ri : recipeIngredients) {
 
                     String changed = ri.getDescription();
-                    Log.e("changed", changed);
 
                     ShoppingListItem sli = new ShoppingListItem(ri, false);
                     shoppingList.add(sli);
@@ -113,16 +110,6 @@ public class ShoppingListActivity extends AppCompatActivity {
 
     }
 
-
-    public void onClickNextWeekShopping(View view){
-        currMonday = currMonday.plusDays(7);
-        setWeek(currMonday);
-    }//onClickNextWeek
-
-    public void onClickPrevWeekShopping(View view){
-        currMonday = currMonday.minusDays(7);
-        setWeek(currMonday);
-    }//onClickprevWeek
 
     public void setWeek(LocalDate firstDay) {
         // clear the week
