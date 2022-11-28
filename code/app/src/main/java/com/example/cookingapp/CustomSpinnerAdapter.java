@@ -17,11 +17,23 @@ import java.util.List;
  */
 
 public class CustomSpinnerAdapter extends ArrayAdapter<String> {
-
+    /**
+     * CustomSpinnerAdapter get the context, resource and objects.
+     * @param context
+     * @param resource
+     * @param objects
+     */
     public CustomSpinnerAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
     }
 
+    /**
+     * getDropDownView get the drop down view by position, convertView and parent.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = super.getDropDownView(position, convertView, parent);
@@ -33,6 +45,13 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
         return view;
     }
 
+    /**
+     * get the view by position, convertView and parent.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
@@ -40,6 +59,10 @@ public class CustomSpinnerAdapter extends ArrayAdapter<String> {
         return view;
     }
 
+    /**
+     * getCount get count - 1
+     * @return
+     */
     @Override
     public int getCount() {
         return super.getCount()-1;

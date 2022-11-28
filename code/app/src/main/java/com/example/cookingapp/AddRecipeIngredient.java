@@ -20,7 +20,10 @@ public class AddRecipeIngredient extends AppCompatActivity {
     Button confirm;
 
 
-
+    /**
+     * onCreate allows users to add an ingredient to a recipe, with a brief description, amount, unit, and ingredient category.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,10 @@ public class AddRecipeIngredient extends AppCompatActivity {
 
     }
 
+    /**
+     * onConfirm allows users to confirm addition.
+     * @param view
+     */
     public void onConfirm(View view) {
         String description = descriptionEditText.getText().toString();
         String category = categoryEditText.getText().toString();
@@ -44,6 +51,5 @@ public class AddRecipeIngredient extends AppCompatActivity {
         intent.putExtra("recipeIngredient", recipeIngredient);
         setResult(RESULT_OK, intent);
         finish();
-
     }
 }

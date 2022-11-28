@@ -37,6 +37,9 @@ import java.util.regex.Pattern;
  * The Ingredients activity class, allowing users to add, edit and delete ingredient entries
  */
 public class AddIngredientActivity extends AppCompatActivity {
+    /**
+     * Ingredient description, location, category, unit, expiry date and amount.
+     */
     int receivedCode; // code this activity receives
     private final int EDIT_OK = 1;
     int resultCode = RESULT_OK; // default is add
@@ -73,7 +76,10 @@ public class AddIngredientActivity extends AppCompatActivity {
     Button SelectCategory;
     Button SelectUnit;
 
-
+    /**
+     * onCreate allows users to add an ingredient with a brief description, best before date, location, amount, unit, and ingredient category.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +107,9 @@ public class AddIngredientActivity extends AppCompatActivity {
         initLocationSpinner();
         initCategorySpinner();
         initUnitSpinner();
-
+        /**
+         * The code below allows users to edit the details of an ingredient.
+         */
         Bundle info = getIntent().getExtras();
         receivedCode = info.getInt("EDIT_CODE"); // try to look for an edit request
         if (receivedCode == EDIT_OK) {
@@ -379,14 +387,20 @@ public class AddIngredientActivity extends AppCompatActivity {
             isConfirmButtonEnabled();
         }
 
+        /**
+         * Processing if users selected nothing
+         * @param parent
+         */
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
 
         }
     }
 
+    /**
+     * initLocationSpinner allows users to add ability for user to add locations to list/adapter
+     */
     private void initLocationSpinner() {
-        // TODO: add ability for user to add locations to list/adapter
         ArrayList<String> locations = new ArrayList<String>() {{
             add("Fridge");
             add("Freezer");
@@ -402,8 +416,10 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * initCategorySpinner allows users to add ability for user to add categories to list/adapter
+     */
     private void initCategorySpinner() {
-        // TODO: add ability for user to add categories to list/adapter
         ArrayList<String> categories = new ArrayList<String>() {{
             add("Vegetable");
             add("Fruit");
@@ -418,8 +434,10 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * initUnitSpinner allows users to add ability for user to add units to list/adapter
+     */
     private void initUnitSpinner() {
-        // TODO: add ability for user to add units to list/adapter
         ArrayList<String> units = new ArrayList<String>() {{
             add("kg");
             add("lb");
@@ -434,7 +452,9 @@ public class AddIngredientActivity extends AppCompatActivity {
     }
 
     // https://stackoverflow.com/questions/5357455/limit-decimal-places-in-android-edittext
-    // TODO: change to preference
+    /**
+     * DecimalDigitsInputFilter allows user to change to preference
+     */
     private class DecimalDigitsInputFilter implements InputFilter {
         Pattern mPattern;
         public DecimalDigitsInputFilter(int digitsBeforeZero,int digitsAfterZero) {
@@ -450,7 +470,9 @@ public class AddIngredientActivity extends AppCompatActivity {
         }
     }
 
-    // for enabling confirm button
+    /**
+     * for enabling confirm button
+     */
     private void isConfirmButtonEnabled() {
         String description = descriptionEditText.getText().toString().trim();
         String date = bestBeforeDateTextView.getText().toString();

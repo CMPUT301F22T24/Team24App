@@ -29,7 +29,9 @@ import java.util.Collections;
  */
 public class IngredientsActivity extends AppCompatActivity implements ViewIngredientDialogFragment.OnFragmentInteractionListener{
 
-
+    /**
+     * Ingredient Activity variables
+     */
     private final int EDIT_OK = 1;
 
     ListView ingredientListView;
@@ -42,6 +44,10 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
     CustomSpinnerAdapter sortBySpinnerAdapter;
     int position = -1;
 
+    /**
+     * onCreate allows users to see the list of ingredients.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -98,6 +104,10 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
 
     }
 
+    /**
+     * implement add button
+     * @param view
+     */
     // TODO: change add button color
     public void onAddClick(View view) {
         Intent intent = new Intent(this, AddIngredientActivity.class);
@@ -105,6 +115,10 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
         activityResultLauncher.launch(intent);
     }//onAddClick
 
+    /**
+     * implement edit button
+     * @param ingredient
+     */
     @Override
     public void onEdit(Ingredient ingredient) {
         // TODO: edit activity
@@ -114,6 +128,10 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
         activityResultLauncher.launch(intent);
     }
 
+    /**
+     * implement delete button
+     * @param ingredient
+     */
     @Override
     public void onDelete(Ingredient ingredient) {
         // Confirm user wants to delete ingredient
@@ -137,6 +155,9 @@ public class IngredientsActivity extends AppCompatActivity implements ViewIngred
         // dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED);
     }
 
+    /**
+     * implement sort the list of ingredients by description, best before date, location, and ingredient category.
+     */
     private void initSortBySpinner() {
         sortBySpinner = findViewById(R.id.ingredients_sortBy_spinner);
         ArrayList<String> sortBy = new ArrayList<String>() {{

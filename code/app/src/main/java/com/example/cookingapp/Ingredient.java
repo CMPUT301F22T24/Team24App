@@ -19,6 +19,9 @@ import java.util.Locale;
  * The Ingredient object class
  */
 public class Ingredient implements Serializable, MealPlanChoice {
+    /**
+     * Ingredient information: description, location, category, unit, expiry date and amount.
+     */
     private String description;
     private LocalDate bestBeforeDate;
     private String location;
@@ -29,6 +32,9 @@ public class Ingredient implements Serializable, MealPlanChoice {
     @DocumentId
     private String documentId;
 
+    /**
+     * instantiate ingredient.
+     */
     public Ingredient() {
         this.description = null;
         this.bestBeforeDate = null;
@@ -38,6 +44,15 @@ public class Ingredient implements Serializable, MealPlanChoice {
         this.category = null;
     }
 
+    /**
+     * instantiate ingredient with description, location, category, unit, expiry date and amount.
+     * @param description
+     * @param bestBeforeDate
+     * @param location
+     * @param amount
+     * @param unit
+     * @param category
+     */
     public Ingredient(String description, LocalDate bestBeforeDate, String location, Double amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = bestBeforeDate;
@@ -47,6 +62,14 @@ public class Ingredient implements Serializable, MealPlanChoice {
         this.category = category;
     }
 
+    /**
+     * instantiate ingredient with description, location, category, unit, expiry date and amount.
+     * @param description
+     * @param location
+     * @param amount
+     * @param unit
+     * @param category
+     */
     public Ingredient(String description, String location, Double amount, String unit, String category) {
         this.description = description;
         this.bestBeforeDate = null;
@@ -56,14 +79,20 @@ public class Ingredient implements Serializable, MealPlanChoice {
         this.category = category;
     }
 
-    // ArrayAdapter uses toString to display stuff to the list View
-    // so we can override the toString to tell ArrayAdapter how to display and ingredient object
+    /**
+     * ArrayAdapter uses toString to display stuff to the list View,
+     * so we can override the toString to tell ArrayAdapter how to display and ingredient object
+     * @return
+     */
     public String toString() {
         String date = bestBeforeDate.toString();
         return String.format("%s | %s | %s | %s", description, date, location, category);
     }
 
-    // converts bestBeforeDate to clean formatted string
+    /**
+     * converts bestBeforeDate to clean formatted string
+     * @return
+     */
     public String getStringDate() {
         // TODO: handle better when date is null
         String pattern = "yyyy-MM-dd";
@@ -75,7 +104,9 @@ public class Ingredient implements Serializable, MealPlanChoice {
         return pattern;
     }
 
-    // Getters and Setters
+    /**
+     * Getters and Setters
+     */
     public String getDescription() {
         return description;
     }
@@ -133,6 +164,9 @@ public class Ingredient implements Serializable, MealPlanChoice {
         this.category = category;
     }
 
+    /**
+     * Ingredient Description Comparator change description to lower case.
+     */
     public static Comparator<Ingredient> IngredientDescriptionComparator = new Comparator<Ingredient>() {
         @Override
         public int compare(Ingredient i1, Ingredient i2) {
@@ -144,17 +178,20 @@ public class Ingredient implements Serializable, MealPlanChoice {
             return d1.compareTo(d2);
         }
     };
-
+    /**
+     * Ingredient BestBeforeDate Comparator change description order
+     */
     public static Comparator<Ingredient> IngredientBestBeforeDateComparator = new Comparator<Ingredient>() {
         @Override
         public int compare(Ingredient i1, Ingredient i2) {
             LocalDate d1 = i1.getBestBeforeDate();
             LocalDate d2 = i2.getBestBeforeDate();
-            // desc order
             return d1.compareTo(d2);
         }
     };
-
+    /**
+     * Ingredient Location Comparator change location to lower case.
+     */
     public static Comparator<Ingredient> IngredientLocationComparator = new Comparator<Ingredient>() {
         @Override
         public int compare(Ingredient i1, Ingredient i2) {
@@ -167,7 +204,9 @@ public class Ingredient implements Serializable, MealPlanChoice {
             return d1.compareTo(d2);
         }
     };
-
+    /**
+     * Ingredient Category Comparator change Category to lower case.
+     */
     public static Comparator<Ingredient> IngredientCategoryComparator = new Comparator<Ingredient>() {
         @Override
         public int compare(Ingredient i1, Ingredient i2) {
@@ -180,6 +219,11 @@ public class Ingredient implements Serializable, MealPlanChoice {
         }
     };
 
+    /**
+     * MealPlan Choice
+     * @param servings
+     * @return
+     */
     @Override
     public MealPlanChoice scale(int servings) {
 

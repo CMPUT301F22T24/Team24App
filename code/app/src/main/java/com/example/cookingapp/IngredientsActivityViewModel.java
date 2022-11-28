@@ -20,7 +20,11 @@ import java.time.ZoneOffset;
 import java.time.zone.ZoneRules;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * <p>
+ * This is the class for the ingredient view model for the data base
+ * </p>
+ */
 public class IngredientsActivityViewModel extends ViewModel {
 
     final String TAG = "IngredientsActivity";
@@ -33,7 +37,12 @@ public class IngredientsActivityViewModel extends ViewModel {
         }
         return ingredients;
     }
-
+    /**
+     * <p>
+     * This method loads in everything from the data base, maps each document into a ingredient class
+     * and stores them in an array list
+     * </p>
+     */
     private void loadIngredients() {
         // fetch from db
         db = FirebaseFirestore.getInstance();
@@ -53,6 +62,10 @@ public class IngredientsActivityViewModel extends ViewModel {
                 });
     }
 
+    /**
+     * This method adds a ingredient to the data base
+     * @param ingredient
+     */
     public void addIngredient(@NonNull Ingredient ingredient) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("description", ingredient.getDescription());
@@ -80,6 +93,11 @@ public class IngredientsActivityViewModel extends ViewModel {
         });
     }
 
+    /**
+     * This method edits a ingredient to the data base
+     * @param ingredient
+     * @param position
+     */
     public void editIngredient(@NonNull Ingredient ingredient, int position) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("description", ingredient.getDescription());
@@ -114,7 +132,10 @@ public class IngredientsActivityViewModel extends ViewModel {
 
     }
 
-
+    /**
+     * This method deletes a ingredient to the data base.
+     * @param ingredient
+     */
     public void deleteIngredient(@NonNull Ingredient ingredient) {
         db = FirebaseFirestore.getInstance();
         db.collection("Ingredients").document(ingredient.getDocumentId()).delete()
