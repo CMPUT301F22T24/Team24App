@@ -34,22 +34,24 @@ public class testmodel extends ViewModel {
     private FirebaseFirestore db;
 
 
-    private MutableLiveData<ArrayList<MealPlan>> mealPlans;
-    private MutableLiveData<ArrayList<Ingredient>> ingredients;
-    private MutableLiveData<ArrayList<RecipeIngredient>> mshopping;
-    private MutableLiveData<ArrayList<RecipeIngredient>> mealIngredients;
+//    private MutableLiveData<ArrayList<MealPlan>> mealPlans;
+//    private MutableLiveData<ArrayList<Ingredient>> ingredients;
+    private static MutableLiveData<ArrayList<RecipeIngredient>> mshopping;
+//    private MutableLiveData<ArrayList<RecipeIngredient>> mealIngredients;
 
     public LiveData<ArrayList<RecipeIngredient>> getShopping(ArrayList<String> docIds) {
 
-        mealPlans = new MutableLiveData<>();
-        ingredients = new MutableLiveData<>();
-        mshopping = new MutableLiveData<>();
+        if (mshopping == null) {
 
-        mealIngredients = new MutableLiveData<>();
+            // mealPlans = new MutableLiveData<>();
+            // ingredients = new MutableLiveData<>();
+            mshopping = new MutableLiveData<>();
+            // mealIngredients = new MutableLiveData<>();
 
-        mealIngredients = new MutableLiveData<>();
-        loadMealPlans(docIds);
-        loadIngredients();
+            loadMealPlans(docIds);
+            // loadIngredients();
+
+        }
 
         // i have both lists
         return mshopping;
@@ -63,7 +65,7 @@ public class testmodel extends ViewModel {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         ArrayList<Ingredient> query = new ArrayList<>(queryDocumentSnapshots.toObjects(Ingredient.class));
-                        ingredients.setValue(query);
+                        // ingredients.setValue(query);
                         Log.d(TAG, "Data retrieved successfully");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -86,7 +88,7 @@ public class testmodel extends ViewModel {
         // fetch from db
         db = FirebaseFirestore.getInstance();
         ArrayList<MealPlan> query = new ArrayList<>();
-        mealPlans.setValue(new ArrayList<>());
+        // mealPlans.setValue(new ArrayList<>());
         db.collection("MealPlan").whereIn(FieldPath.documentId(), docIds).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -184,7 +186,7 @@ public class testmodel extends ViewModel {
                         Tasks.whenAllSuccess(all_tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
                             @Override
                             public void onSuccess(List<Object> objects) {
-                                mealPlans.setValue(query);
+                                // mealPlans.setValue(query);
                                 db = FirebaseFirestore.getInstance();
                                 db.collection("Ingredients").get()
                                         .addOnSuccessListener(new OnSuccessListener<>() {
@@ -300,7 +302,7 @@ public class testmodel extends ViewModel {
 
 
 
-                                                mealIngredients.setValue(updated);
+                                                // mealIngredients.setValue(updated);
                                                 mshopping.setValue(shopping);
 
 

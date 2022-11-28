@@ -29,9 +29,8 @@ public class ShoppingListActivity extends AppCompatActivity {
     ListView shoppingListview;
     ArrayList<ShoppingListItem> shoppingList;
     ShoppingListAdapter shoppinglistadapter;
-    ShoppingListActivityViewModel viewModel;
+    // ShoppingListActivityViewModel viewModel;
     ArrayList<RecipeIngredient> ingredientList;
-
 
     ArrayList<LocalDate> week;
     TextView shopping_list_date_week;
@@ -55,8 +54,6 @@ public class ShoppingListActivity extends AppCompatActivity {
         initSortBySpinner();
 
         ingredientStorageList = new ArrayList<>();
-
-        model = new ViewModelProvider(this).get(testmodel.class);
 
         //////////////////////
         shoppingListview = findViewById(R.id.shopping_list);
@@ -82,28 +79,27 @@ public class ShoppingListActivity extends AppCompatActivity {
             Log.e("docids", s);
         }
 
+        shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
+        // viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
 
+        setWeek(currMonday);
 
+        model = new ViewModelProvider(this).get(testmodel.class);
         model.getShopping(docIds).observe(this, new Observer<ArrayList<RecipeIngredient>>() {
             @Override
             public void onChanged(ArrayList<RecipeIngredient> recipeIngredients) {
                 for (RecipeIngredient ri : recipeIngredients) {
 
-                    String changed = ri.getDescription();
-
-                    ShoppingListItem sli = new ShoppingListItem(ri, false);
-                    shoppingList.add(sli);
-                    shoppinglistadapter.notifyDataSetChanged();
-
-
+                    if (recipeIngredients != null) {
+                        String changed = ri.getDescription();
+                        ShoppingListItem sli = new ShoppingListItem(ri, false);
+                        shoppingList.add(sli);
+                    }
                 }
+                shoppinglistadapter.notifyDataSetChanged();
             }
         });
 
-        shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
-        viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
-
-        setWeek(currMonday);
 
     }//oncreate
 
