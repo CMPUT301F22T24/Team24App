@@ -241,6 +241,8 @@ public class testmodel extends ViewModel {
 
                                                     if (m.getBreakfastRecipe() != null) {
                                                         Recipe br = m.getBreakfastRecipe();
+                                                        RecipeIngredient cel = br.getIngredients().get(0);
+                                                        Log.e("cel", cel.getAmount());
                                                         updated.addAll(br.getIngredients());
 
                                                     }
@@ -264,6 +266,7 @@ public class testmodel extends ViewModel {
 
                                                 for (RecipeIngredient ri : updated) {
                                                     String s = ri.getDescription() + ri.getCategory() + ri.getUnit();
+                                                    Log.e("mealkey", s);
 
                                                     if (map.containsKey(s)) {
                                                         // this means we have some of it in the storage

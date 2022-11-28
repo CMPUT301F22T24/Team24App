@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ViewRecipeDialogFragment#newInstance} factory method to
+ * Use the {@link EditShoppingListItemDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class EditShoppingListItemDialogFragment extends DialogFragment {
@@ -72,7 +72,10 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
         return fragment;
     }
 
-
+    /**
+     * Overrides the onStart method to disable the confirm button
+     * The confirm button will be enabled when all the fields are filled out
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -93,7 +96,7 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-
+        // Initialize Variables
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.edit_shopping_list_item_dialog_fragment, null);
         viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
         descriptionTextView = view.findViewById(R.id.edit_shopping_item_fragment_description_textView);
@@ -102,8 +105,7 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
         expiryDatePicker = view.findViewById(R.id.edit_shopping_item_fragment_expiry_datePicker);
         unitTextView = view.findViewById(R.id.edit_shopping_item_fragment_unit_textView);
         amountEditText = view.findViewById(R.id.edit_shopping_item_fragment_amount_editText);
-        amountEditText.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(3, 2)});
-
+        amountEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(3, 2)});
 
 
         // Display ingredient passed as argument
@@ -111,6 +113,8 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
         descriptionTextView.setText(shoppingListItem.getIngredient().getDescription());
         categoryTextView.setText(shoppingListItem.getIngredient().getCategory());
         unitTextView.setText(shoppingListItem.getIngredient().getUnit());
+        // Make a new TextWatcher to validate that the user has filled in the amount and
+        // the location before the confirm button is re-enabled
         TextWatcher textFilledWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -142,7 +146,7 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
                 .setView(view)
                 .setCancelable(false)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-
+                    // Adds the ingredient to the ingredient storage
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         RecipeIngredient toAdd = shoppingListItem.getIngredient();

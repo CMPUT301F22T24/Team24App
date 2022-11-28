@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Test class for Meal Plan
@@ -59,4 +60,21 @@ public class MealPlanTest {
         assertEquals(ingredient, mealPlan.getDinnerIngredient());
     }
 
+    /***
+     * Test get and set Servings
+     */
+    @Test
+    public void servingsTests() {
+        Double x, y, z;
+        x = 1.0;
+        y = 2.5;
+        z = 3.0;
+        MealPlan mealPlan = mockMealPlan();
+        mealPlan.setBreakfastServings(x);
+        mealPlan.setLunchServings(y);
+        mealPlan.setDinnerServings(z);
+        assertEquals(x, mealPlan.getBreakfastServings());
+        assertEquals(y, mealPlan.getLunchServings());
+        assertEquals(z, mealPlan.getDinnerServings());
+    }
 }

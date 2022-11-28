@@ -46,7 +46,7 @@ public class AddRecipeIngredient extends AppCompatActivity {
         String unit = unitEditText.getText().toString();
         String amount = amountEditText.getText().toString();
 
-        RecipeIngredient recipeIngredient = new RecipeIngredient(description, category, unit, amount);
+        RecipeIngredient recipeIngredient = new RecipeIngredient(description, amount, unit, category);
         Intent intent = new Intent(this, AddRecipeActivity.class);
         intent.putExtra("recipeIngredient", recipeIngredient);
         setResult(RESULT_OK, intent);

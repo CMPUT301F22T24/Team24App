@@ -75,6 +75,7 @@ public class MealPlan implements Serializable {
 
     /**
      * sets the breakfast recipe of the meal plan
+     *
      * @param breakfastRecipe : recipe for breakfast
      */
     public void setBreakfastRecipe(Recipe breakfastRecipe) {
@@ -83,6 +84,7 @@ public class MealPlan implements Serializable {
 
     /**
      * sets the lunch recipe of the meal plan
+     *
      * @param lunchRecipe : recipe for lunch
      */
     public void setLunchRecipe(Recipe lunchRecipe) {
@@ -91,6 +93,7 @@ public class MealPlan implements Serializable {
 
     /**
      * sets the dinner recipe of the meal plan
+     *
      * @param dinnerRecipe : recipe for dinner
      */
     public void setDinnerRecipe(Recipe dinnerRecipe) {
@@ -99,6 +102,7 @@ public class MealPlan implements Serializable {
 
     /**
      * sets the breakfast ingredient of the meal plan
+     *
      * @param breakfastIngredient : ingredient for breakfast
      */
     public void setBreakfastIngredient(Ingredient breakfastIngredient) {
@@ -107,6 +111,7 @@ public class MealPlan implements Serializable {
 
     /**
      * sets the lunch ingredient of the meal plan
+     *
      * @param lunchIngredient : ingredient for lunch
      */
     public void setLunchIngredient(Ingredient lunchIngredient) {
@@ -115,6 +120,7 @@ public class MealPlan implements Serializable {
 
     /**
      * sets the dinner ingredient of the meal plan
+     *
      * @param dinnerIngredient : ingredient for dinner
      */
     public void setDinnerIngredient(Ingredient dinnerIngredient) {
@@ -123,6 +129,7 @@ public class MealPlan implements Serializable {
 
     /**
      * gets the date of the meal plan
+     *
      * @return date
      */
     public String getDate() {
@@ -131,6 +138,7 @@ public class MealPlan implements Serializable {
 
     /**
      * gets the breakfastRecipe of the meal plan
+     *
      * @return breakfastRecipe
      */
 
@@ -140,6 +148,7 @@ public class MealPlan implements Serializable {
 
     /**
      * gets the lunchRecipe of the meal plan
+     *
      * @return lunchRecipe
      */
     public Recipe getLunchRecipe() {
@@ -155,26 +164,50 @@ public class MealPlan implements Serializable {
         return dinnerRecipe;
     }
 
+    /**
+     * Gets the breakfastServings for the meal plan
+     *
+     * @return breakfastServings
+     */
     public Double getBreakfastServings() {
         return breakfastServings;
     }
 
+    /**
+     * Sets the breakfastServings for the meal plan
+     */
     public void setBreakfastServings(Double breakfastServings) {
         this.breakfastServings = breakfastServings;
     }
 
+    /**
+     * Gets the lunchServings for the meal plan
+     *
+     * @return lunchServings
+     */
     public Double getLunchServings() {
         return lunchServings;
     }
 
+    /**
+     * Set the lunch Servings for the meal plan
+     */
     public void setLunchServings(Double lunchServings) {
         this.lunchServings = lunchServings;
     }
 
+    /**
+     * Gets the dinnerServings for the meal plan
+     *
+     * @return dinnerServings
+     */
     public Double getDinnerServings() {
         return dinnerServings;
     }
 
+    /**
+     * Set the dinnerServings for the meal plan
+     */
     public void setDinnerServings(Double dinnerServings) {
         this.dinnerServings = dinnerServings;
     }
@@ -191,6 +224,7 @@ public class MealPlan implements Serializable {
 
     /**
      * gets the lunchIngredient of the meal plan
+     *
      * @return lunchIngredient
      */
     public Ingredient getLunchIngredient() {
@@ -199,6 +233,7 @@ public class MealPlan implements Serializable {
 
     /**
      * gets the dinnerIngredient of the meal plan
+     *
      * @return dinnerIngredient
      */
     public Ingredient getDinnerIngredient() {
@@ -207,6 +242,7 @@ public class MealPlan implements Serializable {
 
     /**
      * gets the documentId of the meal plan
+     *
      * @return documentId
      */
     public String getDocumentId() {
@@ -215,7 +251,8 @@ public class MealPlan implements Serializable {
 
     /**
      * sets the document id for the data base
-     * @param  documentId
+     *
+     * @param documentId
      */
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
