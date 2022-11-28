@@ -203,7 +203,7 @@ public class Recipe implements Serializable, MealPlanChoice {
      */
     public Recipe scale(double servings) {
         Recipe recipe = new Recipe(this.getTitle(), this.getServings(), this.getCategory(), this.getComments(), this.getPrepTime(), (ArrayList<RecipeIngredient>) this.getIngredients(), this.getImage());
-        for (RecipeIngredient ingredient : ((Recipe) recipe).getIngredients()) {
+        for (RecipeIngredient ingredient : recipe.getIngredients()) {
             double scaleRatio = servings / Double.parseDouble(this.getServings());
             ingredient.setAmount(String.valueOf(scaleRatio * Double.parseDouble(ingredient.getAmount())));
         }
