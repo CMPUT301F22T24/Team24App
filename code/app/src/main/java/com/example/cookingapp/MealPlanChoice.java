@@ -4,6 +4,4 @@ import java.io.Serializable;
 
 public interface MealPlanChoice extends Serializable {
 
-    MealPlanChoice scale(int servings);
-
 }
