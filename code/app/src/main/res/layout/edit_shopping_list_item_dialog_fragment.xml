@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
 
@@ -22,27 +22,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Description"
-                android:textSize="20dp"
+                android:fontFamily="@font/karma_medium"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/edit_shopping_item_fragment_description_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/karma_medium"
                 android:text="Ingredient description"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
-        <!--Ingredient Category-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="20dp">
 
-
-        </LinearLayout>
 
         <!--Ingredient Location-->
         <LinearLayout
@@ -51,19 +45,43 @@
             android:orientation="vertical"
             android:paddingBottom="20dp">
 
+
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingredient Location"
-                android:textSize="20dp"
+                android:fontFamily="@font/karma_medium"
+                android:text="Ingredient Category"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/edit_shopping_item_fragment_category_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karma_medium"
+                android:text="category description"
+                android:textSize="20sp" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karma_medium"
+                android:text="Ingredient Location"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edit_shopping_item_fragment_location_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingredient location"
-                android:textSize="20dp" />
+                android:fontFamily="@font/karma_medium"
+                android:hint="Enter location...."
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -81,7 +99,7 @@
                 android:padding="5dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -91,10 +109,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-
                         android:padding="5dp"
                         android:text="Expiry Date"
-
+                        android:fontFamily="@font/karma_medium"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -132,16 +149,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/karma_medium"
                     android:text="Amount"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/edit_shopping_item_fragment_amount_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Amount Bought"
-                    android:textSize="20dp"
+                    android:fontFamily="@font/karma_medium"
+                    android:hint="Enter Amount..."
+                    android:textSize="20sp"
                     android:inputType="numberDecimal" />
 
             </LinearLayout>
@@ -157,16 +176,19 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/karma_medium"
                     android:text="Unit"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/edit_shopping_item_fragment_unit_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/karma_medium"
                     android:text="unit"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 

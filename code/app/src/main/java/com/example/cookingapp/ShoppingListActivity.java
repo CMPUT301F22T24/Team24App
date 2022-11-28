@@ -107,16 +107,16 @@ public class ShoppingListActivity extends AppCompatActivity {
         shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
         viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
 
-        ingredientList.add(new RecipeIngredient("Potato", "5.0", "kg", "vegetable"));
-        ingredientList.add(new RecipeIngredient("Tomato", "2.77", "kg", "vegetable"));
-        ingredientList.add(new RecipeIngredient("Orange", "0.21", "lb", "fruit"));
-        ingredientList.add(new RecipeIngredient("Strawberry", "2.1", "kg", "fruit"));
+      //  ingredientList.add(new RecipeIngredient("Potato", "5.0", "kg", "vegetable"));
+      //  ingredientList.add(new RecipeIngredient("Tomato", "2.77", "kg", "vegetable"));
+      //  ingredientList.add(new RecipeIngredient("Orange", "0.21", "lb", "fruit"));
+      //  ingredientList.add(new RecipeIngredient("Strawberry", "2.1", "kg", "fruit"));
 
 
-        shoppingList.add(new ShoppingListItem(ingredientList.get(0), true));
-        shoppingList.add(new ShoppingListItem(ingredientList.get(1), false));
-        shoppingList.add(new ShoppingListItem(ingredientList.get(2), false));
-        shoppingList.add(new ShoppingListItem(ingredientList.get(3), false));
+       // shoppingList.add(new ShoppingListItem(ingredientList.get(0), true));
+       // shoppingList.add(new ShoppingListItem(ingredientList.get(1), false));
+       // shoppingList.add(new ShoppingListItem(ingredientList.get(2), false));
+        //shoppingList.add(new ShoppingListItem(ingredientList.get(3), false));
 
         //Log.d("YesPlease",shoppingList.get(0).getIngredient().getDescription());
         setWeek(currMonday);

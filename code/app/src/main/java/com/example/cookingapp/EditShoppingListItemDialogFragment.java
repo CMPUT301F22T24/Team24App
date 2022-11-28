@@ -16,6 +16,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -39,6 +41,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +52,7 @@ import java.util.Date;
 public class EditShoppingListItemDialogFragment extends DialogFragment {
 
     ShoppingListActivityViewModel viewModel;
-    TextView descriptionTextView, unitTextView;
+    TextView descriptionTextView, unitTextView, categoryTextView;
     EditText amountEditText, locationEditText;
     DatePicker expiryDatePicker;
     Button confirmButton;
@@ -93,14 +97,19 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.edit_shopping_list_item_dialog_fragment, null);
         viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
         descriptionTextView = view.findViewById(R.id.edit_shopping_item_fragment_description_textView);
+        categoryTextView = view.findViewById(R.id.edit_shopping_item_fragment_category_textView);
         locationEditText = view.findViewById(R.id.edit_shopping_item_fragment_location_editText);
         expiryDatePicker = view.findViewById(R.id.edit_shopping_item_fragment_expiry_datePicker);
         unitTextView = view.findViewById(R.id.edit_shopping_item_fragment_unit_textView);
         amountEditText = view.findViewById(R.id.edit_shopping_item_fragment_amount_editText);
+        amountEditText.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(3, 2)});
+
+
 
         // Display ingredient passed as argument
         ShoppingListItem shoppingListItem = (ShoppingListItem) getArguments().getSerializable("shoppingListItem");
         descriptionTextView.setText(shoppingListItem.getIngredient().getDescription());
+        categoryTextView.setText(shoppingListItem.getIngredient().getCategory());
         unitTextView.setText(shoppingListItem.getIngredient().getUnit());
         TextWatcher textFilledWatcher = new TextWatcher() {
             @Override
@@ -115,11 +124,16 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (locationEditText.getText().length() >= 1 && amountEditText.getText().length() >= 1) {
+                if (locationEditText.getText().length() >= 1 && amountEditText.getText().length() >= 1 ) {
                     confirmButton.setEnabled(true);
                 }
             }
         };
+
+
+
+
+
         locationEditText.addTextChangedListener(textFilledWatcher);
         amountEditText.addTextChangedListener(textFilledWatcher);
         // Get action from user
@@ -152,5 +166,25 @@ public class EditShoppingListItemDialogFragment extends DialogFragment {
                 .create();
 
     }
+
+
+    public class DecimalDigitsInputFilter implements InputFilter {
+
+        Pattern mPattern;
+        public DecimalDigitsInputFilter(int digitsBeforeZero,int digitsAfterZero) {
+            mPattern= Pattern.compile("[0-9]{0," + (digitsBeforeZero-1) + "}+((\\.[0-9]{0," + (digitsAfterZero-1) + "})?)||(\\.)?");
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            Matcher matcher=mPattern.matcher(dest);
+            if(!matcher.matches())
+                return "";
+            return null;
+        }
+    }//DecimalDigitsInputFilter
+
+
 
 }
