@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ShoppingListAdapter extends ArrayAdapter<ShoppingListItem> {
@@ -87,7 +88,10 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingListItem> {
 
 
 
-        temp="Required: "+shoppingList.getIngredient().getAmount() + shoppingList.getIngredient().getUnit();
+        double tempAmount = Double.parseDouble(shoppingList.getIngredient().getAmount());
+        DecimalFormat df = new DecimalFormat("###.##");
+
+        temp="Required: "+ df.format(tempAmount) + shoppingList.getIngredient().getUnit();
         ShoppingIngredientAmount.setText(temp);
 
 

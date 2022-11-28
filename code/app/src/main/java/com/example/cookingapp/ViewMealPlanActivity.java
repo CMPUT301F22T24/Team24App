@@ -171,7 +171,7 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
         String month = currentDate.getMonth().toString();
         String day = Integer.toString(currentDate.getDayOfMonth());
         String year = Integer.toString(currentDate.getYear());
-        String fullDate = month + " " + day + "," + year;
+        String fullDate = month + " " + day + ", " + year;
         SpannableString content = new SpannableString(fullDate);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         date.setText(content);
