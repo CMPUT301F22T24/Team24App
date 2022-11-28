@@ -58,6 +58,16 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         model = new ViewModelProvider(this).get(testmodel.class);
 
+        //////////////////////
+        shoppingListview = findViewById(R.id.shopping_list);
+        shoppingList = new ArrayList<>();
+        shoppinglistadapter = new ShoppingListAdapter(this, shoppingList);
+        shoppingListview.setAdapter(shoppinglistadapter);
+
+        ingredientList = new ArrayList<>();
+
+        ////////////////////////////
+
         ArrayList<String> docIds = new ArrayList<>();
         week = new ArrayList<>();
         for(int i = 0; i < 7; i++) {
@@ -75,22 +85,28 @@ public class ShoppingListActivity extends AppCompatActivity {
             @Override
             public void onChanged(ArrayList<Ingredient> ingredients) {
 
-                // get the shoppig
-                String desc = ingredients.get(0).getDescription();
+                // the entire list ingredients needs to go into shopping list
 
+                Ingredient ingredient = ingredients.get(0);
+
+
+                String t = ingredients.get(0).getDescription();
+                Log.e("changed", t);
+
+                RecipeIngredient r = new RecipeIngredient(ingredient.getDescription(),
+                        Double.toString(ingredient.getAmount()), ingredient.getUnit(), ingredient.getCategory());
+
+                ShoppingListItem sli = new ShoppingListItem(r, true);
+                shoppingList.add(sli);
+                shoppinglistadapter.notifyDataSetChanged();
 
             }
+
         });
 
         shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
         viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
 
-        shoppingListview = findViewById(R.id.shopping_list);
-        shoppingList = new ArrayList<>();
-        shoppinglistadapter = new ShoppingListAdapter(this, shoppingList);
-        shoppingListview.setAdapter(shoppinglistadapter);
-
-        ingredientList = new ArrayList<>();
         ingredientList.add(new RecipeIngredient("Potato", "5.0", "kg", "vegetable"));
         ingredientList.add(new RecipeIngredient("Tomato", "2.77", "kg", "vegetable"));
         ingredientList.add(new RecipeIngredient("Orange", "0.21", "lb", "fruit"));

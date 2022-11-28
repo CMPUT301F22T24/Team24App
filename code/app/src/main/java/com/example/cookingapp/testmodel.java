@@ -37,7 +37,7 @@ public class testmodel extends ViewModel {
     private MutableLiveData<ArrayList<MealPlan>> mealPlans;
     private MutableLiveData<ArrayList<Ingredient>> ingredients;
     private MutableLiveData<ArrayList<ShoppingListItem>> shopping;
-    private MutableLiveData<ArrayList<RecipeIngredient>> mealIngredients;
+    private MutableLiveData<ArrayList<Ingredient>> mealIngredients;
 
     public LiveData<ArrayList<Ingredient>> getShopping(ArrayList<String> docIds) {
 
@@ -45,11 +45,13 @@ public class testmodel extends ViewModel {
         ingredients = new MutableLiveData<>();
 
         mealIngredients = new MutableLiveData<>();
+
+        mealIngredients = new MutableLiveData<>();
         loadMealPlans(docIds);
         loadIngredients();
 
         // i have both lists
-        return ingredients;
+        return mealIngredients;
     }
 
     private void loadIngredients() {
@@ -196,8 +198,25 @@ public class testmodel extends ViewModel {
                                                 String t = Integer.toString(i);
                                                 Log.e("test", t);
 
-                                                String test = query.get(0).getDate();
-                                                Log.e("test", test);
+
+
+
+
+                                                ArrayList<Ingredient> updated =  new ArrayList<>();
+
+                                                for (MealPlan m : query) {
+                                                    if (m.getBreakfastIngredient() != null) {
+                                                        updated.add(m.getBreakfastIngredient());
+                                                        Log.e("test", "asdjkfl;");
+
+                                                    }
+                                                }
+
+                                                int test = updated.size();
+                                                String lol   = Integer.toString(test);
+                                                Log.e("test", lol);
+                                                mealIngredients.setValue(updated);
+
 
                                                 //        loadMealPlans(docIds);
 
