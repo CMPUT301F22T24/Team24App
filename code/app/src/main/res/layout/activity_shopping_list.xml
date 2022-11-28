@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#343231"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context=".ShoppingListActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/add_ingredient_title_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/karma_medium"
+                android:padding="5dp"
+                android:text="Shopping List Ingredients"
+                android:textColor="#E9E5E5"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="1dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/karma_medium"
+                android:text="Sort By:"
+                android:textColor="#ED524E"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/shopping_list_sortBy_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#EC524E"
+                android:popupBackground="#343231" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/shopping_list_date_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="1dp">
+
+            <ImageButton
+                android:id="@+id/shopping_list_previous_week_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:maxWidth="50dp"
+                android:maxHeight="50dp"
+                android:onClick="onClickPrevWeekShopping"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/left_arrow_meal_plan" />
+
+            <TextView
+                android:id="@+id/shopping_list_current_week"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="2"
+                android:fontFamily="@font/karma_medium"
+                android:text="Oct 10 - Oct 16"
+                android:textAlignment="center"
+                android:textColor="#E9E5E5"
+                android:textSize="30sp" />
+
+            <ImageButton
+                android:id="@+id/shopping_list_next_week_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:maxWidth="10dp"
+                android:maxHeight="10dp"
+                android:onClick="onClickNextWeekShopping"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/right_arrow_meal_plan" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <ListView
+                android:id="@+id/shopping_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="15"
+                android:dividerHeight="12.0sp"
+                android:padding="5dp" />
+
+            <Button
+                android:id="@+id/add_recipeIngredient_confirm_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_button"
+                android:fontFamily="@font/karma_medium"
+                android:onClick="onDoneShopping"
+                android:text="Done Shopping"
+                android:textAllCaps="false"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

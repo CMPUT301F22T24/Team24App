@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:orientation="vertical"
+    android:background="#343231"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:buttonTint="#ED524E"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/shopping_list_ingredient_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/karma_medium"
+            android:text="potato"
+            android:textColor="#E9E5E5"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:padding="5dp">
+    <TextView
+        android:id="@+id/shopping_list_ingredient_count_and_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="end"
+        android:fontFamily="@font/karma_medium"
+        android:text="Required: 5kg"
+        android:textColor="#E9E5E5"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/shopping_list_ingredient_purchased"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="end"
+            android:paddingStart="15dp"
+            android:paddingEnd="0dp"
+            android:fontFamily="@font/karma_medium"
+            android:text="Purchased: 0kg"
+            android:textColor="#E9E5E5"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:padding="5dp">
+
+
+
+        <TextView
+            android:id="@+id/shopping_list_ingredient_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/karma_medium"
+            android:text="Category: Vegetable"
+            android:textColor="#E9E5E5"
+            android:textSize="16sp"
+             />
+
+
+    </LinearLayout>
+
+</LinearLayout>
