@@ -50,10 +50,8 @@ public class ShoppingListActivityViewModel extends ViewModel {
                     }
                 });
     }
-
     /**
      * This method adds a ingredient to the data base
-     *
      * @param ingredient
      */
     public void addIngredient(@NonNull Ingredient ingredient) {

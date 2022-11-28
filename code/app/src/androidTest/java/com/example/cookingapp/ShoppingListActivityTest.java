@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
 
 /**
  * Test class for Shopping List Activity. All the UI tests are written here. Robotium test framework is
- * used
+ used
  */
 @RunWith(AndroidJUnit4.class)
 public class ShoppingListActivityTest {
@@ -73,8 +73,10 @@ public class ShoppingListActivityTest {
             EditText amountEditText = (EditText) solo.getView(R.id.edit_shopping_item_fragment_amount_editText);
             solo.enterText(locationEditText, "edit shopping test");
             solo.enterText(amountEditText, "1.0");
-            solo.clickOnView(solo.getView(android.R.id.button3));
+            assertTrue(solo.getView(android.R.id.button3).isClickable());
+        } else {
+            solo.assertCurrentActivity("Wrong Activity", ShoppingListActivity.class);
         }
-        solo.assertCurrentActivity("Wrong Activity", ShoppingListActivity.class);
+
     }
 }
