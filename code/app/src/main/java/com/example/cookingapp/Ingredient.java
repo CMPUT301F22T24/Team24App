@@ -220,14 +220,15 @@ public class Ingredient implements Serializable, MealPlanChoice {
     };
 
     /**
-     * MealPlan Choice
+     * Ingredient Choice
      * @param servings
      * @return
      */
-    @Override
-    public MealPlanChoice scale(int servings) {
-
-        return null;
+    public Ingredient scale(double servings) {
+        Ingredient ingredient = new Ingredient(this.getDescription(), this.getBestBeforeDate(), this.getLocation(),
+                this.getAmount(), this.getUnit(), this.getCategory());
+        ingredient.setAmount(servings);
+        return ingredient;
     }
 }
 

@@ -1,7 +1,5 @@
 package com.example.cookingapp;
 
-import android.util.Log;
-
 import com.google.firebase.firestore.DocumentId;
 
 import java.io.Serializable;
@@ -199,13 +197,16 @@ public class Recipe implements Serializable, MealPlanChoice {
     };
 
     /**
-     * meal plan choice
+     * Recipe choice
      * @param servings
      * @return
      */
-    @Override
-    public MealPlanChoice scale(int servings) {
-
-        return null;
+    public Recipe scale(double servings) {
+        Recipe recipe = new Recipe(this.getTitle(), this.getServings(), this.getCategory(), this.getComments(), this.getPrepTime(), (ArrayList<RecipeIngredient>) this.getIngredients(), this.getImage());
+        for (RecipeIngredient ingredient : ((Recipe) recipe).getIngredients()) {
+            double scaleRatio = servings / Double.parseDouble(this.getServings());
+            ingredient.setAmount(String.valueOf(scaleRatio * Double.parseDouble(ingredient.getAmount())));
+        }
+        return recipe;
     }
 }
