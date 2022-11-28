@@ -81,27 +81,21 @@ public class ShoppingListActivity extends AppCompatActivity {
             Log.e("test", s);
         }
 
-        model.getShopping(docIds).observe(this, new Observer<ArrayList<Ingredient>>() {
+        model.getShopping(docIds).observe(this, new Observer<ArrayList<RecipeIngredient>>() {
             @Override
-            public void onChanged(ArrayList<Ingredient> ingredients) {
+            public void onChanged(ArrayList<RecipeIngredient> recipeIngredients) {
+                for (RecipeIngredient ri : recipeIngredients) {
 
-                // the entire list ingredients needs to go into shopping list
+                    String changed = ri.getDescription();
+                    Log.e("changed", changed);
 
-                Ingredient ingredient = ingredients.get(0);
+                    ShoppingListItem sli = new ShoppingListItem(ri, false);
+                    shoppingList.add(sli);
+                    shoppinglistadapter.notifyDataSetChanged();
 
 
-                String t = ingredients.get(0).getDescription();
-                Log.e("changed", t);
-
-                RecipeIngredient r = new RecipeIngredient(ingredient.getDescription(),
-                        Double.toString(ingredient.getAmount()), ingredient.getUnit(), ingredient.getCategory());
-
-                ShoppingListItem sli = new ShoppingListItem(r, true);
-                shoppingList.add(sli);
-                shoppinglistadapter.notifyDataSetChanged();
-
+                }
             }
-
         });
 
         shopping_list_date_week = findViewById(R.id.shopping_list_current_week);

@@ -36,13 +36,14 @@ public class testmodel extends ViewModel {
 
     private MutableLiveData<ArrayList<MealPlan>> mealPlans;
     private MutableLiveData<ArrayList<Ingredient>> ingredients;
-    private MutableLiveData<ArrayList<ShoppingListItem>> shopping;
-    private MutableLiveData<ArrayList<Ingredient>> mealIngredients;
+    private MutableLiveData<ArrayList<RecipeIngredient>> mshopping;
+    private MutableLiveData<ArrayList<RecipeIngredient>> mealIngredients;
 
-    public LiveData<ArrayList<Ingredient>> getShopping(ArrayList<String> docIds) {
+    public LiveData<ArrayList<RecipeIngredient>> getShopping(ArrayList<String> docIds) {
 
         mealPlans = new MutableLiveData<>();
         ingredients = new MutableLiveData<>();
+        mshopping = new MutableLiveData<>();
 
         mealIngredients = new MutableLiveData<>();
 
@@ -51,7 +52,7 @@ public class testmodel extends ViewModel {
         loadIngredients();
 
         // i have both lists
-        return mealIngredients;
+        return mshopping;
     }
 
     private void loadIngredients() {
@@ -191,40 +192,110 @@ public class testmodel extends ViewModel {
                                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                                 ArrayList<Ingredient> iquery = new ArrayList<>(queryDocumentSnapshots.toObjects(Ingredient.class));
                                                 int len = query.size();
-                                                String s = Integer.toString(len);
-                                                Log.e("test", s);
+                                                String log = Integer.toString(len);
+                                                Log.e("test", log);
 
                                                 int i = iquery.size();
                                                 String t = Integer.toString(i);
                                                 Log.e("test", t);
 
 
+                                                HashMap<String, Double> map = new HashMap<>();
+
+                                                for (Ingredient ing : iquery) {
+                                                    String s = ing.getDescription() + ing.getCategory() + ing.getUnit();
+                                                    map.put(s, ing.getAmount());
+                                                    Log.e("ingkey", s);
+                                                }
 
 
 
-                                                ArrayList<Ingredient> updated =  new ArrayList<>();
+
+
+
+                                                ArrayList<RecipeIngredient> updated =  new ArrayList<>();
+
+                                                //TODO: sclaing before update.add
 
                                                 for (MealPlan m : query) {
                                                     if (m.getBreakfastIngredient() != null) {
-                                                        updated.add(m.getBreakfastIngredient());
-                                                        Log.e("test", "asdjkfl;");
+                                                        Ingredient bi = m.getBreakfastIngredient();
+                                                        // divide by breakfast servings
+                                                        Integer bs = m.getBreakfastServings();
 
+                                                        RecipeIngredient rbi = new RecipeIngredient(bi);
+                                                        updated.add(rbi);
+
+                                                    }
+                                                    if (m.getLunchIngredient() != null) {
+                                                        Ingredient li = m.getLunchIngredient();
+                                                        RecipeIngredient rli = new RecipeIngredient(li);
+                                                        updated.add(rli);
+                                                    }
+                                                    if (m.getDinnerIngredient() != null) {
+                                                        Ingredient di = m.getDinnerIngredient();
+                                                        RecipeIngredient rdi = new RecipeIngredient(di);
+                                                        updated.add(rdi);
+                                                    }
+
+                                                    if (m.getBreakfastRecipe() != null) {
+                                                        Recipe br = m.getBreakfastRecipe();
+                                                        updated.addAll(br.getIngredients());
+
+                                                    }
+
+                                                    if (m.getLunchRecipe() != null) {
+                                                        Recipe lr = m.getLunchRecipe();
+                                                        updated.addAll(lr.getIngredients());
+                                                    }
+
+                                                    if (m.getDinnerRecipe() != null) {
+                                                        Recipe dr = m.getDinnerRecipe();
+                                                        updated.addAll(dr.getIngredients());
                                                     }
                                                 }
 
-                                                int test = updated.size();
-                                                String lol   = Integer.toString(test);
-                                                Log.e("test", lol);
+                                                // all needed ingredients from meal plan -> updated
+                                                // i storage map in map which has s:amount
+
+                                                ArrayList<RecipeIngredient> shopping =  new ArrayList<>();
+
+
+                                                for (RecipeIngredient ri : updated) {
+                                                    String s = ri.getDescription() + ri.getCategory() + ri.getUnit();
+
+                                                    if (map.containsKey(s)) {
+                                                        // this means we have some of it in the storage
+                                                        // needed - have
+                                                        Double have = map.get(s);
+                                                        Double needed = Double.parseDouble(ri.getAmount());
+                                                        Double req = needed - have;
+
+                                                        if (req > 0) {
+                                                            // that means we need it
+                                                            ri.setAmount(String.valueOf(req));
+                                                            shopping.add(ri);
+                                                        }
+                                                    }
+
+                                                    else {
+                                                        // we don't have any of it
+                                                        // so we just simply add it to shopping list
+                                                        shopping.add(ri);
+                                                    }
+                                                }
+
+//                                                for (RecipeIngredient s  : shopping) {
+//                                                    String sitem = s.getDescription();
+//                                                    Log.e("shopping list", sitem);
+//                                                }
+
+
+
+
                                                 mealIngredients.setValue(updated);
+                                                mshopping.setValue(shopping);
 
-
-                                                //        loadMealPlans(docIds);
-
-                                                // query -- meal plan query
-                                                // iquery -- ingredients query
-
-
-//                                                ingredients.setValue(query);
 
                                                 Log.d(TAG, "Data retrieved successfully");
                                             }

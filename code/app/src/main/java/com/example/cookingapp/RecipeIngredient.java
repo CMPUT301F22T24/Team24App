@@ -21,6 +21,12 @@ public class RecipeIngredient implements Serializable {
         this.unit = unit;
         this.category = category;
     }
+    public RecipeIngredient(Ingredient ingredient) {
+        this.description = ingredient.getDescription();
+        this.amount = Double.toString(ingredient.getAmount());
+        this.unit = ingredient.getUnit();
+        this.category = ingredient.getCategory();
+    }
 
 
     public String getDescription() {
