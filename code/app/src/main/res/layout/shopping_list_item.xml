@@ -59,21 +59,6 @@
         android:textSize="16sp"
         android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/shopping_list_ingredient_purchased"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="end"
-            android:paddingStart="15dp"
-            android:paddingEnd="0dp"
-            android:fontFamily="@font/karma_medium"
-            android:text="Purchased: 0kg"
-            android:textColor="#E9E5E5"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
-
-
 
 
 
