@@ -78,6 +78,10 @@ public class ShoppingListActivity extends AppCompatActivity {
         for (int i = 0; i <= 6; i ++)
             docIds.add(week.get(i).toString());
 
+        for (String s : docIds) {
+            Log.e("docids", s);
+        }
+
 
 
         model.getShopping(docIds).observe(this, new Observer<ArrayList<RecipeIngredient>>() {

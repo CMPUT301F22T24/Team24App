@@ -241,20 +241,21 @@ public class testmodel extends ViewModel {
 
                                                     if (m.getBreakfastRecipe() != null) {
                                                         Recipe br = m.getBreakfastRecipe();
-                                                        RecipeIngredient cel = br.getIngredients().get(0);
-                                                        Log.e("cel", cel.getAmount());
-                                                        updated.addAll(br.getIngredients());
+                                                        Recipe scaled = br.scale(m.getBreakfastServings());
+                                                        updated.addAll(scaled.getIngredients());
 
                                                     }
 
                                                     if (m.getLunchRecipe() != null) {
                                                         Recipe lr = m.getLunchRecipe();
-                                                        updated.addAll(lr.getIngredients());
+                                                        Recipe scaled = lr.scale(m.getLunchServings());
+                                                        updated.addAll(scaled.getIngredients());
                                                     }
 
                                                     if (m.getDinnerRecipe() != null) {
                                                         Recipe dr = m.getDinnerRecipe();
-                                                        updated.addAll(dr.getIngredients());
+                                                        Recipe scaled = dr.scale(m.getDinnerServings());
+                                                        updated.addAll(scaled.getIngredients());
                                                     }
                                                 }
 
