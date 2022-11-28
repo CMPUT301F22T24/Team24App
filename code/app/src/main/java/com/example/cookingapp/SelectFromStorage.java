@@ -54,7 +54,7 @@ public class SelectFromStorage extends AppCompatActivity {
             public void onChanged(ArrayList<Ingredient> ingredients) {
                 ArrayList<Ingredient> ings = ingredients;
                 // so now we have the ingredients list from the database
-                for(int i=0; i<ingredients.size()-1; i++) {
+                for(int i=0; i<ingredients.size(); i++) {
                     Ingredient ingredient = ingredients.get(i);
                     RecipeIngredient r = new RecipeIngredient(ingredient.getDescription(),
                             Double.toString(ingredient.getAmount()), ingredient.getUnit(), ingredient.getCategory());
@@ -102,7 +102,7 @@ public class SelectFromStorage extends AppCompatActivity {
         Log.e("test", s);
 
         intent.putExtra("list", selection);
-        setResult(2, intent);
+        setResult(RESULT_OK, intent);
         finish();
 
 

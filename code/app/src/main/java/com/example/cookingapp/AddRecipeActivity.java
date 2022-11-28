@@ -256,6 +256,17 @@ public class AddRecipeActivity extends AppCompatActivity {
                     }
 
                     Intent intent = result.getData();
+                    StorageSelection selection = (StorageSelection) intent.getSerializableExtra("list");
+                    if (selection != null) {
+                        for (RecipeIngredient r : selection.getIngredients()) {
+                            ingredientList.add(r);
+                            recipeIngredientAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+
+
+
                     RecipeIngredient recipeIngredient = (RecipeIngredient) intent.getSerializableExtra("recipeIngredient");
                     if (recipeIngredient != null) {
                         // retrieved recipeIngredient successfully from addRecipeIngredient activity
@@ -391,6 +402,12 @@ public class AddRecipeActivity extends AppCompatActivity {
         categorySpinner.setAdapter(categorySpinnerAdapter);
         categorySpinner.setSelection(categorySpinnerAdapter.getCount());
         categorySpinner.setOnItemSelectedListener(new SpinnerItemSelectedListener());
+    }
+
+    public void onSelectFromStorage(View view) {
+        Intent intent = new Intent(this, SelectFromStorage.class);
+        intent.putExtra("acode", 10);
+        activityResultLauncher.launch(intent);
     }
 
     /**
