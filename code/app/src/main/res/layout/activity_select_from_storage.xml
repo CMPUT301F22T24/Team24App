@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#343231"
+    tools:context=".SelectFromStorage">
+
+
+    <TextView
+        android:id="@+id/add_ingredient_from_storage_title_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/karma_medium"
+        android:text="Add Ingredient from Storage"
+        android:textColor="#E9E5E5"
+        android:textSize="30sp"
+        android:padding="10dp"
+        android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/storage_recipe_ingredient_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:padding="5dp"
+        android:dividerHeight="12.0sp">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/confirm_selections_from_storage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:layout_gravity="bottom|end"
+        android:onClick="OnConfirmSelections"/>
+</LinearLayout>

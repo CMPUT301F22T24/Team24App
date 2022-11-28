@@ -25,8 +25,8 @@
             android:fontFamily="@font/karma_medium"
             android:text="Add Recipe"
             android:textColor="#E9E5E5"
-            android:textSize="30dp"
-            android:textStyle="bold"></TextView>
+            android:textSize="30sp"
+            android:textStyle="bold"/>
 
         <!--Recipe Title-->
         <LinearLayout
@@ -42,8 +42,8 @@
                 android:padding="5dp"
                 android:text="Title"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/add_recipe_title_editText"
@@ -57,7 +57,7 @@
                 android:minHeight="48dp"
                 android:padding="5dp"
                 android:textColor="#E9E5E5"
-                android:textColorHint="#99E9E5E5"></EditText>
+                android:textColorHint="#99E9E5E5"/>
 
         </LinearLayout>
 
@@ -77,7 +77,7 @@
                 android:text="Preparation Time"
                 android:textColor="#E9E5E5"
                 android:textSize="20sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                     android:paddingVertical="30dp"
                     android:text="hrs"
                     android:textColor="#E9E5E5"
-                    android:textSize="20sp"></TextView>
+                    android:textSize="20sp"/>
 
                 <NumberPicker
                     android:id="@+id/min_numberPicker"
@@ -136,8 +136,8 @@
                 android:padding="5dp"
                 android:text="Number of Servings"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/add_recipe_servings_editText"
@@ -152,7 +152,7 @@
                 android:minHeight="48dp"
                 android:padding="5dp"
                 android:textColor="#E9E5E5"
-                android:textColorHint="#99E9E5E5"></EditText>
+                android:textColorHint="#99E9E5E5"/>
 
         </LinearLayout>
 
@@ -171,7 +171,7 @@
                 android:padding="5dp"
                 android:text="Category"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Spinner
@@ -199,8 +199,8 @@
                 android:padding="5dp"
                 android:text="Comments"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
             <EditText
                 android:id="@+id/add_recipe_comments_editText"
@@ -214,7 +214,7 @@
                 android:minHeight="48dp"
                 android:padding="5dp"
                 android:textColor="#E9E5E5"
-                android:textColorHint="#99E9E5E5"></EditText>
+                android:textColorHint="#99E9E5E5"/>
 
         </LinearLayout>
 
@@ -232,8 +232,8 @@
                 android:padding="5dp"
                 android:text="Upload Image"
                 android:textColor="#E9E5E5"
-                android:textSize="20dp"
-                android:textStyle="bold"></TextView>
+                android:textSize="20sp"
+                android:textStyle="bold"/>
             <ImageView
                 android:id="@+id/recipe_Image"
                 android:layout_width="match_parent"
@@ -284,8 +284,8 @@
                     android:padding="5dp"
                     android:text="Ingredients"
                     android:textColor="#E9E5E5"
-                    android:textSize="20dp"
-                    android:textStyle="bold"></TextView>
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
 
                 <Button
                     android:id="@+id/add_recipe_delete_ingredient_button"
@@ -297,7 +297,7 @@
                     android:fontFamily="@font/karma_medium"
                     android:text="Del"
                     android:textAllCaps="false"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"/>
 
                 <Button
                     android:id="@+id/add_recipe_add_ingredient_button"
@@ -310,9 +310,47 @@
                     android:onClick="addIngredientToRecipe"
                     android:text="Add"
                     android:textAllCaps="false"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
+
+<!--                <Button-->
+<!--                    android:id="@+id/add_recipe_select_from_storage_button"-->
+<!--                    android:layout_width="27dp"-->
+<!--                    android:layout_height="34dp"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:background="@drawable/custom_button"-->
+<!--                    android:fontFamily="@font/karma_medium"-->
+<!--                    android:onClick="onSelectFromStorage"-->
+<!--                    android:text="Select from Ingredient Storage"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textSize="15dp" />-->
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <Button
+                    android:id="@+id/add_recipe_select_from_storage_button"
+                    android:layout_width="285dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_button"
+                    android:fontFamily="@font/karma_medium"
+                    android:onClick="onSelectFromStorage"
+                    android:text="Select from Ingredient Storage"
+                    android:textAllCaps="false"
+                    android:layout_gravity="end"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+
+
 
             <ListView
                 android:id="@+id/recipe_ingredient_list"
@@ -347,7 +385,7 @@
                 android:onClick="onAddOrEditRecipeConfirmHandler"
                 android:text="Confirm"
                 android:textAllCaps="false"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
