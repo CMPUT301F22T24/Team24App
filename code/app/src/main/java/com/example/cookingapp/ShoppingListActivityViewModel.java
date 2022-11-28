@@ -32,17 +32,6 @@ public class ShoppingListActivityViewModel extends ViewModel {
         return shoppingList;
     }
 
-//    private MutableLiveData<ArrayList<Ingredient>> ingredients;
-//
-//    public LiveData<ArrayList<Ingredient>> getIngredients() {
-//        if (ingredients == null) {
-//            Log.d("getIngredients","Reached 39");
-//            ingredients = new MutableLiveData<>();
-//            loadIngredients();
-//        }
-//        return ingredients;
-//    }
-
     private void loadShoppingList() {
         // fetch from db
         db = FirebaseFirestore.getInstance();
@@ -62,25 +51,11 @@ public class ShoppingListActivityViewModel extends ViewModel {
                 });
     }
 
-//    private void loadIngredients() {
-//        // fetch from db
-//        db = FirebaseFirestore.getInstance();
-//        db.collection("Ingredients").get()
-//                .addOnSuccessListener(new OnSuccessListener<>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        ArrayList<Ingredient> query = new ArrayList<>(queryDocumentSnapshots.toObjects(Ingredient.class));
-//                        ingredients.setValue(query);
-//                        Log.d(TAG, "Data retrieved successfully");
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.d(TAG, "Data failed to be retrieved");
-//                    }
-//                });
-//    }
-
+    /**
+     * This method adds a ingredient to the data base
+     *
+     * @param ingredient
+     */
     public void addIngredient(@NonNull Ingredient ingredient) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("description", ingredient.getDescription());
