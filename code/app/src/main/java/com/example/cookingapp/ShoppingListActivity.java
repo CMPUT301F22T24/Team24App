@@ -44,9 +44,9 @@ public class ShoppingListActivity extends AppCompatActivity {
 
 
     private static LocalDate currMonday = LocalDate.now( ZoneId.systemDefault())
-            .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
+            .with( TemporalAdjusters.previousOrSame( DayOfWeek.MONDAY ) );
     private static LocalDate currDate = LocalDate.now( ZoneId.systemDefault())
-            .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
+            .with( TemporalAdjusters.previousOrSame( DayOfWeek.MONDAY ) );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

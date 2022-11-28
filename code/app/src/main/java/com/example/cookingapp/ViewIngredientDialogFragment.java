@@ -25,7 +25,7 @@ public class ViewIngredientDialogFragment extends DialogFragment {
     TextView amountTextView;
     TextView unitTextView;
 
-    /*
+    /**
     Purpose: handle delete and edit ingredient
     design rationale: implemented in MainActivity
     */

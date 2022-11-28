@@ -25,6 +25,10 @@ public class UpdateMealPlanActivityViewModel extends ViewModel {
     private FirebaseFirestore db;
     private MutableLiveData<ArrayList<MealPlanChoice>> mealPlanChoices;
 
+    /**
+     * Queries database to fetch for meal plans
+     * @return mealPlanChoices
+     */
     public LiveData<ArrayList<MealPlanChoice>> getMealPlanChoices() {
 
         if(mealPlanChoices == null) {
@@ -35,6 +39,9 @@ public class UpdateMealPlanActivityViewModel extends ViewModel {
         return mealPlanChoices;
     }
 
+    /**
+     * Queries database to fetch for meal plans given a set of dates
+     */
     private void loadMealPlanChoices() {
         ArrayList<MealPlanChoice> query = new ArrayList<>();
 

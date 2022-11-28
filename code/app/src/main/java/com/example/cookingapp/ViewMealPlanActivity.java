@@ -382,28 +382,49 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
         }
     }
 
+    /**
+     * @param recipe
+     * @return returns new recipe or ingredient in activity result launcher
+     */
     @Override
     public void onEdit(Recipe recipe) {
         Intent intent = new Intent(this, UpdateMealPlanActivity.class);
         activityResultLauncher.launch(intent);
     }
 
+    /**
+     * @param recipe
+     * @return currently not implemented
+     */
     @Override
     public void onDelete(Recipe recipe) {
         // TODO: remove delete button
     }
 
+    /**
+     * @param ingredient
+     * @return returns new recipe or ingredient in activity result launcher
+     */
     @Override
     public void onEdit(Ingredient ingredient) {
         Intent intent = new Intent(this, UpdateMealPlanActivity.class);
         activityResultLauncher.launch(intent);
     }
 
+    /**
+     * @param ingredient
+     * @return currently not implemented
+     */
     @Override
     public void onDelete(Ingredient ingredient) {
         // TODO: remove delete button
     }
 
+    /**
+     * @param mealplan
+     * @param mealType
+     * @return returns new recipe or ingredient in activity result launcher
+     */
     @Override
     public void onAddMeal(MealPlan mealplan, String mealType) {
         // mealType is either "breakfast", "lunch", "dinner"

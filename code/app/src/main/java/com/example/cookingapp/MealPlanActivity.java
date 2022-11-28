@@ -36,7 +36,7 @@ public class MealPlanActivity extends AppCompatActivity {
     ImageButton previousWeekButton;
     ImageButton nextWeekButton;
     private static LocalDate currMonday = LocalDate.now( ZoneId.systemDefault())
-            .with( TemporalAdjusters.previous( DayOfWeek.MONDAY ) );
+            .with( TemporalAdjusters.previousOrSame( DayOfWeek.MONDAY ) );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

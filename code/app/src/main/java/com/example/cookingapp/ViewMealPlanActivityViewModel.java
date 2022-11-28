@@ -21,9 +21,17 @@ public class ViewMealPlanActivityViewModel extends ViewModel {
     final String TAG = "ViewMealPlanActivity";
     private FirebaseFirestore db;
 
+    /**
+     * Store mealPlan in view as will as editType when breakfast, lunch and dinner are selected
+     */
     public static MealPlan mealPlan;
     public String editType;
 
+    /**
+     * @param mealPlan
+     * @param documentID
+     * Updates selected meal plan with given mealPlan with documentID
+     */
     public void updateMealPlan(@NonNull MealPlan mealPlan, String documentID) {
         db = FirebaseFirestore.getInstance();
         HashMap<String, Object> data = new HashMap<>();

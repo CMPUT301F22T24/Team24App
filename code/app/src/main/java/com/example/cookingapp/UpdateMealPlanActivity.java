@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -17,6 +19,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UpdateMealPlanActivity extends AppCompatActivity {
 
@@ -24,11 +28,8 @@ public class UpdateMealPlanActivity extends AppCompatActivity {
 
     ListView mealPlanListView;
     ArrayList<MealPlanChoice> mealPlanChoices = new ArrayList<>();
-    Spinner sortBySpinner;
-    CustomSpinnerAdapter sortBySpinnerAdapter;
     MealPlanChoiceAdapter mealPlanChoiceAdapter;
     EditText servingsEditText;
-    // ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class UpdateMealPlanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_meal_plan);
 
         servingsEditText = findViewById(R.id.update_mealPlan_servings_editText);
-
+        servingsEditText.setFilters(new InputFilter[] { new DecimalDigitsInputFilter(2, 1)});
         mealPlanListView = findViewById(R.id.update_mealPlan_list);
 
         mealPlanListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,7 +53,10 @@ public class UpdateMealPlanActivity extends AppCompatActivity {
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                /**
+                                 * Returns chose recipe or ingredient back to ViewMealPlanActivity
+                                 * along with the amount of servings selected
+                                 */
                                 Intent intent = new Intent(getBaseContext(), ViewMealPlanActivity.class);
                                 intent.putExtra("mealPlanChoice", mealPlanChoices.get(position));
                                 intent.putExtra("numServingsSelected", Double.parseDouble(servingsEditText.getText().toString()));
@@ -75,6 +79,10 @@ public class UpdateMealPlanActivity extends AppCompatActivity {
         });
 
 
+        /**
+         * Observer that retrieves recipes and ingredients from database.
+         * Updates mealPlanChoices list
+         */
         viewModel = new ViewModelProvider(this).get(UpdateMealPlanActivityViewModel.class);
         viewModel.getMealPlanChoices().observe(this, new Observer<ArrayList<MealPlanChoice>>() {
             @Override
@@ -88,5 +96,23 @@ public class UpdateMealPlanActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * DecimalDigitsInputFilter allows user to change to preference
+     */
+    private class DecimalDigitsInputFilter implements InputFilter {
+        Pattern mPattern;
+        public DecimalDigitsInputFilter(int digitsBeforeZero,int digitsAfterZero) {
+            mPattern=Pattern.compile("[0-9]{0," + (digitsBeforeZero-1) + "}+((\\.[0-9]{0," + (digitsAfterZero-1) + "})?)||(\\.)?");
+        }
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Matcher matcher=mPattern.matcher(dest);
+            if(!matcher.matches())
+                return "";
+            return null;
+        }
     }
 }
