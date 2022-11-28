@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -57,6 +58,9 @@ public class RecipeIngredientAdapter extends ArrayAdapter<RecipeIngredient> {
         TextView ingredientUnit = view.findViewById(R.id.ingredient_list_item_location);
         TextView ingredientAmount = view.findViewById(R.id.ingredient_list_item_amount);
 
+        double tempAmount = Double.parseDouble(ingredient.getAmount());
+        DecimalFormat df = new DecimalFormat("###.##");
+
 
         ingredientDescription.setText(ingredient.getDescription());
 
@@ -64,7 +68,7 @@ public class RecipeIngredientAdapter extends ArrayAdapter<RecipeIngredient> {
 
         ingredientUnit.setText(ingredient.getUnit());
 
-        ingredientAmount.setText(ingredient.getAmount().toString());
+        ingredientAmount.setText(df.format(tempAmount));
         return view;
     }
 }

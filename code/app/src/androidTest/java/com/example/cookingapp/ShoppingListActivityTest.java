@@ -54,6 +54,7 @@ public class ShoppingListActivityTest {
      * There must be at least one ingredient in the shopping list to run this test
      * The dialog fragment should not allow the confirm button to be clicked
      * untill all the fields are filled out
+     * Also covers the checklist toggling
      */
     @Test
     public void doneShoppingTest() {
