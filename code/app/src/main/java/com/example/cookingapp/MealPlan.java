@@ -16,7 +16,7 @@ public class MealPlan implements Serializable {
     private Recipe breakfastRecipe;
     private Recipe lunchRecipe;
     private Recipe dinnerRecipe;
-    private Integer breakfastServings, lunchServings, dinnerServings;
+    private Double breakfastServings, lunchServings, dinnerServings;
     private Ingredient breakfastIngredient;
     private Ingredient lunchIngredient;
     private Ingredient dinnerIngredient;
@@ -50,7 +50,7 @@ public class MealPlan implements Serializable {
         this.dinnerIngredient = dinnerIngredient;
     }
 
-    public MealPlan(String date, Recipe breakfastRecipe, Recipe lunchRecipe, Recipe dinnerRecipe, Integer breakfastServings, Integer lunchServings, Integer dinnerServings, Ingredient breakfastIngredient, Ingredient lunchIngredient, Ingredient dinnerIngredient, String documentId) {
+    public MealPlan(String date, Recipe breakfastRecipe, Recipe lunchRecipe, Recipe dinnerRecipe, Double breakfastServings, Double lunchServings, Double dinnerServings, Ingredient breakfastIngredient, Ingredient lunchIngredient, Ingredient dinnerIngredient, String documentId) {
         this.date = date;
         this.breakfastRecipe = breakfastRecipe;
         this.lunchRecipe = lunchRecipe;
@@ -155,27 +155,27 @@ public class MealPlan implements Serializable {
         return dinnerRecipe;
     }
 
-    public Integer getBreakfastServings() {
+    public Double getBreakfastServings() {
         return breakfastServings;
     }
 
-    public void setBreakfastServings(Integer breakfastServings) {
+    public void setBreakfastServings(Double breakfastServings) {
         this.breakfastServings = breakfastServings;
     }
 
-    public Integer getLunchServings() {
+    public Double getLunchServings() {
         return lunchServings;
     }
 
-    public void setLunchServings(Integer lunchServings) {
+    public void setLunchServings(Double lunchServings) {
         this.lunchServings = lunchServings;
     }
 
-    public Integer getDinnerServings() {
+    public Double getDinnerServings() {
         return dinnerServings;
     }
 
-    public void setDinnerServings(Integer dinnerServings) {
+    public void setDinnerServings(Double dinnerServings) {
         this.dinnerServings = dinnerServings;
     }
 

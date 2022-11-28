@@ -55,7 +55,7 @@ public class UpdateMealPlanActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(getBaseContext(), ViewMealPlanActivity.class);
                                 intent.putExtra("mealPlanChoice", mealPlanChoices.get(position));
-                                intent.putExtra("numServingsSelected", Integer.parseInt(servingsEditText.getText().toString()));
+                                intent.putExtra("numServingsSelected", Double.parseDouble(servingsEditText.getText().toString()));
                                 // Have to return servings in here
                                 // Have to intent.putExtra(servings)
                                 setResult(RESULT_OK, intent);

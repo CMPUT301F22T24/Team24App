@@ -83,9 +83,9 @@ public class MealPlanActivityViewModel extends ViewModel {
                             final Ingredient[] breakfastIngredient = {null};
                             final Ingredient[] lunchIngredient = {null};
                             final Ingredient[] dinnerIngredient = {null};
-                            final Integer[] breakfastServings = {null};
-                            final Integer[] lunchServings = {null};
-                            final Integer[] dinnerServings = {null};
+                            final Double[] breakfastServings = {null};
+                            final Double[] lunchServings = {null};
+                            final Double[] dinnerServings = {null};
 
                             List<Task<DocumentSnapshot>> tasks = new ArrayList<>();
                             for (Map.Entry<String, Object> entry : data.entrySet()) {
@@ -95,13 +95,13 @@ public class MealPlanActivityViewModel extends ViewModel {
                                     switch (entry.getKey()) {
 
                                         case "breakfastServings":
-                                            breakfastServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
+                                            breakfastServings[0] = (Double) entry.getValue();
                                             break;
                                         case "lunchServings":
-                                            lunchServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
+                                            lunchServings[0] = (Double) entry.getValue();
                                             break;
                                         case "dinnerServings":
-                                            dinnerServings[0] = (Integer) Math.toIntExact((Long) entry.getValue());
+                                            dinnerServings[0] = (Double) entry.getValue();
                                             break;
 
                                     }
