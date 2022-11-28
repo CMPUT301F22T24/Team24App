@@ -213,6 +213,7 @@ public class testmodel extends ViewModel {
 
 
 
+
                                                 ArrayList<RecipeIngredient> updated =  new ArrayList<>();
 
                                                 //TODO: sclaing before update.add
@@ -220,20 +221,20 @@ public class testmodel extends ViewModel {
                                                 for (MealPlan m : query) {
                                                     if (m.getBreakfastIngredient() != null) {
                                                         Ingredient bi = m.getBreakfastIngredient();
-                                                        // divide by breakfast servings
-//                                                        Integer bs = m.getBreakfastServings();
-
-                                                        RecipeIngredient rbi = new RecipeIngredient(bi);
+                                                        Ingredient scaled = bi.scale(m.getBreakfastServings());
+                                                        RecipeIngredient rbi = new RecipeIngredient(scaled);
                                                         updated.add(rbi);
 
                                                     }
                                                     if (m.getLunchIngredient() != null) {
                                                         Ingredient li = m.getLunchIngredient();
-                                                        RecipeIngredient rli = new RecipeIngredient(li);
+                                                        Ingredient scaled = li.scale(m.getLunchServings());
+                                                        RecipeIngredient rli = new RecipeIngredient(scaled);
                                                         updated.add(rli);
                                                     }
                                                     if (m.getDinnerIngredient() != null) {
                                                         Ingredient di = m.getDinnerIngredient();
+                                                        Ingredient scaled = di.scale(m.getDinnerServings());
                                                         RecipeIngredient rdi = new RecipeIngredient(di);
                                                         updated.add(rdi);
                                                     }
@@ -289,6 +290,8 @@ public class testmodel extends ViewModel {
 //                                                    String sitem = s.getDescription();
 //                                                    Log.e("shopping list", sitem);
 //                                                }
+
+
 
 
 
