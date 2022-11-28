@@ -72,6 +72,26 @@ public class RecipeTest {
         recipe.setImage("image");
         assertEquals("image", recipe.getImage());
     }
+    /**
+     * Test scale to servings function
+     */
+    @Test
+    public void scaleRecipeIngredientsTest(){
+        Double wantedServings = 5.0;
+        Recipe recipe = mockRecipe();
+        recipe.setServings(String.valueOf(2.0));
+        RecipeIngredient ingredient1 = new RecipeIngredient();
+        RecipeIngredient ingredient2 = new RecipeIngredient();
+        ingredient1.setAmount(String.valueOf(1.0));
+        ingredient2.setAmount(String.valueOf(2.5));
+        ArrayList<RecipeIngredient> ingredients = new ArrayList<RecipeIngredient>();
+        ingredients.add(ingredient1);
+        ingredients.add(ingredient2);
+        recipe.setIngredients(ingredients);
+        Recipe scaledRecipe = recipe.scale(wantedServings);
+        assertEquals(2.5,Double.parseDouble(scaledRecipe.getIngredients().get(0).getAmount()),0.001);
+        assertEquals(6.25,Double.parseDouble(scaledRecipe.getIngredients().get(1).getAmount()),0.001);
+    }
 
 
 }

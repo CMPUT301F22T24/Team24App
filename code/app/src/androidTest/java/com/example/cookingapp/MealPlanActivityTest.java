@@ -56,13 +56,5 @@ public class MealPlanActivityTest {
         solo.clickOnView(mealPlanList.getChildAt(0));
         solo.assertCurrentActivity("Wrong Activity", ViewMealPlanActivity.class);
     }
-    /**
-     * Check scaling in mealplan works for ingredients
-     */
 
-    /**
-     * Check scaling in meal plan works for recipes
-     * Should check the servings of the recipes
-     * and the servings of ingredients within the recipe
-     */
 }
