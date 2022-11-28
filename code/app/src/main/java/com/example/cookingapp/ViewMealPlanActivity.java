@@ -394,11 +394,31 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
 
     /**
      * @param recipe
-     * @return currently not implemented
+     * deletes selected recipe
      */
     @Override
     public void onDelete(Recipe recipe) {
-        // TODO: remove delete button
+        switch (viewModel.editType) {
+            case "breakfast":
+                viewModel.mealPlan.setBreakfastRecipe(null);
+                viewModel.mealPlan.setBreakfastIngredient(null);
+                viewModel.mealPlan.setBreakfastServings(null);
+                break;
+            case "lunch":
+                viewModel.mealPlan.setLunchRecipe(null);
+                viewModel.mealPlan.setLunchIngredient(null);
+                viewModel.mealPlan.setLunchServings(null);
+                break;
+            case "dinner":
+                viewModel.mealPlan.setDinnerRecipe(null);
+                viewModel.mealPlan.setDinnerIngredient(null);
+                viewModel.mealPlan.setDinnerServings(null);
+                break;
+        }
+        viewModel.updateMealPlan(viewModel.mealPlan, viewModel.mealPlan.getDate());
+        setBreakfast();
+        setLunch();
+        setDinner();
     }
 
     /**
@@ -413,11 +433,31 @@ public class ViewMealPlanActivity extends AppCompatActivity implements ViewRecip
 
     /**
      * @param ingredient
-     * @return currently not implemented
+     * @return deletes selected ingredients
      */
     @Override
     public void onDelete(Ingredient ingredient) {
-        // TODO: remove delete button
+        switch (viewModel.editType) {
+            case "breakfast":
+                viewModel.mealPlan.setBreakfastRecipe(null);
+                viewModel.mealPlan.setBreakfastIngredient(null);
+                viewModel.mealPlan.setBreakfastServings(null);
+                break;
+            case "lunch":
+                viewModel.mealPlan.setLunchRecipe(null);
+                viewModel.mealPlan.setLunchIngredient(null);
+                viewModel.mealPlan.setLunchServings(null);
+                break;
+            case "dinner":
+                viewModel.mealPlan.setDinnerRecipe(null);
+                viewModel.mealPlan.setDinnerIngredient(null);
+                viewModel.mealPlan.setDinnerServings(null);
+                break;
+        }
+        viewModel.updateMealPlan(viewModel.mealPlan, viewModel.mealPlan.getDate());
+        setBreakfast();
+        setLunch();
+        setDinner();
     }
 
     /**

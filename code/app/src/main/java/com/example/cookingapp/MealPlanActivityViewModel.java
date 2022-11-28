@@ -60,7 +60,6 @@ public class MealPlanActivityViewModel extends ViewModel {
      * and stores them in an array list
      * </p>
      */
-    // https://stackoverflow.com/questions/51892766/android-firestore-convert-array-of-document-references-to-listpojo
     private void loadMealPlans(ArrayList<String> docIds) {
 
         // fetch from db
@@ -176,67 +175,6 @@ public class MealPlanActivityViewModel extends ViewModel {
 
                     }
                 });
-    }
-
-    /**
-     * <p>
-     * This method adds a mealPlan to the data base
-     * @param mealPlan: mealPlan to added
-     * </p>
-     */
-    public void addMealPlan(@NonNull MealPlan mealPlan) {
-
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("date", mealPlan.getDate());
-        data.put("breakfastRecipe", mealPlan.getBreakfastRecipe());
-        data.put("lunchRecipe", mealPlan.getLunchRecipe());
-        data.put("dinnerRecipe", mealPlan.getDinnerRecipe());
-        data.put("breakfastIngredient",mealPlan.getBreakfastIngredient());
-        data.put("lunchIngredient", mealPlan.getLunchIngredient());
-        data.put("dinnerIngredient", mealPlan.getDinnerIngredient());
-
-        db = FirebaseFirestore.getInstance();
-        db.collection("MealPlan").add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        mealPlan.setDocumentId(documentReference.getId());
-                        Log.d(TAG, "Data added successfully");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "Data failed to be added");
-                    }
-                });
-    }
-
-    /**
-     * <p>
-     * This method deletes a meal plan from the data base
-     * @param mealPlan: meal plan to be deleted
-     * </p>
-     */
-    public void deleteMealPlan(@NonNull MealPlan mealPlan) {
-        /*
-        db = FirebaseFirestore.getInstance();
-        db.collection("MealPlan").document(mealPlan.getDocumentId()).delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        ArrayList<MealPlan> updated = mealPlans.getValue();
-                        updated.remove(mealPlan);
-                        mealPlans.setValue(updated);
-                        Log.d(TAG, "Data deleted successfully");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "Data failed to be deleted");
-                    }
-                });
-
-         */
     }
 
 }

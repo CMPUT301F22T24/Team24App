@@ -38,32 +38,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="5dp"
-        android:layout_margin="5dp">
-
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="5dp"
-            android:fontFamily="@font/karma_medium"
-            android:text="Sort By:"
-            android:textColor="#ED524E"
-            android:textSize="20sp" />
-
-        <Spinner
-            android:id="@+id/update_mealPLan_recipes_sortBy_spinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="#EC524E"
-            android:popupBackground="#343231"/>
-    </LinearLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
