@@ -24,12 +24,24 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
     private final ArrayList<Recipe> recipeList;
     private final Context context;
 
+    /**
+     * Recipe Adapter instantiate context and recipelist.
+     * @param context
+     * @param recipeList
+     */
     public RecipeAdapter(@NonNull Context context, ArrayList<Recipe> recipeList) {
         super(context, 0, recipeList);
         this.context = context;
         this.recipeList = recipeList;
     }
 
+    /**
+     * getView allows to see recipe list.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

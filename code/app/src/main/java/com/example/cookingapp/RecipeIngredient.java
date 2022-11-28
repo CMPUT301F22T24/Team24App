@@ -2,12 +2,21 @@ package com.example.cookingapp;
 
 import java.io.Serializable;
 
+/**
+ * Recipe Ingredient class handle add ingredient to recipe from ingredient storage.
+ */
 public class RecipeIngredient implements Serializable {
+    /**
+     * ingredient attributes
+     */
     private String description;
     private String amount;
     private String unit;
     private String category;
 
+    /**
+     * instantiate Recipe Ingredient
+     */
     public RecipeIngredient() {
         this.description = null;
         this.amount = null;
@@ -15,6 +24,13 @@ public class RecipeIngredient implements Serializable {
         this.category = null;
     }
 
+    /**
+     * instantiate Recipe Ingredient
+     * @param description
+     * @param amount
+     * @param unit
+     * @param category
+     */
     public RecipeIngredient(String description, String amount, String unit, String category) {
         this.description = description;
         this.amount = amount;
@@ -22,7 +38,10 @@ public class RecipeIngredient implements Serializable {
         this.category = category;
     }
 
-
+    /**
+     * getter and setter
+     * @return
+     */
     public String getDescription() {
         return description;
     }

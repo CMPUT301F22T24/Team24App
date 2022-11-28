@@ -15,6 +15,9 @@ import java.util.List;
  * </p>
  */
 public class Recipe implements Serializable, MealPlanChoice {
+    /**
+     * recipe attributes: title, servings, category, comments, prepTime and image.
+     */
     private String title;
     private String servings;
     private String category;
@@ -26,6 +29,9 @@ public class Recipe implements Serializable, MealPlanChoice {
     @DocumentId
     private String documentId;
 
+    /**
+     * instantiate recipe
+     */
     public Recipe() {
         this.title = null;
         this.servings = null;
@@ -36,6 +42,16 @@ public class Recipe implements Serializable, MealPlanChoice {
         this.image = null;
     }
 
+    /**
+     * instantiate recipe
+     * @param title
+     * @param servings
+     * @param category
+     * @param comments
+     * @param prepTime
+     * @param ingredients
+     * @param image
+     */
     public Recipe(String title, String servings, String category, String comments, String prepTime, ArrayList<RecipeIngredient> ingredients, String image) {
         this.title = title;
         this.servings = servings;
@@ -46,6 +62,10 @@ public class Recipe implements Serializable, MealPlanChoice {
         this.image = image;
     }
 
+    /**
+     * getter and setter
+     * @return
+     */
     public String getTitle() {
         return title;
     }
@@ -96,6 +116,9 @@ public class Recipe implements Serializable, MealPlanChoice {
 
     public void setDocumentId(String documentId) { this.documentId = documentId; }
 
+    /**
+     * Recipe Title Comparator change title to lower case.
+     */
     public static Comparator<Recipe> RecipeTitleComparator = new Comparator<Recipe>() {
         @Override
         public int compare(Recipe i1, Recipe i2) {
@@ -109,6 +132,9 @@ public class Recipe implements Serializable, MealPlanChoice {
         }
     };
 
+    /**
+     * Recipe Preparation Time Comparator set the prep time
+     */
     public static Comparator<Recipe> RecipePreparationTimeComparator = new Comparator<Recipe>() {
         @Override
         public int compare(Recipe i1, Recipe i2) {
@@ -135,7 +161,9 @@ public class Recipe implements Serializable, MealPlanChoice {
         }
     };
 
-
+    /**
+     * Recipe Servings Comparator get servings
+     */
     public static Comparator<Recipe> RecipeServingsComparator = new Comparator<Recipe>() {
         @Override
         public int compare(Recipe i1, Recipe i2) {
@@ -155,6 +183,9 @@ public class Recipe implements Serializable, MealPlanChoice {
         }
     };
 
+    /**
+     * Recipe Category Comparator change Category to lower case
+     */
     public static Comparator<Recipe> RecipeCategoryComparator = new Comparator<Recipe>() {
         @Override
         public int compare(Recipe i1, Recipe i2) {
@@ -167,7 +198,11 @@ public class Recipe implements Serializable, MealPlanChoice {
         }
     };
 
-
+    /**
+     * meal plan choice
+     * @param servings
+     * @return
+     */
     @Override
     public MealPlanChoice scale(int servings) {
 

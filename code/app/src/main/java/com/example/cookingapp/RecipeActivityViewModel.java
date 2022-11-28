@@ -97,6 +97,11 @@ public class RecipeActivityViewModel extends ViewModel {
                 });
     }
 
+    /**
+     * This method edit a recipe to the data base
+     * @param recipe
+     * @param position
+     */
     public void editRecipe(@NonNull Recipe recipe, int position) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("title", recipe.getTitle());

@@ -27,7 +27,9 @@ import java.util.Collections;
  * </p>
  */
 public class RecipesActivity extends AppCompatActivity implements ViewRecipeDialogFragment.OnFragmentInteractionListener {
-
+    /**
+     * Recipes Activity variables
+     */
     private final int EDIT_OK = 1;
 
     ListView recipeListView;
@@ -39,6 +41,11 @@ public class RecipesActivity extends AppCompatActivity implements ViewRecipeDial
     RecipeActivityViewModel viewModel;
 
     int position = -1;
+
+    /**
+     * onCreate allows users to see a list of recipes.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +116,10 @@ public class RecipesActivity extends AppCompatActivity implements ViewRecipeDial
         activityResultLauncher.launch(intent);
     }
 
+    /**
+     * onEdit allows users to edit recipe.
+     * @param recipe
+     */
     public void onEdit(Recipe recipe) {
         // TODO: edit activity
         Intent intent = new Intent(this, AddRecipeActivity.class);
@@ -117,6 +128,10 @@ public class RecipesActivity extends AppCompatActivity implements ViewRecipeDial
         activityResultLauncher.launch(intent);
     }
 
+    /**
+     * onDelete allows users to delete recipe.
+     * @param recipe
+     */
     public void onDelete(Recipe recipe) {
         // Confirm user wants to delete ingredient
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
