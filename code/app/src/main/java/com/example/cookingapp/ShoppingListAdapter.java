@@ -1,6 +1,7 @@
 package com.example.cookingapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,18 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingListItem> {
 
     private ArrayList<ShoppingListItem> shoppingL;
     private Context context;
+    private CheckboxListener checkboxL;
+
+    public interface CheckboxListener {
+        void onCheckboxListener(int position);
+    }
+
+    public void setCheckboxListener( CheckboxListener checkboxL){
+        this.checkboxL = checkboxL;
+
+    }
+
+
     /**
      *
      * Constructor of the ShoppingListAdapter
@@ -34,13 +47,31 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingListItem> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
 
+        ViewHolder viewHolder;
+        viewHolder = new ViewHolder();
         if(view == null) {
             view = LayoutInflater.from(context)
                     .inflate(R.layout.shopping_list_item, parent, false);
+
+            viewHolder.check = (CheckBox) view.findViewById(R.id.checkBox);
+            view.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) view.getTag();
+
         }
 
         ShoppingListItem shoppingList = shoppingL.get(position);
-        CheckBox isCheck =  view.findViewById(R.id.checkBox);
+
+        viewHolder.check.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                if(checkboxL!=null){
+                    checkboxL.onCheckboxListener(position);
+                }
+
+            }
+
+        });
+
 
 
         TextView ShoppingIngredientDescription = view.findViewById(R.id.shopping_list_ingredient_name);
@@ -59,11 +90,18 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingListItem> {
         temp="Required: "+shoppingList.getIngredient().getAmount() + shoppingList.getIngredient().getUnit();
         ShoppingIngredientAmount.setText(temp);
 
-        if(shoppingList.getChecked()){
-            isCheck.setChecked(true);
-        }
+
 
 
         return view;
     }
+
+
+    private static class ViewHolder{
+        CheckBox check;
+
+    }
+
+
+
 }

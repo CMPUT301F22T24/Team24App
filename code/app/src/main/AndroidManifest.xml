@@ -31,6 +31,21 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+
+        <activity
+            android:name=".SelectFromStorage"
+            android:exported="false"
+            android:parentActivityName=".AddIngredientActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+
+
+
+
         <activity
             android:name=".ViewMealPlanActivity"
             android:exported="false"
@@ -57,7 +72,10 @@
         </activity>
         <activity
             android:name=".AddRecipeIngredient"
-            android:exported="false">
+            android:exported="false"
+            android:parentActivityName=".AddIngredientActivity"
+            >
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

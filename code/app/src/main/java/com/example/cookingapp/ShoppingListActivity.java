@@ -62,6 +62,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         shoppingListview = findViewById(R.id.shopping_list);
         shoppingList = new ArrayList<>();
         shoppinglistadapter = new ShoppingListAdapter(this, shoppingList);
+        shoppinglistadapter.setCheckboxListener(this::onCheckboxListener);
         shoppingListview.setAdapter(shoppinglistadapter);
 
         ingredientList = new ArrayList<>();
@@ -101,21 +102,17 @@ public class ShoppingListActivity extends AppCompatActivity {
         shopping_list_date_week = findViewById(R.id.shopping_list_current_week);
         viewModel = new ViewModelProvider(this).get(ShoppingListActivityViewModel.class);
 
-      //  ingredientList.add(new RecipeIngredient("Potato", "5.0", "kg", "vegetable"));
-      //  ingredientList.add(new RecipeIngredient("Tomato", "2.77", "kg", "vegetable"));
-      //  ingredientList.add(new RecipeIngredient("Orange", "0.21", "lb", "fruit"));
-      //  ingredientList.add(new RecipeIngredient("Strawberry", "2.1", "kg", "fruit"));
-
-
-       // shoppingList.add(new ShoppingListItem(ingredientList.get(0), true));
-       // shoppingList.add(new ShoppingListItem(ingredientList.get(1), false));
-       // shoppingList.add(new ShoppingListItem(ingredientList.get(2), false));
-        //shoppingList.add(new ShoppingListItem(ingredientList.get(3), false));
-
-        //Log.d("YesPlease",shoppingList.get(0).getIngredient().getDescription());
         setWeek(currMonday);
 
     }//oncreate
+
+
+    public void onCheckboxListener(int position){
+        ShoppingListItem shop = shoppingList.get(position);
+        shop.setChecked(!shop.getChecked());
+
+    }
+
 
     public void onClickNextWeekShopping(View view){
         currMonday = currMonday.plusDays(7);
@@ -187,7 +184,6 @@ public class ShoppingListActivity extends AppCompatActivity {
     public void onDoneShopping(View view) {
         for (ShoppingListItem shoppingListItem : shoppingList) {
             if (shoppingListItem.getChecked()) {
-                Log.d("here", shoppingListItem.getIngredient().getDescription());
                 EditShoppingListItemDialogFragment.newInstance(shoppingListItem).show(getSupportFragmentManager(), "EDIT_SHOPPING_ITEM");
 
             }
