@@ -235,7 +235,7 @@ public class testmodel extends ViewModel {
                                                     if (m.getDinnerIngredient() != null) {
                                                         Ingredient di = m.getDinnerIngredient();
                                                         Ingredient scaled = di.scale(m.getDinnerServings());
-                                                        RecipeIngredient rdi = new RecipeIngredient(di);
+                                                        RecipeIngredient rdi = new RecipeIngredient(scaled);
                                                         updated.add(rdi);
                                                     }
 
